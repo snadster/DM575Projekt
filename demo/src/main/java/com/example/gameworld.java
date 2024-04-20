@@ -12,10 +12,10 @@ public class gameworld {
 
     }
     
-    public createCoins {
+    public void createCoins() {
         for(int i = 0; i < 21; i++) {
             for(int k = 0; k < 30; k++) {
-                if () {
+                if ( ) {
                     //create coin and add to GW list
                 }
             }
