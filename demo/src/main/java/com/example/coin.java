@@ -1,11 +1,11 @@
 package com.example;
 
-public class coin {
+public class Coin {
     private int value;
     private int x;
     private int y;
 
-    public coin() {
+    public Coin() {
         
     }
     

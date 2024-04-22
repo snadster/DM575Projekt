@@ -1,6 +1,6 @@
 package com.example;
 
-public enum state {
+public enum State {
     GAMEOVER,
     NORMAL,
     POWER  

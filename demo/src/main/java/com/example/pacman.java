@@ -2,14 +2,14 @@ package com.example;
 
 import javafx.scene.image.Image;
 
-public class pacman {
+public class Pacman {
     private int lives;
     private Image sprite;
-    private direction direction;
+    private Direction direction;
     private int x;
     private int y;
 
-    public pacman() {
+    public Pacman() {
         
     }
 

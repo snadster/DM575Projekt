@@ -22,34 +22,29 @@ import javafx.scene.layout.FlowPane;
 public class App extends Application {
 
     @Override
-
     public void start(@SuppressWarnings("exports") Stage stage) {
-        
+
         // make flowpane, scene, and stage
-        FlowPane pane = new FlowPane();
-        Scene scene = new Scene(pane,672,960,Color.DARKGRAY);
-        
+        // FlowPane pane = new FlowPane();
+        // vi skifter til group fordi flowPane sutter hårdt.
+        Group root = new Group();
+        Scene scene = new Scene(root,960,672,Color.DARKGRAY);
 
         // make text, set size font and color
         Text text = new Text();
         text.setText("pac-man :)");
-        text.setX(300);
-        text.setY(400);
+        text.setX(350);
+        text.setY(100);
         text.setFont(Font.font("Brush Script",60));
         text.setFill(Color.YELLOW);
-
+        root.getChildren().add(text);
+        
+        stage.setTitle("pac man?");
+        stage.setScene(scene);
         stage.setWidth(960);
         stage.setHeight(672);
-
         stage.setResizable(false);
-
-        pane.getChildren().add(text);
-        stage.setScene(scene);
-        stage.setTitle("pac man?");
         stage.show();
-        
-        
-
     }
 
     public static void main(String[] args) {
