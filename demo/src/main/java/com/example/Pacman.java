@@ -10,7 +10,13 @@ public class Pacman {
     private int y;
 
     public Pacman() {
-        
+        this.lives = 2;
+        Image pacSprite = new Image("/pac man sprite.jpg");
+        this.sprite = 
+        this.direction = Direction.UP;
+        this.x = 1;
+        this.y = 1;
+
     }
 
 }
