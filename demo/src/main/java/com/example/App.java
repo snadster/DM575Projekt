@@ -34,12 +34,12 @@ public class App extends Application {
         Scene mainScene = new Scene(root);
         stage.setScene(mainScene);
 
-        Canvas canvas = new Canvas(1000, 1000);
+        Canvas canvas = new Canvas(1010, 722);
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         root.setCenter(canvas);
         context.setFill(Color.rgb(54,60,61));
-        context.fillRect(40, 40, 960, 672);
+        context.fillRect(25, 25, 960, 672);
         
 
         stage.show();
