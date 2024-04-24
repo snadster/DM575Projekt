@@ -12,7 +12,7 @@ public class Pacman {
     public Pacman() {
         this.lives = 2;
         Image pacSprite = new Image("/pac man sprite.jpg");
-        this.sprite = 
+        this.sprite = pacSprite;
         this.direction = Direction.UP;
         this.x = 1;
         this.y = 1;

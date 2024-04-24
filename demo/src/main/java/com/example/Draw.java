@@ -1,12 +1,21 @@
 package com.example;
+import javafx.scene.image.Image;
 
-//TODO: 
+/*
+TODO: 
 
+*/
 public class Draw {
-    private GW Gameworld;
+    private Gameworld GW;
 
     public Draw(Gameworld gw) {
         this.GW = gw;
+    
+    
+    
+
     }
+
+    */
     
 }
