@@ -17,7 +17,7 @@ public class Draw {
     }
 
 
-    public void switchCase(Image img, Draw draw) //we use switch case for fun and for speed
+    public void switchCase(Image img) //we use switch case for fun and for speed
     {
         for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
         {
@@ -26,16 +26,19 @@ public class Draw {
                 switch (Map.map[y][x]) //vi tar det der stårpå pladsen og læser det.
                 {
                     case 0 :
-                        draw.canvas.drawImage();
+                        canvas.drawImage("ALL SPRITES LINEAR.png", 1, 239, 32, 32, x, y, 32, 32);
                         break;
                     case 1 :
-                        
+                        canvas.drawImage("ALL SPRITES LINEAR.png", 69, 239, 32, 32, x, y, 32, 32);
                         break;
                     case 2 :
-                        // and here (im workin on a sprite sheet)
+                        // canvas.drawImage(null, sx, sy, sw, sh, x, y, w, h);
                         break;
                     case 3 :
-                        //also here
+                        // canvas.drawImage(null, sx, sy, sw, sh, x, y, w, h);
+                        break;
+                    case 4 :
+                        canvas.drawImage("ALL SPRITES LINEAR.png", 35, 239, 32, 32, x, y, 32, 32);
                         break;
 
 
