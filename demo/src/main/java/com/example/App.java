@@ -46,39 +46,6 @@ public class App extends Application {
     }
 
 
-    //     // make group, scene, and stage
-    //     Group root = new Group();
-    //     Scene scene = new Scene(root,960,672,Color.DARKGRAY);
-
-    //     //attempt at getting a different font loaded in
-    //     //URL fontUrl = new URL("'");
-
-    //     // make text, set size font and color
-    //     // the finished program will need smaller text to show highscore, but not any circle or the like.
-    //     // we might need to use canvas instead to be able to render our stuff, so this is temporary
-    //     Text text = new Text();
-    //     text.setText("pac-man :)");
-    //     text.setX(350);
-    //     text.setY(100);
-    //     text.setFont(Font.font("Brush Script",60));
-    //     text.setFill(Color.YELLOWGREEN);
-    //     root.getChildren().add(text);
-
-    //     Circle paccy = new Circle();
-    //     paccy.setCenterX(480);
-    //     paccy.setCenterY(336);
-    //     paccy.setRadius(50);
-    //     paccy.setFill(Color.YELLOW);
-    //     root.getChildren().add(paccy);
-        
-    //     stage.setTitle("pac man?");
-    //     stage.setScene(scene);
-    //     stage.setWidth(960);
-    //     stage.setHeight(672);
-    //     stage.setResizable(false);
-    //     stage.show();
-    // }
-
     public static void main(String[] args) {
         launch(args);
         Gameworld gamie = new Gameworld();

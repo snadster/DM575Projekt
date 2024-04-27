@@ -1,5 +1,6 @@
 package com.example;
 import javafx.scene.image.Image;
+import javafx.scene.canvas.*;
 
 /*
 TODO: 
@@ -7,13 +8,21 @@ TODO:
 */
 public class Draw {
     private Gameworld gw;
+    public App app;
 
     public Draw(Gameworld gw) {
         this.gw = gw;
     }
 
-    public void switchCasePrinter(Image args) //we use switch case for fun and for speed
+    public Draw(App app) 
     {
+        this.app = app;
+    }
+
+
+    public void drawImage(Image img) //we use switch case for fun and for speed
+    {
+
         for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
         {
             for (int y = 0; y < Map.map.length; y++)
@@ -21,7 +30,7 @@ public class Draw {
                 switch (Map.map[y][x]) //vi tar det der stårpå pladsen og læser det.
                 {
                     case 0 :
-                                 // time to put sprites in with their size
+                        
                         break;
                     case 1 :
                         
