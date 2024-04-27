@@ -25,7 +25,7 @@ import javafx.scene.layout.FlowPane;
 public class App extends Application {
 
     @Override
-    public void start(@SuppressWarnings("exports") Stage stage) {
+    public void start(Stage stage) {
 
         stage.setTitle("dragon-man");
 
@@ -41,6 +41,8 @@ public class App extends Application {
         context.setFill(Color.rgb(54,60,61));
         context.fillRect(25, 25, 960, 672);
         
+        Gameworld gamie = new Gameworld();
+        Draw drawie = new Draw(gamie, canvas);
 
         stage.show();
     }
@@ -48,8 +50,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch(args);
-        Gameworld gamie = new Gameworld();
-        Draw drawie = new Draw(gamie);
+ 
     }
 
 } 

@@ -1,28 +1,24 @@
 package com.example;
 import javafx.scene.image.Image;
 import javafx.scene.canvas.*;
-
+import javafx.scene.paint.*;
+import javafx.scene.*;
 /*
 TODO: 
 
 */
 public class Draw {
     private Gameworld gw;
-    public App app;
+    private Canvas canvas;
 
-    public Draw(Gameworld gw) {
+    public Draw(Gameworld gw, Canvas canvas) {
         this.gw = gw;
-    }
-
-    public Draw(App app) 
-    {
-        this.app = app;
+        this.canvas = canvas;
     }
 
 
-    public void drawImage(Image img) //we use switch case for fun and for speed
+    public void switchCase(Image img, Draw draw) //we use switch case for fun and for speed
     {
-
         for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
         {
             for (int y = 0; y < Map.map.length; y++)
@@ -30,7 +26,7 @@ public class Draw {
                 switch (Map.map[y][x]) //vi tar det der stårpå pladsen og læser det.
                 {
                     case 0 :
-                        
+                        draw.canvas.drawImage();
                         break;
                     case 1 :
                         
