@@ -1,8 +1,7 @@
 package com.example;
 import javafx.scene.image.Image;
 import javafx.scene.canvas.*;
-import javafx.scene.paint.*;
-import javafx.scene.*;
+
 /*
 TODO: 
 
@@ -10,15 +9,17 @@ TODO:
 public class Draw {
     private Gameworld gw;
     private Canvas canvas;
+    private GraphicsContext context;
 
     public Draw(Gameworld gw, Canvas canvas) {
         this.gw = gw;
         this.canvas = canvas;
+        this.context = canvas.getGraphicsContext2D();
     }
 
-
-    public void switchCase(Image img) //we use switch case for fun and for speed
+    public void drawBoard() //we use switch case for fun and for speed
     {
+        Image spriteSheet = new Image("ALL SPRITES LINEAR.png");
         for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
         {
             for (int y = 0; y < Map.map.length; y++)
@@ -26,22 +27,20 @@ public class Draw {
                 switch (Map.map[y][x]) //vi tar det der stårpå pladsen og læser det.
                 {
                     case 0 :
-                        canvas.drawImage("ALL SPRITES LINEAR.png", 1, 239, 32, 32, x, y, 32, 32);
+                        context.drawImage(spriteSheet, 1, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
                         break;
                     case 1 :
-                        canvas.drawImage("ALL SPRITES LINEAR.png", 69, 239, 32, 32, x, y, 32, 32);
+                        context.drawImage(spriteSheet, 69, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
                         break;
                     case 2 :
-                        // canvas.drawImage(null, sx, sy, sw, sh, x, y, w, h);
+                        context.drawImage(spriteSheet, 103, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
                         break;
                     case 3 :
-                        // canvas.drawImage(null, sx, sy, sw, sh, x, y, w, h);
+                        context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
                         break;
                     case 4 :
-                        canvas.drawImage("ALL SPRITES LINEAR.png", 35, 239, 32, 32, x, y, 32, 32);
+                        context.drawImage(spriteSheet, 35, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
                         break;
-
-
                 }
             }
         }
