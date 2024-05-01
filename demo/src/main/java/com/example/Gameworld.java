@@ -1,8 +1,9 @@
 package com.example;
-
 import java.lang.reflect.Array;
-
 import javafx.scene.image.Image;
+import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+
 
 /*
  TODO: 
@@ -18,39 +19,34 @@ import javafx.scene.image.Image;
  speed for the ghosts
 */
 
-public class Gameworld {
-    private Pacman Pacman;
+public class Gameworld extends AnimationTimer {
+    private KeyHandler keyHandler;
+    private Pacman pacman;
     private Ghost[] ghosts;
     private Coin[] coins;
     private State state;
     private int score;
 
-    public Gameworld() {
-        // Pacman pac = new Pacman();
-        // this.Pacman = pac;
+    public Gameworld(KeyHandler keyHandler) {
 
-        // // Here we add the sprites for ghosts, and create new ghost objects that use them.
-        // Image blueGhost = new Image("/blue guy.jpg");
-        // Ghost blue = new Ghost(blueGhost, 50, 50);
-
-        // Image orangeGhost = new Image("/orange guy.jpg");
-        // Ghost orange = new Ghost(orangeGhost, 51, 50);
-        
-        // Image pinkGhost = new Image("/pink guy.jpg");
-        // Ghost pink = new Ghost(pinkGhost, 50, 51);
-
-        // Image redGhost = new Image("/red ghost.jpg");
-        // Ghost red = new Ghost(redGhost, 52, 50);
-
-        // Ghost[] ghostarray = {blue, orange, pink, red};
-        // this.ghosts = ghostarray;
 
         // Coin[] coinarray = new Coin[308];
         // this.coins = coinarray;
 
+        this.keyHandler = keyHandler;
+        this.addKeyListener(keyHandler);
+        this.setFocusable(true);
         this.state = State.NORMAL;
 
     }
+
+    public void update() {
+        if (keyHandler.upPressed == true){
+            
+        }
+    }
+
+}
     
     
     // public void createCoins(Gameworld GW) {

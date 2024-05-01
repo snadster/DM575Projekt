@@ -19,12 +19,22 @@ import javafx.scene.layout.FlowPane;
 
 
 
+
 /**
  * JavaFX App
  */
 public class App extends Application {
+    KeyHandler keyH = new KeyHandler();
+    this.addKeyListener(keyH);
+    this.setFocusable(true);
+    
 
-    @Override
+    public App() {
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
+    }
+
+
     public void start(Stage stage) {
 
         stage.setTitle("dragon-man");
@@ -49,6 +59,13 @@ public class App extends Application {
         stage.show();
     }
 
+
+
+    public void update() {
+        if (keyH.upPressed == true){
+
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
