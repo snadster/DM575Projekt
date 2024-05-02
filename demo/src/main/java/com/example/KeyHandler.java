@@ -20,7 +20,6 @@ public class KeyHandler {
         this.scene = scene;
     }
 
-
     public void inputHandler() {
         scene.setOnKeyPressed (new EventHandler <KeyEvent>() {
             @Override
@@ -62,8 +61,3 @@ public class KeyHandler {
     }
 
 }
-
-
-    
-
-    

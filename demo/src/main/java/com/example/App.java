@@ -4,21 +4,9 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.layout.FlowPane;
-
-
+import javafx.scene.image.Image;
 
 
 /**
@@ -26,24 +14,18 @@ import javafx.scene.layout.FlowPane;
  */
 public class App extends Application {
    
-
-    @SuppressWarnings("unchecked")
 	public void start(Stage stage) {
 
         stage.setTitle("dragon-man");
-
+        stage.setFullScreen(true);
+        stage.getIcons().add(new Image("TILE_COIN.png"));
         BorderPane root = new BorderPane();
 
         Scene mainScene = new Scene(root);
         stage.setScene(mainScene);
 
         Canvas canvas = new Canvas(1024, 736);
-        GraphicsContext context = canvas.getGraphicsContext2D();
-
         root.setCenter(canvas);
-        context.setFill(Color.rgb(54,60,61));
-        context.fillRect(32, 32, 960, 672);
-
 
         KeyHandler keyH = new KeyHandler(mainScene);
         keyH.inputHandler();
@@ -55,15 +37,32 @@ public class App extends Application {
 
         AnimationTimer gameloop = new AnimationTimer()
         {
-            public void handle(long nanotime)
+            public void handle(long nowNS)
             {
                 drawie.drawBoard();
-                
 
+                int x = 32;
+                int y = 32;
+                if (keyH.upPressed) 
+                {
+                    drawie.drawAnimated(nowNS, 4, 409, 1, x, y);
+                }
+                else if (keyH.downPressed)
+                {
+                    drawie.drawAnimated(nowNS, 4, 1, 1, x, y);
+                }
+                else if (keyH.leftPressed)
+                {
+                    drawie.drawAnimated(nowNS, 4, 137, 1, x, y);
+                }
+                else if (keyH.rightPressed)
+                {
+                    drawie.drawAnimated(nowNS, 4, 273, 1, x, y);
+                }
             }
         }; 
         gameloop.start();
-        
+
         stage.show();
     }
 

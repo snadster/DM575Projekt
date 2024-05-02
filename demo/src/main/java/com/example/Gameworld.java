@@ -1,9 +1,4 @@
 package com.example;
-import java.lang.reflect.Array;
-import javafx.scene.image.Image;
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-
 
 /*
  TODO: 
@@ -19,7 +14,8 @@ import javafx.application.Application;
  speed for the ghosts
 */
 
-public class Gameworld extends AnimationTimer {
+public class Gameworld {
+
     private Entity pacman;
     private Entity[] ghosts;
     private Coin[] coins;
@@ -37,13 +33,8 @@ public class Gameworld extends AnimationTimer {
     }
 
     public void update() {
-        if (){
-            
-        }
+        
     }
-
-}
-    
     
     // public void createCoins(Gameworld GW) {
     //     for(int y = 0; y < 21; y++) {
@@ -72,6 +63,4 @@ public class Gameworld extends AnimationTimer {
         
     // }
 
-    
-    
 }
