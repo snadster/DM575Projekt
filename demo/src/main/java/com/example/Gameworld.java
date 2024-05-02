@@ -20,28 +20,24 @@ import javafx.application.Application;
 */
 
 public class Gameworld extends AnimationTimer {
-    private KeyHandler keyHandler;
-    private Pacman pacman;
-    private Ghost[] ghosts;
+    private Entity pacman;
+    private Entity[] ghosts;
     private Coin[] coins;
     private State state;
     private int score;
 
-    public Gameworld(KeyHandler keyHandler) {
+    public Gameworld() {
 
 
         // Coin[] coinarray = new Coin[308];
         // this.coins = coinarray;
-
-        this.keyHandler = keyHandler;
-        this.addKeyListener(keyHandler);
-        this.setFocusable(true);
+        
         this.state = State.NORMAL;
 
     }
 
     public void update() {
-        if (keyHandler.upPressed == true){
+        if (){
             
         }
     }

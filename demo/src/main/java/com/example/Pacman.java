@@ -2,21 +2,12 @@ package com.example;
 
 import javafx.scene.image.Image;
 
-public class Pacman {
+public class Pacman extends Entity {
     private int lives;
-    private Image sprite;
-    private Direction direction;
-    private int x;
-    private int y;
 
-    // public Pacman() {
-    //     this.lives = 2;
-    //     Image pacSprite = new Image("/pac man sprite.jpg");
-    //     this.sprite = pacSprite;
-    //     this.direction = Direction.UP;
-    //     this.x = 1;
-    //     this.y = 1;
-
-    // }
+    public Pacman(Image image, int px, int py, int vx, int vy) {
+        super(image, px, py, vx, vy);
+        this.lives = 2;
+    }
 
 }

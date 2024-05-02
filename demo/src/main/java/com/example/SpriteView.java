@@ -1,6 +1,6 @@
 package com.example;
 
-import java.util.Vector;
+
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -13,16 +13,13 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class SpriteView
 {
-    public Vector position;
-    public Vector  velocity;
-    public Image sprite;
+    public Entity entity;
     public Rectangle boundary;
 
-    public SpriteView()
+    public SpriteView(Entity entity)
     {
-        position = new Vector(0,0);
-        velocity = new Vector(0,0);
-        boundary = new Rectangle(0,0,0,0); // we update this when we use an image but neutralized for now 
+        this.entity = entity;
+        this.boundary = new Rectangle(x,y,32,32); // we update this when we use an image but neutralized for now  
     }
 
     public void setPosition(double x, double y)
@@ -30,14 +27,11 @@ public class SpriteView
         position.set(x,y);
     }
 
-    public void setSprite(String file, int sx, int sy, int sw, int sh)
+    public void spriteBundariesDragon(String file)
     {
-        sprite = new Image(file);
         
-
-
-        boundary.width = sprite.getWidth();
-        boundary.height = sprite.getHeight();
+        boundary.width = entity.sprite.getWidth();
+        boundary.height = entity.sprite.getHeight();
 
     }
 

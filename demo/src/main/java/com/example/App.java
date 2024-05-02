@@ -1,5 +1,6 @@
 package com.example;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,18 +25,10 @@ import javafx.scene.layout.FlowPane;
  * JavaFX App
  */
 public class App extends Application {
-    KeyHandler keyH = new KeyHandler();
-    this.addKeyListener(keyH);
-    this.setFocusable(true);
-    
+   
 
-    public App() {
-        this.addKeyListener(keyH);
-        this.setFocusable(true);
-    }
-
-
-    public void start(Stage stage) {
+    @SuppressWarnings("unchecked")
+	public void start(Stage stage) {
 
         stage.setTitle("dragon-man");
 
@@ -50,21 +43,28 @@ public class App extends Application {
         root.setCenter(canvas);
         context.setFill(Color.rgb(54,60,61));
         context.fillRect(32, 32, 960, 672);
+
+
+        KeyHandler keyH = new KeyHandler(mainScene);
+        keyH.inputHandler();
         
         Gameworld gamie = new Gameworld();
 
         Draw drawie = new Draw(gamie, canvas);
         drawie.drawBoard();
 
+        AnimationTimer gameloop = new AnimationTimer()
+        {
+            public void handle(long nanotime)
+            {
+                drawie.drawBoard();
+                
+
+            }
+        }; 
+        gameloop.start();
+        
         stage.show();
-    }
-
-
-
-    public void update() {
-        if (keyH.upPressed == true){
-
-        }
     }
 
     public static void main(String[] args) {
