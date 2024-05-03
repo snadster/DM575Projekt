@@ -25,6 +25,6 @@ public class Map
                                     {4,1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,1,4,1,1,1,1,1,1,1,4,1,1,1,4}}; 
 
                                     //0 = empty space, 1 = wall, 2 = powerup, 
-                                    //3 = ghostvault, 4=tower
+                                    //3 = knight vault, 4 = tower
     
 }

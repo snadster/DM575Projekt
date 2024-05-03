@@ -16,11 +16,11 @@ package com.example;
 
 public class Gameworld {
 
-    private Entity pacman;
-    private Entity[] ghosts;
-    private Coin[] coins;
-    private State state;
-    private int score;
+    protected Entity dragon;
+    protected Entity[] knights;
+    protected Coin[] coins;
+    protected State state;
+    protected int score;
 
     public Gameworld() {
 
@@ -36,30 +36,22 @@ public class Gameworld {
         
     }
     
-    // public void createCoins(Gameworld GW) {
-    //     for(int y = 0; y < 21; y++) {
-    //         for(int x = 0; x < 30; x++) {
-    //             if (GW.map[x][y] == 0) { 
-    //                 //create normal coin and add to gw list
-    //             }
-    //             if (GW.map[x][y] == 2) {
-    //                 //create powerup
-    //             }
-    //         }
-    //     }
-    // } 
+    public void createCoins(Gameworld GW) {
+        for(int y = 0; y < 21; y++) {
+            for(int x = 0; x < 30; x++) {
+                if (Map.map[x][y] == 0) { 
+                    //create normal coin and add to gw list
+                }
+            }
+        }
+    } 
     
     // public void collectCoin(){
         
     // }
 
 
-    // public void collision(){
-        
-    // }
-
-
-    // public void EatGhost(){
+    // public void EatKnight(){
         
     // }
 
