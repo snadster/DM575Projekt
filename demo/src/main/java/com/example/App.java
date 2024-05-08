@@ -18,7 +18,8 @@ public class App extends Application {
 
         stage.setTitle("Camelot's Burning");
         stage.setFullScreen(true);
-        stage.getIcons().add(new Image("TILE_COIN.png"));
+        stage.setFullScreenExitHint("Should thou wish to minimise thine screen, press 'ESC'");
+        stage.getIcons().add(new Image("TILE_FIREBALL.png"));
         BorderPane root = new BorderPane();
 
         Scene mainScene = new Scene(root);
