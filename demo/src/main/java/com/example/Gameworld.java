@@ -22,19 +22,18 @@ public class Gameworld {
     protected State state;
     protected int score;
 
-    public Gameworld() {
+    public Gameworld(Entity dragon, Entity[] knights) {
 
 
         // Coin[] coinarray = new Coin[308];
         // this.coins = coinarray;
-        
+        this.dragon = dragon;
+        this.knights = knights;
         this.state = State.NORMAL;
 
     }
 
-    public void update() {
-        
-    }
+    
     
     public void createCoins(Gameworld GW) {
         for(int y = 0; y < 21; y++) {
