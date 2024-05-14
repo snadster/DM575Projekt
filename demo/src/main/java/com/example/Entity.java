@@ -1,16 +1,12 @@
 package com.example;
 
-import javafx.scene.image.Image;
-
 public class Entity {
-    protected Image sprite;
     protected Direction direction;
     protected int positionX;
     protected int positionY;
     protected int velocity;
 
-    public Entity(Image image, int px, int py, int v) {
-        this.sprite = image;
+    public Entity(int px, int py, int v) {
         this.direction = Direction.UP;
         this.positionX = px;
         this.positionY = py;
@@ -18,20 +14,40 @@ public class Entity {
     }
 
     public void move(Entity entity) {
-        if (entity.direction == Direction.DOWN) {
-            entity.positionY = entity.positionY - entity.velocity;
-        }
+        if (wallCollision(entity) == false) {
+             if (entity.direction == Direction.DOWN) {
+                entity.positionY = entity.positionY - entity.velocity;
+            }
 
-        if (entity.direction == Direction.UP) {
-            entity.positionY = entity.positionY + entity.velocity;
-        }
+            if (entity.direction == Direction.UP) {
+                entity.positionY = entity.positionY + entity.velocity;
+            }
 
-        if (entity.direction == Direction.LEFT) {
-            entity.positionX = entity.positionX - entity.velocity;
-        }
+            if (entity.direction == Direction.LEFT) {
+                entity.positionX = entity.positionX - entity.velocity;
+            }
 
-        if (entity.direction == Direction.RIGHT) {
-            entity.positionX = entity.positionX + entity.velocity;
+            if (entity.direction == Direction.RIGHT) {
+                entity.positionX = entity.positionX + entity.velocity;
+            }
         }
+       
+    }
+
+    public boolean wallCollision(Entity entity) {
+        boolean collision = false;
+        if (entity.direction == Direction.UP && Map.map[entity.positionX / 32][(entity.positionY / 32) - 1] == 1) {
+            collision = true;
+        }
+        if (entity.direction == Direction.DOWN && Map.map[entity.positionX / 32][(entity.positionY / 32) + 1] == 1) {
+            collision = true;
+        }
+        if (entity.direction == Direction.RIGHT && Map.map[(entity.positionX / 32) + 1][(entity.positionY / 32)] == 1) {
+            collision = true;
+        }
+        if (entity.direction == Direction.LEFT && Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32)] == 1) {
+            collision = true;
+        }
+        return collision;
     }
 }

@@ -7,20 +7,24 @@ import javafx.scene.canvas.*;
 TODO: 
 
 */
-public class Draw {
+public class Draw 
+{
 
     private Gameworld gw;
     private Canvas canvas;
     private GraphicsContext context;
     private Image spriteSheet = new Image("ALL SPRITES LINEAR.png");
+    private KeyHandler kh;
 
-    public Draw(Gameworld gw, Canvas canvas) {
+    public Draw(Gameworld gw, Canvas canvas, KeyHandler kh) 
+    {
         this.gw = gw;
         this.canvas = canvas;
         this.context = canvas.getGraphicsContext2D();
+        this.kh = kh;
     }
 
-    public void drawBoard() //we use switch case for fun and for speed
+    public void drawBoard()//we use switch case for fun and for speed
     {
         for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
         {
@@ -46,7 +50,23 @@ public class Draw {
                 }
             }
         }
+        
     }
+
+    public void startPosition()
+    {
+        // draws the start position for dragon
+        context.drawImage(spriteSheet, 409, 1, 32, 32, gw.dragon.positionX, gw.dragon.positionY, 32, 32);
+
+        //draws the start for knights, in order of blue, purple, pink, orange
+        context.drawImage(spriteSheet, 103, 35, 32, 32, gw.knights[0].positionX, gw.knights[0].positionY, 32, 32);
+        context.drawImage(spriteSheet, 103, 69, 32, 32, gw.knights[1].positionX, gw.knights[1].positionY, 32, 32);
+        context.drawImage(spriteSheet, 103, 103, 32, 32, gw.knights[2].positionX, gw.knights[2].positionY, 32, 32);
+        context.drawImage(spriteSheet, 103, 137, 32, 32, gw.knights[3].positionX, gw.knights[3].positionY, 32, 32);
+    }
+
+    
+
     public void drawCoins()
     {
 

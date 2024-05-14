@@ -7,6 +7,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.canvas.GraphicsContext;
 
+/* 
+     def pixelMath(int x, int y)
+     {
+        int collone = Ceil(x / 32)
+        int række = Ceil(y / 32)
+
+        return (colonne, række)
+     }
+     
+
+
+     if(dragon wanna move)
+     {
+        return pixel pixelMath(dragon.positionX, dragon.positionY)
+     }
+ 
+ 
+ */
+
+
+
 // here we use our Rectangle, we make sprites and their boundaries
 // we do that to check if the boundaries of the sprites overlap
 // this includes walls, characters, and coins.

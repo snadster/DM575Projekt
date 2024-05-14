@@ -1,13 +1,11 @@
 package com.example;
 
-import javafx.scene.image.Image;
-
 public class Dragon extends Entity {
     private int lives;
     private KeyHandler kh;
 
-    public Dragon(Image image, int px, int py, int v, KeyHandler kh) {
-        super(image, px, py, v);
+    public Dragon(int px, int py, int v, KeyHandler kh) {
+        super(px, py, v);
         this.lives = 2;
         this.kh = kh;
     }
@@ -30,8 +28,5 @@ public class Dragon extends Entity {
         }
     }
 
-    // Update is called once per frame
-    public void update() {
-        
-    }
+    
 }
