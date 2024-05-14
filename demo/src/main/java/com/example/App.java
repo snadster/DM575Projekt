@@ -74,13 +74,12 @@ public class App extends Application {
         Knight knight3 = new Knight(512, 352, 0);
         Knight knight4 = new Knight(544, 352, 0);
 
-        Entity[] knightarray = {knight1, knight2, knight3, knight4};
+        Knight[] knightarray = {knight1, knight2, knight3, knight4};
 
         Gameworld gamie = new Gameworld(dragonman, knightarray);
 
         Draw drawie = new Draw(gamie, canvas, keyH);
         drawie.drawBoard();
-        drawie.startPosition();
 
         // gamie.createCoins(gamie);
 
@@ -90,30 +89,10 @@ public class App extends Application {
             {
                 //draws our board each frame so the dragon can move without leaving a trail of dragons.
                 drawie.drawBoard();
+                drawie.drawDragon(nowNS);
+                drawie.drawKnights(nowNS);
                 dragonman.move(dragonman);
-                
-                //animates the dragon from the spritesheet.
-                int x = dragonman.positionX;
-                int y = dragonman.positionY;
-                int dw = 32; //endelige størrelse burde være 32
-                int dh = 32; // størrelsesmuligheder: 64, 128, 160, 192, 224
-                if (keyH.upPressed) 
-                {
-                    drawie.drawAnimated(nowNS, 4, 409, 1, x, y, dw, dh);
-                }
-                else if (keyH.downPressed)
-                {
-                    drawie.drawAnimated(nowNS, 4, 1, 1, x, y, dw, dh);
-                }
-                else if (keyH.leftPressed)
-                {
-                    drawie.drawAnimated(nowNS, 4, 137, 1, x, y, dw, dh);
-                }
-                else if (keyH.rightPressed)
-                {
-                    drawie.drawAnimated(nowNS, 4, 273, 1, x, y, dw, dh);
-                }
-
+                dragonman.changeDirection();
             }
         }; 
         gameloop.start();

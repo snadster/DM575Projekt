@@ -10,23 +10,22 @@ public class Dragon extends Entity {
         this.kh = kh;
     }
 
-    public static void changeDirection(Dragon dragon) {
-        if (dragon.kh.upPressed == true) {
-            dragon.direction = Direction.UP;
+    public void changeDirection() {
+        if (kh.upPressed == true) {
+            direction = Direction.UP;
         }
 
-        if (dragon.kh.downPressed == true) {
-            dragon.direction = Direction.DOWN;
+        if (kh.downPressed == true) {
+            direction = Direction.DOWN;
         }
 
-        if (dragon.kh.leftPressed == true) {
-            dragon.direction = Direction.LEFT;
+        if (kh.leftPressed == true) {
+            direction = Direction.LEFT;
         }
 
-        if (dragon.kh.rightPressed == true) {
-            dragon.direction = Direction.RIGHT;
+        if (kh.rightPressed == true) {
+            direction = Direction.RIGHT;
         }
     }
 
-    
 }

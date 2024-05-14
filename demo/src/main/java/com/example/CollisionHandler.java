@@ -1,12 +1,5 @@
 package com.example;
 
-
-import javafx.animation.AnimationTimer;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.canvas.GraphicsContext;
-
 /* 
      def pixelMath(int x, int y)
      {

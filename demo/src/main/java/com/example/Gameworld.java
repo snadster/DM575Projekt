@@ -2,13 +2,13 @@ package com.example;
 
 public class Gameworld {
 
-    protected Entity dragon;
-    protected Entity[] knights;
+    protected Dragon dragon;
+    protected Knight[] knights;
     protected Coin[] coins;
     protected State state;
     protected int score;
 
-    public Gameworld(Entity dragon, Entity[] knights) {
+    public Gameworld(Dragon dragon, Knight[] knights) {
 
         // Coin[] coinarray = new Coin[308];
         // this.coins = coinarray;
@@ -20,7 +20,7 @@ public class Gameworld {
 
     
     public void createCoins(Gameworld GW) {
-        
+
         for(int y = 0; y < 21; y++) {
             for(int x = 0; x < 30; x++) {
                 if (Map.map[x][y] == 0) { 

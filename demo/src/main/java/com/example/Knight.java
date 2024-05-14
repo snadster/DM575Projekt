@@ -1,9 +1,5 @@
 package com.example;
 
-import java.util.ArrayList;
-
-import javafx.scene.image.Image;
-
 public class Knight extends Entity {
 
     public Knight(int px, int py, int v) {
