@@ -1,5 +1,8 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Entity {
     protected Direction direction;
     protected int positionX;
@@ -16,11 +19,11 @@ public class Entity {
     public void move(Entity entity) {
         if (wallCollision(entity) == false) {
              if (entity.direction == Direction.DOWN) {
-                entity.positionY = entity.positionY - entity.velocity;
+                entity.positionY = entity.positionY + entity.velocity;
             }
 
             if (entity.direction == Direction.UP) {
-                entity.positionY = entity.positionY + entity.velocity;
+                entity.positionY = entity.positionY - entity.velocity;
             }
 
             if (entity.direction == Direction.LEFT) {
@@ -36,16 +39,19 @@ public class Entity {
 // byt om på x og y og tilføj flere som også checker diverse etc.
     public boolean wallCollision(Entity entity) {
         boolean collision = false;
-        if (entity.direction == Direction.UP && Map.map[entity.positionX / 32][(entity.positionY / 32) - 1] == 1) {
+        ArrayList<Integer> noNoSquares = new ArrayList<Integer>(
+            Arrays.asList(1, 3, 4)
+        );
+        if (entity.direction == Direction.UP && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
             collision = true;
         }
-        if (entity.direction == Direction.DOWN && Map.map[entity.positionX / 32][(entity.positionY / 32) + 1] == 1) {
+        if (entity.direction == Direction.DOWN && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
             collision = true;
         }
-        if (entity.direction == Direction.RIGHT && Map.map[(entity.positionX / 32) + 1][(entity.positionY / 32)] == 1) {
+        if (entity.direction == Direction.RIGHT && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
             collision = true;
         }
-        if (entity.direction == Direction.LEFT && Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32)] == 1) {
+        if (entity.direction == Direction.LEFT && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
             collision = true;
         }
         return collision;
