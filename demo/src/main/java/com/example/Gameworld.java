@@ -4,39 +4,53 @@ public class Gameworld {
 
     protected Dragon dragon;
     protected Knight[] knights;
-    protected Coin[] coins;
+    protected int coinValue;
     protected State state;
     protected int score;
 
     public Gameworld(Dragon dragon, Knight[] knights) {
 
-        // Coin[] coinarray = new Coin[308];
-        // this.coins = coinarray;
         this.dragon = dragon;
         this.knights = knights;
+        this.coinValue = 10;
         this.state = State.NORMAL;
+        this.score = 0;
 
     }
 
-    
-    public void createCoins(Gameworld GW) {
+    public void collectCoin(){
+        int dragonX = (dragon.positionX / 32) - 1;
+        int dragonY = (dragon.positionY / 32) - 1;
+        if (Map.map[dragonX][dragonY] == 5) {
+            score = score + coinValue;
+            Map.map[dragonX][dragonY] = 0;
+        }
+        
+    }
 
-        for(int y = 0; y < 21; y++) {
-            for(int x = 0; x < 30; x++) {
-                if (Map.map[x][y] == 0) { 
-                    //create normal coin and add to gw list
+    public void gameOver() {
+
+        boolean gameOver = false;
+
+        int CoinsLeft = 0;
+        for (int x = 0; x < 30; x++) {
+            for (int y = 0; y < 21; y++) {
+                if (Map.map[y][x] == 5) {
+                    CoinsLeft++;
                 }
             }
         }
-    } 
-    
-    // public void collectCoin(){
-        
-    // }
+        if (CoinsLeft == 0) {
+            gameOver = true;
+        }
 
+        if (dragon.lives == 0) {
+            gameOver = true;
+        }
 
-    // public void EatKnight(){
-        
-    // }
+        if (gameOver == true) {
+           state = State.GAMEOVER;
+        }
+    }
 
 }

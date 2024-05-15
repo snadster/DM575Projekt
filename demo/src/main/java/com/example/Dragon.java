@@ -1,7 +1,7 @@
 package com.example;
 
 public class Dragon extends Entity {
-    private int lives;
+    protected int lives;
     private KeyHandler kh;
 
     public Dragon(int px, int py, int v, KeyHandler kh) {

@@ -33,6 +33,15 @@ public class Entity {
             if (entity.direction == Direction.RIGHT) {
                 entity.positionX = entity.positionX + entity.velocity;
             }
+
+            if (entity.positionX <= 0 && entity.direction == Direction.LEFT) {
+                entity.positionX = 960;
+            }
+
+            if (entity.positionX >= 960 && entity.direction == Direction.RIGHT) {
+                entity.positionX = 0;
+            }
+            
         }
        
     }
@@ -42,16 +51,16 @@ public class Entity {
         ArrayList<Integer> noNoSquares = new ArrayList<Integer>(
             Arrays.asList(1, 3, 4)
         );
-        if (entity.direction == Direction.UP && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
+        if (entity.direction == Direction.UP && noNoSquares.contains(Map.map[(entity.positionX / 32) - 2][(entity.positionY / 32) - 1])) {
             collision = true;
         }
-        if (entity.direction == Direction.DOWN && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
+        if (entity.direction == Direction.DOWN && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32) - 1])) {
             collision = true;
         }
-        if (entity.direction == Direction.RIGHT && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
+        if (entity.direction == Direction.RIGHT && noNoSquares.contains(Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32)])) {
             collision = true;
         }
-        if (entity.direction == Direction.LEFT && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32)])) {
+        if (entity.direction == Direction.LEFT && noNoSquares.contains(Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32) - 2])) {
             collision = true;
         }
         return collision;

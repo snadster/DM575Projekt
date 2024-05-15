@@ -10,8 +10,7 @@ import javafx.scene.image.Image;
 
 /* TODO
     dragon man bevægelse (sofie kigger lidt her)
-        move
-        update
+        wallCollision skal fikses
         test evt velocities
 
     ridder bevægelse  (celine vil gerne kigge lidt her)
@@ -24,9 +23,7 @@ import javafx.scene.image.Image;
         funktion som tager koordinater som input - skal kaldes i gameworld
     
     coins (ligger i gameworld)
-        indsæt dem på brættet
-        fjern dem igen nårpacman rammer dem
-        score 
+        lav switchcase for coins i draw
 
     collison checker
         mellem dragon og ridder ()
