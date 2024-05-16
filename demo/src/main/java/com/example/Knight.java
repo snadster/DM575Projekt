@@ -5,15 +5,81 @@ import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
 
+
+
 public class Knight extends Entity {
 
     public Knight(int px, int py, int v) {
         super(px, py, v);
+    
     }
+
+Gameworld gw = new Gameworld(Dragon);
+public boolean canMoveLeft = false;
+public boolean canMoveRight = false;
+public boolean canMoveUp = false;
+public boolean canMoveDown = false;
+
+public void possibleDirections(){
+
+    // Check if knight can move down on the board
+    while(this.positionX > 600) {
+        canMoveDown = true;
+    }
+
+     // Check if knight can move up on the board
+     while(this.positionX > 30) {
+        canMoveUp = true;
+     }
+
+    // Check if knight can move right on the board
+
+
+    // Check if knight can move left on the board
+}
+
 
 //Called once per frame
 public void update(){
 
+}
+
+public void DragonCoordinates(int[][] target){
+
+}
+
+public void DetermineRedKnightDirection(){
+    String direction = ClosestDirection(Dragon[positionX][positionY]);
+}
+
+public void DeterminePinkKnightDirection(){
+
+}
+
+public void DetermineBlueKnightDirection(){
+
+}
+
+public void DetermineOrangeKnightDirection(){
+
+}
+
+String ClosestDirection(int[][] target){
+    float shortestDistance = 0;
+    String lastDirection = "";
+    String newDirection = "";
+
+    if(... && Direction != DOWN){
+
+        // Get the Manhattan distance between target (Dragon) and knight
+        int distance = Math.abs(Dragon[positionX] - this.positionX) + Math.abs(Dragon[positionY]-this.positionY);
+
+        if(distance < shortestDistance || shortestDistance == 0){
+            shortestDistance = distance;
+            newDirection = "retning"
+        }
+    }
+    
 }
 
 /*ridder bevægelse  (celine vil gerne kigge lidt her)
