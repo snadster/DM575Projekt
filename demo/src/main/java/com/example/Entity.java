@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.lang.Math;
 
 public class Entity {
     protected Direction direction;

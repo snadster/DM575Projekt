@@ -75,7 +75,7 @@ public class App extends Application {
 
         Gameworld gamie = new Gameworld(dragonman, knightarray);
 
-        Draw drawie = new Draw(gamie, canvas, keyH);
+        Draw drawie = new Draw(gamie, canvas);
         drawie.drawBoard();
 
         // gamie.createCoins(gamie);
@@ -90,6 +90,7 @@ public class App extends Application {
                 drawie.drawKnights(nowNS);
                 dragonman.move(dragonman);
                 dragonman.changeDirection();
+                drawie.drawScore();
             }
         }; 
         gameloop.start();
