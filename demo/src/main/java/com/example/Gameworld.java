@@ -19,8 +19,8 @@ public class Gameworld {
     }
 
     public void collectCoin(){
-        int dragonX = (dragon.positionX / 32) - 1;
-        int dragonY = (dragon.positionY / 32) - 1;
+        int dragonX = (dragon.positionX / 32);
+        int dragonY = (dragon.positionY / 32);
         if (Map.map[dragonX][dragonY] == 5) {
             score = score + coinValue;
             Map.map[dragonX][dragonY] = 0;

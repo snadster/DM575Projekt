@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.lang.Math;
 
 public class Entity {
     protected Direction direction;
@@ -51,18 +52,29 @@ public class Entity {
         ArrayList<Integer> noNoSquares = new ArrayList<Integer>(
             Arrays.asList(1, 3, 4)
         );
-        if (entity.direction == Direction.UP && noNoSquares.contains(Map.map[(entity.positionX / 32) - 2][(entity.positionY / 32) - 1])) {
+        if (entity.direction == Direction.UP && noNoSquares.contains(Map.map[(entity.positionY - entity.velocity) / 32][entity.positionX / 32])) {
+            entity.positionY = ((entity.positionY / 32) * 32);
+            entity.positionX = ((entity.positionX / 32) * 32);
+            collision = true;
+            
+
+        }
+        else if (entity.direction == Direction.DOWN && noNoSquares.contains(Map.map[(entity.positionY + entity.velocity) / 32][entity.positionX / 32])) {
+            entity.positionY = ((entity.positionY / 32) * 32);
+            entity.positionX = ((entity.positionX / 32) * 32);
             collision = true;
         }
-        if (entity.direction == Direction.DOWN && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32) - 1])) {
+        else if (entity.direction == Direction.RIGHT && noNoSquares.contains(Map.map[entity.positionY / 32][(entity.positionX + entity.velocity) / 32])) {
+            entity.positionY = ((entity.positionY / 32) * 32);
+            entity.positionX = ((entity.positionX / 32) * 32);
             collision = true;
         }
-        if (entity.direction == Direction.RIGHT && noNoSquares.contains(Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32)])) {
-            collision = true;
-        }
-        if (entity.direction == Direction.LEFT && noNoSquares.contains(Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32) - 2])) {
+        else if (entity.direction == Direction.LEFT && noNoSquares.contains(Map.map[entity.positionY / 32][(entity.positionX - entity.velocity) / 32])) {
+            entity.positionY = ((entity.positionY / 32) * 32);
+            entity.positionX = ((entity.positionX / 32) * 32);
             collision = true;
         }
         return collision;
     }
+
 }

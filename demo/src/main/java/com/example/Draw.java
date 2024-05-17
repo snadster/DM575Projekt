@@ -2,26 +2,26 @@ package com.example;
 
 import javafx.scene.image.Image;
 import javafx.scene.canvas.*;
+import javafx.scene.text.*;
+import javafx.scene.paint.*;
 
 /*
 TODO: 
 
 */
-public class Draw 
+public class Draw
 {
 
     private Gameworld gw;
     private Canvas canvas;
     private GraphicsContext context;
     private Image spriteSheet = new Image("ALL SPRITES LINEAR.png");
-    private KeyHandler kh;
 
-    public Draw(Gameworld gw, Canvas canvas, KeyHandler kh) 
+    public Draw(Gameworld gw, Canvas canvas) 
     {
         this.gw = gw;
         this.canvas = canvas;
         this.context = canvas.getGraphicsContext2D();
-        this.kh = kh;
     }
 
     public void drawBoard()//we use switch case for fun and for speed
@@ -46,6 +46,9 @@ public class Draw
                         break;
                     case 4 :
                         context.drawImage(spriteSheet, 35, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 5 :
+                        context.drawImage(spriteSheet, 137, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
                         break;
                 }
             }
@@ -78,10 +81,13 @@ public class Draw
         }
     }
 
-    public void drawCoins()
-    {
-
-    }
+     public void drawScore() 
+     {
+       Text t = new Text();
+       t.setText("Score: " + gw.score);
+       t.setFont(Font.loadFont("file:Demo/Resources/Sketch Gothic School.ttf", 20));
+      t.setFill(Color.BLACK);
+     }
 
     public void drawKnights(long nowNS)
     {

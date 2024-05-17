@@ -13,7 +13,7 @@ public class Knight extends Entity {
         super(px, py, v);
     
     }
-
+/*
 Gameworld gw = new Gameworld(Dragon);
 public boolean canMoveLeft = false;
 public boolean canMoveRight = false;
@@ -71,7 +71,7 @@ String ClosestDirection(int[][] target){
 
     if(... && Direction != DOWN){
 
-        // Get the Manhattan distance between target (Dragon) and knight
+        // Get the absolute Manhattan distance between target (Dragon) and knight
         int distance = Math.abs(Dragon[positionX] - this.positionX) + Math.abs(Dragon[positionY]-this.positionY);
 
         if(distance < shortestDistance || shortestDistance == 0){
@@ -81,6 +81,7 @@ String ClosestDirection(int[][] target){
     }
     
 }
+*/
 
 /*ridder bevægelse  (celine vil gerne kigge lidt her)
         brug samme funktion til at de kan flytte sig
