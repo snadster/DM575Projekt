@@ -244,7 +244,7 @@ public class Draw
         long fourthOfSecondNS = 1000000000 / 4;
         long animationFrame = nowNS / fourthOfSecondNS % animationLength;
         context.setImageSmoothing(false);
-        context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX, positionY, dw, dh);
+        context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX + 32, positionY + 32, dw, dh);
     } 
 
 }

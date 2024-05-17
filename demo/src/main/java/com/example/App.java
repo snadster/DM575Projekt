@@ -65,11 +65,11 @@ public class App extends Application {
         KeyHandler keyH = new KeyHandler(mainScene);
         keyH.inputHandler();
 
-        Dragon dragonman = new Dragon(480, 416, 3, keyH);
-        Knight knight1 = new Knight(448, 352, 0);
-        Knight knight2 = new Knight(480, 352, 0);
-        Knight knight3 = new Knight(512, 352, 0);
-        Knight knight4 = new Knight(544, 352, 0);
+        Dragon dragonman = new Dragon(448, 384, 3, keyH);
+        Knight knight1 = new Knight(416, 320, 0);
+        Knight knight2 = new Knight(448, 320, 0);
+        Knight knight3 = new Knight(480, 320, 0);
+        Knight knight4 = new Knight(512, 320, 0);
 
         Knight[] knightarray = {knight1, knight2, knight3, knight4};
 

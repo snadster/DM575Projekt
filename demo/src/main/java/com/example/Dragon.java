@@ -28,4 +28,11 @@ public class Dragon extends Entity {
         }
     }
 
+    public Rectangle dragonRectangle()
+    {
+        Rectangle dragonRectangle = new Rectangle(this.positionX, this.positionY, 32, 32);
+        return dragonRectangle;
+    }
+
+
 }
