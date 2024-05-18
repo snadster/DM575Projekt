@@ -62,194 +62,66 @@ public class Draw
         context.setFill(Color.WHITESMOKE);
     }
 
-    public void drawDragon(long nowNS) {
-        //animates the dragon from the spritesheet.
-        Dragon dragon = gw.dragon;
-        int x = dragon.positionX;
-        int y = dragon.positionY;
-        //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
-        int size = 32; 
-        if (dragon.direction == Direction.UP)
-        {
-            drawAnimated(nowNS, 4, 409, 1, x, y, size, size);
-        }
-        else if (dragon.direction == Direction.DOWN)
-        {
-            drawAnimated(nowNS, 4, 1, 1, x, y, size, size);
-        }
-        else if (dragon.direction == Direction.LEFT)
-        {
-            drawAnimated(nowNS, 4, 137, 1, x, y, size, size);
-        }
-        else if (dragon.direction == Direction.RIGHT)
-        {
-            drawAnimated(nowNS, 4, 273, 1, x, y, size, size);
-        }
+    public void drawScore() 
+    {
+        // context.setFont(Font.loadFont("Sketch Gothic School.ttf", 60)); //this line doesnt work yet and idk why.
+        context.fillText("Score: "+ gw.score, 30, 30);
+        context.fillText("Lives: "+ gw.dragon.lives, 30, 720);
+        context.setFill(Color.BLACK);
     }
 
-     public void drawScore() 
-     {
-         // context.setFont(Font.loadFont("Sketch Gothic School.ttf", 60)); //this line doesnt work yet and idk why.
-         context.fillText("Score: "+ gw.score, 30, 30);
-         context.fillText("Lives: "+ gw.dragon.lives, 30, 720);
-         context.setFill(Color.BLACK);
-     }
+    public void drawDragon(long nowNS)
+    {
+        drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
+    }
 
     public void drawKnights(long nowNS)
     {
-        drawAnimatedBlueKnight(nowNS);
-        drawAnimatedOrangeKnight(nowNS);
-        drawAnimatedPinkKnight(nowNS);
-        drawAnimatedPurpleKnight(nowNS);
+        drawAnimatedSprite(nowNS, gw.knights[0], 3, 1, 35);
+        drawAnimatedSprite(nowNS, gw.knights[1], 3, 1, 69);
+        drawAnimatedSprite(nowNS, gw.knights[2], 3, 1, 103);
+        drawAnimatedSprite(nowNS, gw.knights[3], 3, 1, 137);
     }
 
-
-    public void drawAnimatedBlueKnight(long nowNS)
+    public void drawPowerKnights(long nowNS)
     {
-        int x = gw.knights[0].positionX;
-        int y = gw.knights[0].positionY;
-        int dw = 32;
-        int dh = 32;
-        if (gw.knights[0].direction == Direction.UP)  //direction up
-        {
-            drawAnimated(nowNS, 3, 1, 35, x, y, dw, dh);
-        }
-        else if (gw.knights[0].direction == Direction.DOWN)  //direction down
-        {
-            drawAnimated(nowNS, 3, 103, 35, x, y, dw, dh);
-        }
-        else if (gw.knights[0].direction == Direction.LEFT)  //direction left
-        {
-            drawAnimated(nowNS, 3, 209, 35, x, y, dw, dh);
-        }
-        else if (gw.knights[0].direction == Direction.RIGHT)  //direction right
-        {
-            drawAnimated(nowNS, 3, 309, 35, x, y, dw, dh);
-        }
+        drawAnimatedSprite(nowNS, gw.knights[0], 3, 1, 171);
+        drawAnimatedSprite(nowNS, gw.knights[1], 3, 1, 171);
+        drawAnimatedSprite(nowNS, gw.knights[2], 3, 1, 171);
+        drawAnimatedSprite(nowNS, gw.knights[3], 3, 1, 171);
     }
-
-    public void drawAnimatedPurpleKnight(long nowNS)
-    {
-        int x = gw.knights[1].positionX;
-        int y = gw.knights[1].positionY;
-        int dw = 32;
-        int dh = 32;
-        if (gw.knights[1].direction == Direction.UP)  //direction up
-        {
-            drawAnimated(nowNS, 3, 1, 69, x, y, dw, dh);
-        }
-        else if (gw.knights[1].direction == Direction.DOWN)  //direction down
-        {
-            drawAnimated(nowNS, 3, 103, 69, x, y, dw, dh);
-        }
-        else if (gw.knights[1].direction == Direction.LEFT)  //direction left
-        {
-            drawAnimated(nowNS, 3, 209, 69, x, y, dw, dh);
-        }
-        else if (gw.knights[1].direction == Direction.RIGHT)  //direction right
-        {
-            drawAnimated(nowNS, 3, 309, 69, x, y, dw, dh);
-        }
-    }
-
-    public void drawAnimatedPinkKnight(long nowNS)
-    {
-        int x = gw.knights[2].positionX;
-        int y = gw.knights[2].positionY;
-        int dw = 32;
-        int dh = 32;
-        if (gw.knights[2].direction == Direction.UP)  //direction up
-        {
-            drawAnimated(nowNS, 3, 1, 103, x, y, dw, dh);
-        }
-        else if (gw.knights[2].direction == Direction.DOWN)  //direction down
-        {
-            drawAnimated(nowNS, 3, 103, 103, x, y, dw, dh);
-        }
-        else if (gw.knights[2].direction == Direction.LEFT)  //direction left
-        {
-            drawAnimated(nowNS, 3, 209, 103, x, y, dw, dh);
-        }
-        else if (gw.knights[2].direction == Direction.RIGHT)  //direction right
-        {
-            drawAnimated(nowNS, 3, 309, 103, x, y, dw, dh);
-        }
-    }
-
-    public void drawAnimatedOrangeKnight(long nowNS)
-    {
-        int x = gw.knights[3].positionX;
-        int y = gw.knights[3].positionY;
-        int dw = 32;
-        int dh = 32;
-        if (gw.knights[3].direction == Direction.UP)  //direction up
-        {
-            drawAnimated(nowNS, 3, 1, 137, x, y, dw, dh);
-        }
-        else if (gw.knights[3].direction == Direction.DOWN)  //direction down
-        {
-            drawAnimated(nowNS, 3, 103, 137, x, y, dw, dh);
-        }
-        else if (gw.knights[3].direction == Direction.LEFT)  //direction left
-        {
-            drawAnimated(nowNS, 3, 209, 137, x, y, dw, dh);
-        }
-        else if (gw.knights[3].direction == Direction.RIGHT)  //direction right
-        {
-            drawAnimated(nowNS, 3, 309, 137, x, y, dw, dh);
-        }
-    }
-
-    public void drawAnimatedPowerKnight(long nowNS)
-    {
-        int x = 32;
-        int y = 32;
-        int dw = 32;
-        int dh = 32;
-        for (Knight knighty : gw.knights)
-        {
-            if (knighty.direction == Direction.UP)  //direction up
-            {
-                drawAnimated(nowNS, 3, 1, 171, x, y, dw, dh);
-            }
-            else if (knighty.direction == Direction.DOWN)  //direction down
-            {
-                drawAnimated(nowNS, 3, 103, 171, x, y, dw, dh);
-            }
-            else if (knighty.direction == Direction.LEFT)  //direction left
-            {
-                drawAnimated(nowNS, 3, 209, 171, x, y, dw, dh);
-            }
-            else if (knighty.direction == Direction.RIGHT)  //direction right
-            {
-                drawAnimated(nowNS, 3, 309, 171, x, y, dw, dh);
-            }
-        }
-    }
-
-    // public void drawAnimatedDeadKnight(long nowNS)
+    // i need a way to acess the dead knight here please
+    // public void drawDeadKnights(long nowNS)
     // {
-    //     int x = 32;
-    //     int y = 32;
-    //     int dw = 32;
-    //     int dh = 32;
-    //     if (gw.knights[1].direction == Direction.UP)  //direction up
-    //     {
-    //         drawAnimated(nowNS, 3, 1, 205, x, y, dw, dh);
-    //     }
-    //     else if (gw.knights[1].direction == Direction.DOWN)  //direction down
-    //     {
-    //         drawAnimated(nowNS, 3, 103, 205, x, y, dw, dh);
-    //     }
-    //     else if (gw.knights[1].direction == Direction.LEFT)  //direction left
-    //     {
-    //         drawAnimated(nowNS, 3, 209, 205, x, y, dw, dh);
-    //     }
-    //     else if (gw.knights[1].direction == Direction.RIGHT)  //direction right
-    //     {
-    //         drawAnimated(nowNS, 3, 309, 205, x, y, dw, dh);
-    //     }
+    //     drawAnimatedSprite(nowNS, gw.deadknight, 4, 1, 205);
     // }
+
+    public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
+    {
+        //animates the dragon from the spritesheet.
+        Entity entities = entity;
+        int x = entities.positionX;
+        int y = entities.positionY;
+        int size = 32;
+        //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
+        if (entities.direction == Direction.UP)
+        {
+            drawAnimated(nowNS, animationLength, startX, startY, x, y, size, size);
+        }
+        else if (entities.direction == Direction.DOWN)
+        {
+            drawAnimated(nowNS, animationLength, startX + 1 * animationLength * 34, startY, x, y, size, size);
+        }
+        else if (entities.direction == Direction.RIGHT)
+        {
+            drawAnimated(nowNS, animationLength, startX + 2 * animationLength * 34, startY, x, y, size, size);
+        }
+        else if (entities.direction == Direction.LEFT)
+        {
+            drawAnimated(nowNS, animationLength, startX + 3 * animationLength * 34, startY, x, y, size, size);
+        }
+    }
+
 
     public void drawAnimated(long nowNS, long animationLength, int startX, int startY, int positionX, int positionY, int dw, int dh)
     {
