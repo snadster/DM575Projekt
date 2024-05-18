@@ -1,8 +1,6 @@
 package com.example;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.lang.Math;
 
 public class Entity {
     protected Direction direction;
@@ -37,10 +35,10 @@ public class Entity {
             }
 
             if (entity.positionX <= 0 && entity.direction == Direction.LEFT) {
-                entity.positionX = 960;
+                entity.positionX = 928;
             }
 
-            if (entity.positionX >= 960 && entity.direction == Direction.RIGHT) {
+            if (entity.positionX >= 928 && entity.direction == Direction.RIGHT) {
                 entity.positionX = 0;
             }
             
@@ -71,58 +69,46 @@ public class Entity {
     //     return collision;
     // }
 
-    public ArrayList<Rectangle> wallRectangle()
-    {
-        ArrayList<Rectangle> wallRectangles = new ArrayList<>();
-        for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
-        {
-            for (int y = 0; y < Map.map.length; y++)
-            {
-                if (Map.map[y][x] == 1 || Map.map[y][x] == 4)
-                {
-                    Rectangle wall = new Rectangle(x*32, y*32, 32, 32);
-                    wallRectangles.add(wall);
-                }
-            }
-        }
-        return wallRectangles;
-    }
 
-    public ArrayList<Rectangle> vaultRectangle(Rectangle rectangle)
-    {
-        ArrayList<Rectangle> vaultRectangles = new ArrayList<>();
-        for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
-        {
-            for (int y = 0; y < Map.map.length; y++)
-            {
-                if (Map.map[y][x] == 3)
-                {
-                    Rectangle vault = new Rectangle(x, y, 32, 32);
-                    vaultRectangles.add(vault);
-                }
-            }
-        }
-        return vaultRectangles;
-    }
-
-
+    // kombinere de to metoder under for at faktisk checke de givne rektangler for kollisioner.
     public boolean wallCollision()
     {
+        boolean entityCollisionWall = collision(1) || collision(4);
+        return entityCollisionWall;
+    }
+
+    // kalder rektangle laveren på kortnummer input of checker om nogle entities rammer ind i nogle af rektanglerne.
+    public boolean collision(int mapNumber)
+    {
         Rectangle entityRectangle = new Rectangle(positionX+1, positionY+1, 30, 30);
-        ArrayList<Rectangle> walls = wallRectangle();
-        System.out.println(walls.size());
+        ArrayList<Rectangle> colliders = rectangleMaker(mapNumber);
         boolean yep = false;
-        for(int x = 0; x < walls.size(); x++)
+        for(int x = 0; x < colliders.size(); x++)
         {
-            if(walls.get(x).overlap(entityRectangle))
+            if(colliders.get(x).overlap(entityRectangle))
             {
                 yep = true;
-                System.out.println("wall");
             }
             
         }
         return yep;
     }
 
-
+    // iterer over kortet og skaber rektangler til det givne nummer
+    public ArrayList<Rectangle> rectangleMaker(int mapNumber)
+    {
+        ArrayList<Rectangle> listRectangles = new ArrayList<>();
+        for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
+        {
+            for (int y = 0; y < Map.map.length; y++)
+            {
+                if (Map.map[y][x] == mapNumber)
+                {
+                    Rectangle rectangles = new Rectangle(x*32, y*32, 32, 32);
+                    listRectangles.add(rectangles);
+                }
+            }
+        }
+        return listRectangles;
+    }
 }

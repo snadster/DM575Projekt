@@ -9,8 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
 
 /* TODO
-    dragon man bevægelse (sofie kigger lidt her)
-        wallCollision skal fikses
+
+    lav powermode og de tilhørende skift (i.e aesthetics.)
         test evt velocities
 
     ridder bevægelse  (celine vil gerne kigge lidt her)
@@ -21,14 +21,10 @@ import javafx.scene.image.Image;
             tager 25% random etc.
         velocity tilpasset efter dragon mans hast
         funktion som tager koordinater som input - skal kaldes i gameworld
-    
-    coins (ligger i gameworld)
-        lav switchcase for coins i draw
 
     collison checker
-        mellem dragon og ridder ()
+        mellem dragon og ridder (to forskellige, hvor skal den ligge?)
         mellem mønter og dragon (skal ligge i gameworld)
-        mellem dragon og væg (skal ligge i drage)
             fire forskellige måder
         mellem ridder og væg (skal ligge i ridder)
             fire forskellige måder.
@@ -65,7 +61,7 @@ public class App extends Application {
         KeyHandler keyH = new KeyHandler(mainScene);
         keyH.inputHandler();
 
-        Dragon dragonman = new Dragon(448, 384, 3, keyH);
+        Dragon dragonman = new Dragon(448, 384, 1, keyH); 
         Knight knight1 = new Knight(416, 320, 0);
         Knight knight2 = new Knight(448, 320, 0);
         Knight knight3 = new Knight(480, 320, 0);
@@ -85,12 +81,15 @@ public class App extends Application {
             public void handle(long nowNS)
             {
                 //draws our board each frame so the dragon can move without leaving a trail of dragons.
+                drawie.drawBox();
                 drawie.drawBoard();
                 drawie.drawDragon(nowNS);
                 drawie.drawKnights(nowNS);
                 dragonman.move(dragonman);
                 dragonman.changeDirection();
                 drawie.drawScore();
+                gamie.collectCoin();
+                gamie.collectFireball();
             }
         }; 
         gameloop.start();

@@ -28,7 +28,28 @@ public class Dragon extends Entity {
         }
     }
 
-    public Rectangle dragonRectangle()
+    // vi bruger metoden fra entity, men tilføjer at vaults ikke kan begås i.
+    @Override 
+    public boolean wallCollision()
+    {
+        boolean dragonCollisionWalls = super.wallCollision() || collision(3);
+        return dragonCollisionWalls;
+    }
+
+    public boolean coinCollision()
+    {
+        boolean dragonCollisionCoin = collision(5);
+        return dragonCollisionCoin;
+    }
+
+    public boolean fireballCollision()
+    {
+        boolean dragonCollisionFireball = collision(2);
+        return dragonCollisionFireball;
+    }
+
+    // denne metode laver en rectangel til dragen ved brug af vores fancy rectangle klasse
+    public Rectangle dragonRectangle() 
     {
         Rectangle dragonRectangle = new Rectangle(this.positionX, this.positionY, 32, 32);
         return dragonRectangle;

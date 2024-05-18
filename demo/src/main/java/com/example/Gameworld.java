@@ -18,14 +18,37 @@ public class Gameworld {
 
     }
 
-    public void collectCoin(){
+    // jeg vil prøve at lave en metode som håndtere at checke for collections, for at holde os til dry
+    // men det må blive en anden dag hvis overhovedet.
+    // public void collection(int mapNumber, int newMapNumber, int attribute, int valueAttribute)
+    // {
+    //     int dragonX = (dragon.positionX / 32);
+    //     int dragonY = (dragon.positionY / 32);
+    //     if (dragon.coinCollision() && Map.map[dragonY][dragonX]== mapNumber) {
+    //         attribute = attribute + valueAttribute;
+    //         Map.map[dragonY][dragonX] = newMapNumber;
+    //     } 
+    // }
+
+    public void collectCoin()
+    {
         int dragonX = (dragon.positionX / 32);
         int dragonY = (dragon.positionY / 32);
-        if (Map.map[dragonX][dragonY] == 5) {
+        if (dragon.coinCollision() && Map.map[dragonY][dragonX]== 5) {
             score = score + coinValue;
-            Map.map[dragonX][dragonY] = 0;
+            Map.map[dragonY][dragonX] = 0;
         }
         
+    }
+
+    public void collectFireball()
+    {
+        int dragonX = (dragon.positionX / 32);
+        int dragonY = (dragon.positionY / 32);
+        if (dragon.fireballCollision() && Map.map[dragonY][dragonX]== 2) {
+            //mode = powermode; den skal i powermode men det ved jeg ikke hvordan man gør.
+            Map.map[dragonY][dragonX] = 0;
+        }
     }
 
     public void gameOver() {
