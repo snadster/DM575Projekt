@@ -16,6 +16,7 @@ public class Entity {
         this.velocity = v;
     }
 
+    
     public void move(Entity entity) {
         if (!wallCollision()) {
              if (entity.direction == Direction.DOWN) {

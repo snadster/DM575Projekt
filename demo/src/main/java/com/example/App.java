@@ -91,7 +91,7 @@ public class App extends Application {
                 gamie.collectCoin();
                 gamie.collectFireball();
                 for (int i = 0; i < 4; i++) {
-                    //gamie.knights[i].DetermineKnightDirection(gamie.knights[i], dragonman.positionX, dragonman.positionY);
+                    gamie.knights[i].DetermineKnightDirection(gamie.knights[i], dragonman.positionX, dragonman.positionY);
                     gamie.knights[i].move(gamie.knights[i]);
                 }
                 
