@@ -64,7 +64,7 @@ public class Draw
 
     public void drawScore() 
     {
-        // context.setFont(Font.loadFont("Sketch Gothic School.ttf", 60)); //this line doesnt work yet and idk why.
+        context.setFont(Font.loadFont("Sketch Gothic School.ttf", 60)); //this line doesnt work yet and idk why.
         context.fillText("Score: "+ gw.score, 30, 30);
         context.fillText("Lives: "+ gw.dragon.lives, 30, 720);
         context.setFill(Color.BLACK);

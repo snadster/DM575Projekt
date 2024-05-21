@@ -61,11 +61,11 @@ public class App extends Application {
         KeyHandler keyH = new KeyHandler(mainScene);
         keyH.inputHandler();
 
-        Dragon dragonman = new Dragon(448, 384, 1, keyH); 
-        Knight knight1 = new Knight(416, 320, 0);
-        Knight knight2 = new Knight(448, 320, 0);
-        Knight knight3 = new Knight(480, 320, 0);
-        Knight knight4 = new Knight(512, 320, 0);
+        Dragon dragonman = new Dragon(448, 384, 2, keyH); 
+        Knight knight1 = new Knight(416, 320, 1);
+        Knight knight2 = new Knight(448, 320, 1);
+        Knight knight3 = new Knight(480, 320, 1);
+        Knight knight4 = new Knight(512, 320, 1);
 
         Knight[] knightarray = {knight1, knight2, knight3, knight4};
 
@@ -90,6 +90,11 @@ public class App extends Application {
                 drawie.drawScore();
                 gamie.collectCoin();
                 gamie.collectFireball();
+                for (int i = 0; i < 4; i++) {
+                    //gamie.knights[i].DetermineKnightDirection(gamie.knights[i], dragonman.positionX, dragonman.positionY);
+                    gamie.knights[i].move(gamie.knights[i]);
+                }
+                
             }
         }; 
         gameloop.start();

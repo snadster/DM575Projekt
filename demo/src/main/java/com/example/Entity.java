@@ -10,7 +10,7 @@ public class Entity {
     protected Map map;
 
     public Entity(int px, int py, int v) {
-        this.direction = Direction.DOWN;
+        this.direction = Direction.UP;
         this.positionX = px;
         this.positionY = py;
         this.velocity = v;
@@ -48,27 +48,6 @@ public class Entity {
         }
        
     }
-
-    // public boolean wallCollision(Entity entity) {
-    //     boolean collision = false;
-    //     ArrayList<Integer> noNoSquares = new ArrayList<Integer>(
-    //         Arrays.asList(1, 3, 4)
-    //     );
-    //     if (entity.direction == Direction.UP && noNoSquares.contains(Map.map[(entity.positionX / 32) - 2][(entity.positionY / 32) - 1])) {
-    //         collision = true;
-    //     }
-    //     else if (entity.direction == Direction.DOWN && noNoSquares.contains(Map.map[(entity.positionX / 32)][(entity.positionY / 32) - 1])) {
-    //         collision = true;
-    //     }
-    //     else if (entity.direction == Direction.RIGHT && noNoSquares.contains(Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32)])) {
-    //         collision = true;
-    //     }
-    //     else if (entity.direction == Direction.LEFT && noNoSquares.contains(Map.map[(entity.positionX / 32) - 1][(entity.positionY / 32) - 2])) {
-    //         collision = true;
-    //     }
-    //     return collision;
-    // }
-
 
     // kombinere de to metoder under for at faktisk checke de givne rektangler for kollisioner.
     public boolean wallCollision()
