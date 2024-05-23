@@ -1,9 +1,6 @@
 package com.example;
 import java.util.Random;
-import javax.swing.Timer;
 import java.util.concurrent.*; 
-import java.util.*; 
-import java.io.*; 
 
 
 public class Gameworld {
@@ -54,15 +51,13 @@ public class Gameworld {
         if (dragon.fireballCollision() && Map.map[dragonY][dragonX] == 2) {
             Map.map[dragonY][dragonX] = 0;
             state = State.POWER;
+            Runnable endPowerState = () -> state = State.NORMAL;
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
-            executorService.schedule(endPowerMode(), 10, TimeUnit.SECONDS);
+            executorService.schedule(endPowerState, 10, TimeUnit.SECONDS);
 
         }
     }
 
-    public void endPowerMode() {
-        state = State.NORMAL;
-    }
 
     public void gameOver() {
 
@@ -91,7 +86,7 @@ public class Gameworld {
 
     public void GiveKnightDirection(Knight knight) {
         Random rand = new Random();
-        int x = rand.nextInt(4);
+        int x = rand.nextInt(2);
         if (x == 0) {
             Direction direction = knight.randomDirection(knight);
             knight.direction = direction;

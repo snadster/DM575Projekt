@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
 import javafx.scene.text.*;
+import java.util.concurrent.*; 
 
 /* TODO
 
@@ -63,10 +64,10 @@ public class App extends Application {
         keyH.inputHandler();
 
         Dragon dragonman = new Dragon(448, 384, 2, keyH); 
-        Knight knight1 = new Knight(416, 320, 1);
+        Knight knight1 = new Knight(448, 288, 1);
         Knight knight2 = new Knight(448, 320, 1);
         Knight knight3 = new Knight(480, 320, 1);
-        Knight knight4 = new Knight(512, 320, 1);
+        Knight knight4 = new Knight(480, 288, 1);
 
         Knight[] knightarray = {knight1, knight2, knight3, knight4};
 
@@ -74,8 +75,15 @@ public class App extends Application {
 
         Draw drawie = new Draw(gamie, canvas);
         drawie.drawBoard();
+        
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
 
-        // gamie.createCoins(gamie);
+        Runnable knightDirection = () -> { for (int i = 0; i < 4; i++) {
+                                                gamie.GiveKnightDirection(gamie.knights[i]);
+                                            }
+        };
+        ses.scheduleAtFixedRate(knightDirection, 2000, 250, TimeUnit.MILLISECONDS);
+
 
         AnimationTimer gameloop = new AnimationTimer()
         {
@@ -94,10 +102,8 @@ public class App extends Application {
 
                 gamie.collectCoin();
                 gamie.collectFireball();
-                
 
                 for (int i = 0; i < 4; i++) {
-                    gamie.GiveKnightDirection(gamie.knights[i]);
                     gamie.knights[i].move(gamie.knights[i]);
                 }
                 
