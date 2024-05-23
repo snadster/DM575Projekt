@@ -53,7 +53,7 @@ public class Entity {
     // kombinere de to metoder under for at faktisk checke de givne rektangler for kollisioner.
     public boolean wallCollision()
     {
-        boolean entityCollisionWall = collision(1) || collision(4);
+        boolean entityCollisionWall = collision(1) || collision(4) || collision(6);
         return entityCollisionWall;
     }
 

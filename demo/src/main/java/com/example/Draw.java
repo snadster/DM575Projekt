@@ -51,6 +51,9 @@ public class Draw
                     case 5 :
                         context.drawImage(spriteSheet, 137, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
                         break;
+                    case 6 :
+                        context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
                 }
             }
         }
@@ -59,11 +62,11 @@ public class Draw
 
     public void drawBox()
     {
-        context.fillRect(0, 0, 1050, 800);
         this.context.setFill(Color.WHITESMOKE);
+        context.fillRect(0, 0, 1050, 800);
     }
 
-    public static Font loadFont()
+    public static Font loadGothFont()
     {
         Font gothic = Font.loadFont("Sketch Gothic School.ttf", 25);
         return gothic;
@@ -71,9 +74,10 @@ public class Draw
 
     public void drawScore() 
     {
+        this.context.setFill(Color.BLACK);
+        Font.loadFont("Sketch Gothic School.ttf", 25.0);
         context.fillText("Score: "+ gw.score, 30.0, 30.0);
         context.fillText("Lives: "+ gw.dragon.lives, 30, 720);
-        this.context.setFill(Color.BLACK);
     }
 
     public void drawDragon(long nowNS)
