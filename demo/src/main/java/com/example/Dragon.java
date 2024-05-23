@@ -55,5 +55,10 @@ public class Dragon extends Entity {
         return dragonRectangle;
     }
 
+        // denne metode laver en rectangel til dragen ved brug af vores fancy rectangle klasse
+  
+    
+    
+
 
 }

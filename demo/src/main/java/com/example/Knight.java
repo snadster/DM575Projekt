@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Knight extends Entity {
 
@@ -8,124 +10,120 @@ public class Knight extends Entity {
     
     }
 
-public boolean canMoveLeft = false;
-public boolean canMoveRight = false;
-public boolean canMoveUp = false;
-public boolean canMoveDown = false;
 
-// Trying to find out which directions are possible. Sould maybe be a part of move.
-public void possibleDirections(){
-    if (this.direction == Direction.DOWN) {
-        canMoveDown = true;
-        canMoveLeft = true;
-        canMoveRight = true;
-        canMoveUp = false;
+// Determine possible directions.
+public ArrayList<Direction> possibleDirections(Knight knight){
+    ArrayList<Direction> posdir = new ArrayList<Direction>();
+    posdir.add(Direction.DOWN);
+    posdir.add(Direction.UP);
+    posdir.add(Direction.LEFT);
+    posdir.add(Direction.RIGHT);
+
+    if (knight.direction == Direction.DOWN && knight.wallCollision()) {
+        posdir.remove(Direction.DOWN);
     }
 
-    if (this.direction == Direction.UP) {
-        canMoveUp = true;
-        canMoveLeft = true;
-        canMoveRight = true;
-        canMoveDown = false;
+    if (knight.direction == Direction.UP && knight.wallCollision()) {
+        posdir.remove(Direction.UP);
     }
 
-    if (this.direction == Direction.LEFT) {
-        canMoveDown = true;
-        canMoveUp = true;
-        canMoveLeft = true;
-        canMoveRight = false;
+    if (knight.direction == Direction.LEFT && knight.wallCollision()) {
+        posdir.remove(Direction.LEFT);
     }
 
-    if (this.direction == Direction.RIGHT) {
-        canMoveDown = true;
-        canMoveUp = true;
-        canMoveRight = true;
-        canMoveLeft = false;
+    if (knight.direction == Direction.RIGHT && knight.wallCollision()) {
+        posdir.remove(Direction.RIGHT);
     }
+    return posdir;
 }
 
-
-public void DetermineKnightDirection(Entity knight, int DragonPositionX, int DragonPositionY ){
-    Direction direction = ClosestDirection(DragonPositionX, DragonPositionY); 
-    // mangler randomize
-}
-
-public Direction ClosestDirection(int DragonPositionX, int DragonPositionY){
+// Determine closest direction beween knight and dragon.
+public Direction ClosestDirection(Knight knight, int DragonPositionX, int DragonPositionY){
     float shortestDistance = 0;
-    Direction lastDirection = this.direction;
-    Direction newDirection = direction;
+    ArrayList<Direction> possibles = possibleDirections(knight);
+    Direction bestDirection = null;
 
-    
-    // Need to change direction after wall collision. Note missing something if there's an junction
-    if(wallCollision()){
-
-        // If we can move up and are not reversing direction
-        if(canMoveUp && lastDirection != Direction.DOWN){
+    for (int i = 0; i < possibles.size(); i++) {
+        int x = 0;
+        int y = 0;
+        if (possibles.get(i) == Direction.DOWN) {
+            x = knight.positionX;
+            y = knight.positionY + knight.velocity;
+        }
+        else if (possibles.get(i) == Direction.UP) {
+            x = knight.positionX;
+            y = knight.positionY - knight.velocity;
+        }
+        else if (possibles.get(i) == Direction.RIGHT) {
+            x = knight.positionX + knight.velocity;
+            y = knight.positionY;
+        }
+        else if (possibles.get(i) == Direction.LEFT) {
+            x = knight.positionX - knight.velocity;
+            y = knight.positionY;
+        }
 
          // Get the Manhattan distance between target (Dragon) and knight
-        float distance = Math.abs(DragonPositionX - this.positionX) + Math.abs(DragonPositionY - this.positionY);
+        float distance = Math.abs(DragonPositionX - x) + Math.abs(DragonPositionY - y);
 
             // Shortest distance so far
             if(distance < shortestDistance || shortestDistance == 0){
                 shortestDistance = distance;
-                newDirection = Direction.UP;
+                bestDirection = possibles.get(i);
             }
         }
+        
+        return bestDirection;
+    }  
 
-        // If we can move down and are not reversing direction
-        else if(canMoveDown && lastDirection != Direction.UP){
+// Determine furthest direction between knight and dragon.
+public Direction FurthestDirection(Knight knight, int DragonPositionX, int DragonPositionY) {
+    float farthestDistance = 0;
+    ArrayList<Direction> possibles = possibleDirections(knight);
+    Direction bestDirection = null;
 
-        // Get the Manhattan distance between target (Dragon) and knight
-        float distance = Math.abs(DragonPositionX - this.positionX) + Math.abs(DragonPositionY - this.positionY);
-
-            // Shortest distance so far
-            if(distance < shortestDistance || shortestDistance == 0){
-                shortestDistance = distance;
-                newDirection = Direction.DOWN;
-            }
+    for (int i = 0; i < possibles.size(); i++) {
+        int x = 0;
+        int y = 0;
+        if (possibles.get(i) == Direction.DOWN) {
+            x = knight.positionX;
+            y = knight.positionY + knight.velocity;
         }
-
-        // If we can move left and are not reversing direction
-        else if(canMoveLeft && lastDirection != Direction.RIGHT){
+        else if (possibles.get(i) == Direction.UP) {
+            x = knight.positionX;
+            y = knight.positionY - knight.velocity;
+        }
+        else if (possibles.get(i) == Direction.RIGHT) {
+            x = knight.positionX + knight.velocity;
+            y = knight.positionY;
+        }
+        else if (possibles.get(i) == Direction.LEFT) {
+            x = knight.positionX - knight.velocity;
+            y = knight.positionY;
+        }
 
          // Get the Manhattan distance between target (Dragon) and knight
-        float distance = Math.abs(DragonPositionX - this.positionX) + Math.abs(DragonPositionY - this.positionY);
+        float distance = Math.abs(DragonPositionX - x) + Math.abs(DragonPositionY - y);
 
-            // Shortest distance so far
-            if(distance < shortestDistance || shortestDistance == 0){
-                shortestDistance = distance;
-                newDirection = Direction.LEFT;
+            // Furthest distance so far
+            if(distance > farthestDistance){
+                farthestDistance = distance;
+                bestDirection = possibles.get(i);
             }
         }
+        
+        return bestDirection;
+    }  
 
-        // If we can move right and are not reversing direction
-        else if(canMoveRight && lastDirection != Direction.LEFT){
-
-        // Get the Manhattan distance between target (Dragon) and knight
-        float distance = Math.abs(DragonPositionX - this.positionX) + Math.abs(DragonPositionY - this.positionY);
-
-            // Shortest distance so far
-            if(distance < shortestDistance || shortestDistance == 0){
-                shortestDistance = distance;
-                newDirection = Direction.RIGHT;
-            }
-        }
-
+    // Randomize the choice of direction.
+    public Direction randomDirection(Knight knight) 
+    {
+        ArrayList<Direction> possibles = possibleDirections(knight);
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(2);
+        Direction newDirection = possibles.get(randomIndex);
+        return newDirection;
     }
 
-    return newDirection;
 }
 
-
-}
-
-
-/*ridder bevægelse  (celine vil gerne kigge lidt her)
-        brug samme funktion til at de kan flytte sig
-        ai til søgealgoritme
-        måske fire forskellige versioner
-            bare sårn. den ene tager 50% random, den anden
-            tager 25% random etc.
-        velocity tilpasset efter dragon mans hast
-        funktion som tager koordinater som input - skal kaldes i gameworld
-*/

@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
+import javafx.scene.text.*;
 
 /* TODO
 
@@ -80,18 +81,23 @@ public class App extends Application {
         {
             public void handle(long nowNS)
             {
-                //draws our board each frame so the dragon can move without leaving a trail of dragons.
+                //box draws our board each frame so the dragon can move without leaving a trail of dragons.
                 drawie.drawBox();
                 drawie.drawBoard();
+                drawie.drawScore();
                 drawie.drawDragon(nowNS);
                 drawie.drawKnights(nowNS);
+                
+
                 dragonman.move(dragonman);
                 dragonman.changeDirection();
-                drawie.drawScore();
+
                 gamie.collectCoin();
                 gamie.collectFireball();
+                
+
                 for (int i = 0; i < 4; i++) {
-                    gamie.knights[i].DetermineKnightDirection(gamie.knights[i], dragonman.positionX, dragonman.positionY);
+                    gamie.GiveKnightDirection(gamie.knights[i]);
                     gamie.knights[i].move(gamie.knights[i]);
                 }
                 

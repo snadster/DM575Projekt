@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.canvas.*;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
+import java.lang.String;
+import java.net.URL;
 
 /*
 TODO: 
@@ -13,14 +15,13 @@ public class Draw
 {
 
     private Gameworld gw;
-    private Canvas canvas;
     private GraphicsContext context;
     private Image spriteSheet = new Image("ALL SPRITES LINEAR.png");
+    
 
     public Draw(Gameworld gw, Canvas canvas) 
     {
         this.gw = gw;
-        this.canvas = canvas;
         this.context = canvas.getGraphicsContext2D();
     }
 
@@ -59,15 +60,20 @@ public class Draw
     public void drawBox()
     {
         context.fillRect(0, 0, 1050, 800);
-        context.setFill(Color.WHITESMOKE);
+        this.context.setFill(Color.WHITESMOKE);
+    }
+
+    public static Font loadFont()
+    {
+        Font gothic = Font.loadFont("Sketch Gothic School.ttf", 25);
+        return gothic;
     }
 
     public void drawScore() 
     {
-        context.setFont(Font.loadFont("Sketch Gothic School.ttf", 60)); //this line doesnt work yet and idk why.
-        context.fillText("Score: "+ gw.score, 30, 30);
+        context.fillText("Score: "+ gw.score, 30.0, 30.0);
         context.fillText("Lives: "+ gw.dragon.lives, 30, 720);
-        context.setFill(Color.BLACK);
+        this.context.setFill(Color.BLACK);
     }
 
     public void drawDragon(long nowNS)
@@ -75,7 +81,16 @@ public class Draw
         drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
     }
 
-    public void drawKnights(long nowNS)
+    public void drawKnights(long nowNS) {
+        if (gw.state == State.NORMAL) {
+            drawNormalKnights(nowNS);
+        }
+        if (gw.state == State.POWER) {
+            drawPowerKnights(nowNS);
+        }
+    }
+
+    public void drawNormalKnights(long nowNS)
     {
         drawAnimatedSprite(nowNS, gw.knights[0], 3, 1, 35);
         drawAnimatedSprite(nowNS, gw.knights[1], 3, 1, 69);
@@ -90,11 +105,12 @@ public class Draw
         drawAnimatedSprite(nowNS, gw.knights[2], 3, 1, 171);
         drawAnimatedSprite(nowNS, gw.knights[3], 3, 1, 171);
     }
-    // i need a way to acess the dead knight here please
-    // public void drawDeadKnights(long nowNS)
-    // {
-    //     drawAnimatedSprite(nowNS, gw.deadknight, 4, 1, 205);
-    // }
+
+    public void drawDeadKnights(long nowNS, Knight deadKnightPosition)
+    {
+        drawAnimatedSprite(nowNS, deadKnightPosition, 4, 1, 205);
+    }
+
 
     public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
     {

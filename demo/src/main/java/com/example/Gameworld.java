@@ -1,4 +1,10 @@
 package com.example;
+import java.util.Random;
+import javax.swing.Timer;
+import java.util.concurrent.*; 
+import java.util.*; 
+import java.io.*; 
+
 
 public class Gameworld {
 
@@ -45,10 +51,17 @@ public class Gameworld {
     {
         int dragonX = (dragon.positionX / 32);
         int dragonY = (dragon.positionY / 32);
-        if (dragon.fireballCollision() && Map.map[dragonY][dragonX]== 2) {
-            //mode = powermode; den skal i powermode men det ved jeg ikke hvordan man gør.
+        if (dragon.fireballCollision() && Map.map[dragonY][dragonX] == 2) {
             Map.map[dragonY][dragonX] = 0;
+            state = State.POWER;
+            ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+            executorService.schedule(endPowerMode(), 10, TimeUnit.SECONDS);
+
         }
+    }
+
+    public void endPowerMode() {
+        state = State.NORMAL;
     }
 
     public void gameOver() {
@@ -74,6 +87,25 @@ public class Gameworld {
         if (gameOver == true) {
            state = State.GAMEOVER;
         }
+    }
+
+    public void GiveKnightDirection(Knight knight) {
+        Random rand = new Random();
+        int x = rand.nextInt(4);
+        if (x == 0) {
+            Direction direction = knight.randomDirection(knight);
+            knight.direction = direction;
+        }
+        else {
+            if (state == State.NORMAL) {
+                Direction direction = knight.ClosestDirection(knight, dragon.positionX, dragon.positionY); 
+                knight.direction = direction;
+            }
+            else if (state == State.POWER) {
+                Direction direction = knight.FurthestDirection(knight, dragon.positionX, dragon.positionY); 
+                knight.direction = direction;
+            } 
+        } 
     }
 
 }
