@@ -119,7 +119,7 @@ public class App extends Application {
                     float distance = Math.abs(dragonMapX - knightMapX) + Math.abs(dragonMapY - knightMapY);
                     Node node = new Node(knightMapX, knightMapY, null, distance, null);
                     Node bestNode = gw.knights.get(i).knightBFS(node, dragonMapX, dragonMapY);
-                    gw.knights.get(i).direction = bestNode.direction;
+                    //gw.knights.get(i).direction = bestNode.direction;
                 }  
             }
         }; 
