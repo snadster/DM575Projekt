@@ -137,7 +137,7 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
                 reached[y][x] = false;
             }
         }
-        reached[node.knight.positionY / 32][node.knight.positionX / 32] = true;
+        reached[node.y][node.x] = true;
         Direction[] directions = {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP};
 
         while (nodes.size() > 0) {
@@ -147,68 +147,66 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
 
             for (Direction direction: directions) {
                 if (direction == Direction.DOWN) {
-                    Knight temp = new Knight(current.knight.positionX, current.knight.positionY + current.knight.velocity, current.knight.velocity);
-                    if (!temp.wallCollision()) {
-                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
-                        Node newNode = new Node(temp, Direction.DOWN, distance, current);
-                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                    int tempY = current.y + 1;
+                    if (Map.map[tempY][current.x] == 0 || Map.map[tempY][current.x] == 5) {
+                        float distance = Math.abs(dragonX - current.x) + Math.abs(dragonY - tempY);
+                        Node newNode = new Node(current.x, tempY, Direction.DOWN, distance, current);
+                        if (reached[newNode.y][newNode.x] == false) {
                             nodes.add(newNode);
-                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                            reached[newNode.y][newNode.x] = true;
                         }
                     }
                 }
 
                 if (direction == Direction.UP) {
-                    Knight temp = new Knight(current.knight.positionX, current.knight.positionY - current.knight.velocity, current.knight.velocity);
-                    if (!temp.wallCollision()) {
-                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
-                        Node newNode = new Node(temp, Direction.UP, distance, current);
-                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                    int tempY = current.y - 1;
+                    if (Map.map[tempY][current.x] == 0 || Map.map[tempY][current.x] == 5) {
+                        float distance = Math.abs(dragonX - current.x) + Math.abs(dragonY - tempY);
+                        Node newNode = new Node(current.x, tempY, Direction.UP, distance, current);
+                        if (reached[newNode.y][newNode.x] == false) {
                             nodes.add(newNode);
-                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                            reached[newNode.y][newNode.y] = true;
                         }
                     } 
                 }
 
                 if (direction == Direction.LEFT) {
-                    Knight temp = new Knight(current.knight.positionX - current.knight.velocity, current.knight.positionY, current.knight.velocity);
-                    if (!temp.wallCollision()) {
-                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
-                        Node newNode = new Node(temp, Direction.LEFT, distance, current);
-                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                    int tempX = current.x - 1;
+                    if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5) {
+                        float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
+                        Node newNode = new Node(tempX, current.y, Direction.LEFT, distance, current);
+                        if (reached[newNode.y][newNode.x] == false) {
                             nodes.add(newNode);
-                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                            reached[newNode.y][newNode.x] = true;
                         }
                     }
                 }
 
                 if (direction == Direction.RIGHT) {
-                    Knight temp = new Knight(current.knight.positionX + current.knight.velocity, current.knight.positionY, current.knight.velocity);
-                    if (!temp.wallCollision()) {
-                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
-                        Node newNode = new Node(temp, Direction.RIGHT, distance, current);
-                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                    int tempX = current.x + 1;
+                    if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5) {
+                        float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
+                        Node newNode = new Node(tempX, current.y, Direction.RIGHT, distance, current);
+                        if (reached[newNode.y][newNode.x] == false) {
                             nodes.add(newNode);
-                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                            reached[newNode.y][newNode.x] = true;
                         }
                     } 
                 }
             }
+            Node goal = null;
             Node result = null;
-            Node child = null;
-            for (Node x: nodes) {
-                if (x.distance <= 32) {
-                    result = x;
-                    while (result.parent != null) {
-                        result = result.parent;
-                        child = result;
+            for (Node test: nodes) {
+                if (test.distance <= 32) {
+                    goal = test;
+                    while (goal.parent != null) {
+                        goal = goal.parent;
+                        result = goal;
                     }
-                    return child;
+                    return result;
                 }
-                System.out.println(1);
             }
         }
-        System.out.println("fejl 2");
         return null;
     }
 }
