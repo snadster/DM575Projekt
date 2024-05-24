@@ -155,8 +155,7 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
                             nodes.add(newNode);
                             reached[temp.positionY / 32][temp.positionX / 32] = true;
                         }
-                        
-                    } 
+                    }
                 }
 
                 if (direction == Direction.UP) {
@@ -196,16 +195,20 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
                 }
             }
             Node result = null;
+            Node child = null;
             for (Node x: nodes) {
-                if (x.distance < 32) {
+                if (x.distance <= 32) {
                     result = x;
-                    while (result.parent != node) {
+                    while (result.parent != null) {
                         result = result.parent;
+                        child = result;
                     }
+                    return child;
                 }
+                System.out.println(1);
             }
-            return result;
         }
+        System.out.println("fejl 2");
         return null;
     }
 }
