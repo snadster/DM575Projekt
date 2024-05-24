@@ -77,6 +77,8 @@ public class App extends Application {
         Draw drawie = new Draw(gw, canvas);
         drawie.drawBoard();
 
+        CollisionHandler cool = new CollisionHandler(gw);
+
     /*  CollisionHandler cool = new CollisionHandler(gw);
         
         ScheduledExecutorService ses = Executors.newScheduledThreadPool(1); */
@@ -104,6 +106,8 @@ public class App extends Application {
 
                 gw.collectCoin();
                 gw.collectFireball();
+
+                cool.dragonKnightCollisionAction();
 
                 for (int i = 0; i < 4; i++) {
                     Node node = new Node(gw.knights.get(i), 1000);    
