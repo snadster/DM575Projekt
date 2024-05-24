@@ -1,85 +1,54 @@
 package com.example;
+import java.util.ArrayList;
 
+public class CollisionHandler
+{
+   private Gameworld gw;
 
+   public CollisionHandler(Gameworld gw)
+   {
+      this.gw = gw;
+   }
 
+   // 
+   public void dragonKnightCollisionAction()
+   {
+      int knightIndex = dragonKnightCollisionKnightIndex();
+      int no = -1;
+      if (knightIndex != no && gw.state == State.NORMAL)
+      {
+         gw.score = gw.score / 4;
+         gw.dragon.lives = gw.dragon.lives - 1;
+      }
+      if (knightIndex != no && gw.state == State.POWER) //this state specifier is not strictly necessary; it is here for clear understanding
+      {
+         gw.score = gw.score + 400;
+         gw.knights.remove(knightIndex);
+      } 
+   }
 
+   public int dragonKnightCollisionKnightIndex()
+   {
+      ArrayList<Rectangle> knightRectangles = knightRectangles();
+      int knightHitIndex = -1;
+      for (int k = 0; k < knightRectangles.size(); k++)
+      {
+         if (knightRectangles.get(k).overlap(gw.dragon.dragonRectangle()))
+         {
+            knightHitIndex = k;
+         }
+      }
+      return knightHitIndex;
+   }
 
-
-
-
-
-
-
-
-
-
-
-
-/* 
-     def pixelMath(int x, int y)
-     {
-        int collone = Ceil(x / 32)
-        int række = Ceil(y / 32)
-
-        return (colonne, række)
-     }
-     
-
-
-     if(dragon wanna move)
-     {
-        return pixel pixelMath(dragon.positionX, dragon.positionY)
-     }
- 
- 
- */
-
-
-
-// here we use our Rectangle, we make sprites and their boundaries
-// we do that to check if the boundaries of the sprites overlap
-// this includes walls, characters, and coins.
-
-// public class CollisionHandler
-// {
-//     public Entity entity;
-//     public Rectangle boundary;
-
-//     public CollisionHandler(Entity entity)
-//     {
-//         this.entity = entity;
-//         this.boundary = new Rectangle(x,y,32,32); // we update this when we use an image but neutralized for now  
-//     }
-
-//     public void setPosition(double x, double y)
-//     {
-//         position.set(x,y);
-//     }
-
-//     public void spriteBundariesDragon(String file)
-//     {
-        
-//         boundary.width = entity.sprite.getWidth();
-//         boundary.height = entity.sprite.getHeight();
-
-//     }
-
-//     public Rectangle boundary()
-//     {
-//         boundary.x = position.x;
-//         boundary.y = position.y;
-//         return boundary;
-
-//     }
-
-//     public boolean overlaps(collisionHandler other)
-//     {
-//         return this.boundary().overlaps(other.boundary());
-//     }
-    
-//     public void drawSprite(GraphicsContext context) //render = drawSprite
-//     {
-//         context.drawImage(sprite, position.x, position.y);
-//     }
-
-// }
+   public ArrayList<Rectangle> knightRectangles()
+   {
+      ArrayList<Rectangle> knightRectangles = new ArrayList<Rectangle>();
+      for (int i = 0; i < gw.knights.size(); i++) 
+      {
+         Rectangle knightRectangle = new Rectangle(gw.knights.get(i).positionX, gw.knights.get(i).positionY, 32, 32);
+         knightRectangles.add(knightRectangle);
+      }
+      return knightRectangles;
+   }
+}

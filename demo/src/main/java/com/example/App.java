@@ -7,8 +7,10 @@ import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
-import javafx.scene.text.*;
-import java.util.concurrent.*; 
+//import javafx.scene.text.*;
+
+import java.util.ArrayList;
+//import java.util.concurrent.*; 
 
 /* TODO
 
@@ -50,14 +52,13 @@ public class App extends Application {
 
         stage.setTitle("Camelot's Burning");
         stage.setFullScreen(true);
-        stage.setFullScreenExitHint("Should thou wish to minimise thine screen, press 'ESC'");
+        //stage.setFullScreenExitHint("Should thou wish to minimise thine screen, press 'ESC'");
+        stage.setFullScreenExitHint("");
         stage.getIcons().add(new Image("TILE_EMPTY_FLAME.png"));
     
         BorderPane root = new BorderPane();
-
         Scene mainScene = new Scene(root);
         stage.setScene(mainScene);
-
         Canvas canvas = new Canvas(1024, 736);
         root.setCenter(canvas);
 
@@ -65,26 +66,27 @@ public class App extends Application {
         keyH.inputHandler();
 
         Dragon dragonman = new Dragon(448, 384, 2, keyH); 
-        Knight knight1 = new Knight(448, 288, 1);
-        Knight knight2 = new Knight(448, 320, 1);
-        Knight knight3 = new Knight(480, 320, 1);
-        Knight knight4 = new Knight(480, 288, 1);
+        ArrayList<Knight> knightArray = new ArrayList<>();
+        knightArray.add(new Knight(448, 288, 1));
+        knightArray.add(new Knight(448, 320, 1));
+        knightArray.add(new Knight(480, 320, 1));
+        knightArray.add(new Knight(480, 288, 1));
 
-        Knight[] knightarray = {knight1, knight2, knight3, knight4};
+        Gameworld gw = new Gameworld(dragonman, knightArray);
 
-        Gameworld gamie = new Gameworld(dragonman, knightarray);
-
-        Draw drawie = new Draw(gamie, canvas);
+        Draw drawie = new Draw(gw, canvas);
         drawie.drawBoard();
+
+    /*  CollisionHandler cool = new CollisionHandler(gw);
         
-        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1); */
 
-        Runnable knightDirection = () -> { for (int i = 0; i < 4; i++) {
-                                                gamie.GiveKnightDirection(gamie.knights[i]);
-                                            }
-        };
-        ses.scheduleAtFixedRate(knightDirection, 2000, 250, TimeUnit.MILLISECONDS);
-
+        // Runnable knightDirection = () -> {
+        //     for (int i = 0; i < 4; i++) {
+        //         gw.GiveKnightDirection(gw.knights.get(i));
+        //     }
+        // };
+        // ses.scheduleAtFixedRate(knightDirection, 2000, 250, TimeUnit.MILLISECONDS);
 
         AnimationTimer gameloop = new AnimationTimer()
         {
@@ -96,18 +98,19 @@ public class App extends Application {
                 drawie.drawScore();
                 drawie.drawDragon(nowNS);
                 drawie.drawKnights(nowNS);
-                
 
                 dragonman.move(dragonman);
                 dragonman.changeDirection();
 
-                gamie.collectCoin();
-                gamie.collectFireball();
+                gw.collectCoin();
+                gw.collectFireball();
 
                 for (int i = 0; i < 4; i++) {
-                    gamie.knights[i].move(gamie.knights[i]);
-                }
-                
+                    Node node = new Node(gw.knights.get(i), 1000);    
+                    Direction newDirection = gw.knights.get(i).knightAI(node, dragonman.positionX, dragonman.positionY);
+                    gw.knights.get(i).direction = newDirection;            
+                    gw.knights.get(i).move(gw.knights.get(i));
+                }  
             }
         }; 
         gameloop.start();

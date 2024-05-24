@@ -4,8 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.canvas.*;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
-import java.lang.String;
-import java.net.URL;
+//import java.lang.String;
+//import java.net.URL;
 
 /*
 TODO: 
@@ -96,18 +96,18 @@ public class Draw
 
     public void drawNormalKnights(long nowNS)
     {
-        drawAnimatedSprite(nowNS, gw.knights[0], 3, 1, 35);
-        drawAnimatedSprite(nowNS, gw.knights[1], 3, 1, 69);
-        drawAnimatedSprite(nowNS, gw.knights[2], 3, 1, 103);
-        drawAnimatedSprite(nowNS, gw.knights[3], 3, 1, 137);
+        drawAnimatedSprite(nowNS, gw.knights.get(0), 3, 1, 35);
+        drawAnimatedSprite(nowNS, gw.knights.get(1), 3, 1, 69);
+        drawAnimatedSprite(nowNS, gw.knights.get(2), 3, 1, 103);
+        drawAnimatedSprite(nowNS, gw.knights.get(3), 3, 1, 137);
     }
 
     public void drawPowerKnights(long nowNS)
     {
-        drawAnimatedSprite(nowNS, gw.knights[0], 3, 1, 171);
-        drawAnimatedSprite(nowNS, gw.knights[1], 3, 1, 171);
-        drawAnimatedSprite(nowNS, gw.knights[2], 3, 1, 171);
-        drawAnimatedSprite(nowNS, gw.knights[3], 3, 1, 171);
+        for (Knight knight : gw.knights) 
+        {
+            drawAnimatedSprite(nowNS, knight, 3, 1, 171);
+        } 
     }
 
     public void drawDeadKnights(long nowNS, Knight deadKnightPosition)

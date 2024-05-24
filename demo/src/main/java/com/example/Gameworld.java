@@ -1,20 +1,21 @@
 package com.example;
-import java.util.Random;
+import java.util.ArrayList;
+//import java.util.Random;
 import java.util.concurrent.*; 
 
 
 public class Gameworld {
 
     protected Dragon dragon;
-    protected Knight[] knights;
+    protected ArrayList<Knight> knights;
     protected int coinValue;
     protected State state;
     protected int score;
 
-    public Gameworld(Dragon dragon, Knight[] knights) {
+    public Gameworld(Dragon dragon, ArrayList<Knight> knightarray) {
 
         this.dragon = dragon;
-        this.knights = knights;
+        this.knights = knightarray;
         this.coinValue = 10;
         this.state = State.NORMAL;
         this.score = 0;
@@ -54,9 +55,18 @@ public class Gameworld {
             Runnable endPowerState = () -> state = State.NORMAL;
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.schedule(endPowerState, 10, TimeUnit.SECONDS);
+           // executeSelf.schedule(killSelf, 10.1, TimeUnit.SECONDS);
 
         }
     }
+
+    /* ignorer disse forsøg på at få stopped den der runnable executor
+    public void killSelf()
+    {
+        Runnable killSelf = () -> 
+        ScheduledExecutorService executeSelf = Executors.newSingleThreadScheduledExecutor();
+    }
+    */
 
     public void gameOver() {
 
@@ -83,10 +93,10 @@ public class Gameworld {
         }
     }
 
-    public void GiveKnightDirection(Knight knight) {
+    /* public void GiveKnightDirection(Knight knight) {
         Random rand = new Random();
         int x = rand.nextInt(2);
-        if (x == 0) {
+        if (x == 7) {
             Direction direction = knight.randomDirection(knight);
             knight.direction = direction;
         }
@@ -100,6 +110,6 @@ public class Gameworld {
                 knight.direction = direction;
             } 
         } 
-    }
+    } */
 
 }
