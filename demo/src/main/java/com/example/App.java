@@ -52,6 +52,7 @@ public class App extends Application {
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("Should thou wish to minimise thine screen, press 'ESC'");
         stage.getIcons().add(new Image("TILE_EMPTY_FLAME.png"));
+    
         BorderPane root = new BorderPane();
 
         Scene mainScene = new Scene(root);

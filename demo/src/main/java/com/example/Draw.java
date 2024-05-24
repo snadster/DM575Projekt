@@ -66,16 +66,16 @@ public class Draw
         context.fillRect(0, 0, 1050, 800);
     }
 
-    public static Font loadGothFont()
-    {
-        Font gothic = Font.loadFont("Sketch Gothic School.ttf", 25);
-        return gothic;
-    }
+    // public static Font loadGothFont()
+    // {
+    //     Font gothic = Font.loadFont("Sketch Gothic School.ttf", 25);
+    //     return gothic;
+    // }
 
     public void drawScore() 
     {
+        this.context.setFont(Font.loadFont("Sketch Gothic School.ttf", 25));
         this.context.setFill(Color.BLACK);
-        Font.loadFont("Sketch Gothic School.ttf", 25.0);
         context.fillText("Score: "+ gw.score, 30.0, 30.0);
         context.fillText("Lives: "+ gw.dragon.lives, 30, 720);
     }
