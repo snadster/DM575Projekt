@@ -2,8 +2,6 @@ package com.example;
 
 import java.util.ArrayList;
 //import java.util.Random;
-import java.util.Stack;
-import java.util.Iterator;
 
 public class Knight extends Entity {
 
@@ -130,60 +128,85 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
      */
     
 
-    public Direction knightAI(Node node, int dragonX, int dragonY) {
-        Direction[] directions = {Direction.UP, Direction.DOWN, Direction.RIGHT, Direction.LEFT};
-        Stack<Node> stack = new Stack<Node>();
-        ArrayList<Direction> result = new ArrayList<Direction>();
-        Iterator<Node> iterator = stack.iterator();
-        Node current = node;
-        // Expand while stack is not empty and we have not found the goal.
-        while (current.distance > 32) {
-            while (iterator.hasNext()) {
-                Node next = iterator.next();
-                if (next.distance < current.distance) {   // Heuristic
-                    current = next;
+    public Node knightBFS(Node node, int dragonX, int dragonY) {
+        ArrayList<Node> nodes = new ArrayList<Node>();
+        nodes.add(node);
+        boolean[][] reached = new boolean[21][30];
+        for (int y = 0; y < 21; y++) {
+            for (int x = 0; x < 30; x++) {
+                reached[y][x] = false;
+            }
+        }
+        reached[node.knight.positionY / 32][node.knight.positionX / 32] = true;
+        Direction[] directions = {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP};
+
+        while (nodes.size() > 0) {
+
+            Node current = nodes.get(0);
+            nodes.remove(current);
+
+            for (Direction direction: directions) {
+                if (direction == Direction.DOWN) {
+                    Knight temp = new Knight(current.knight.positionX, current.knight.positionY + current.knight.velocity, current.knight.velocity);
+                    if (!temp.wallCollision()) {
+                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
+                        Node newNode = new Node(temp, Direction.DOWN, distance, current);
+                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                            nodes.add(newNode);
+                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                        }
+                        
+                    } 
+                }
+
+                if (direction == Direction.UP) {
+                    Knight temp = new Knight(current.knight.positionX, current.knight.positionY - current.knight.velocity, current.knight.velocity);
+                    if (!temp.wallCollision()) {
+                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
+                        Node newNode = new Node(temp, Direction.UP, distance, current);
+                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                            nodes.add(newNode);
+                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                        }
+                    } 
+                }
+
+                if (direction == Direction.LEFT) {
+                    Knight temp = new Knight(current.knight.positionX - current.knight.velocity, current.knight.positionY, current.knight.velocity);
+                    if (!temp.wallCollision()) {
+                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
+                        Node newNode = new Node(temp, Direction.LEFT, distance, current);
+                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                            nodes.add(newNode);
+                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                        }
+                    }
+                }
+
+                if (direction == Direction.RIGHT) {
+                    Knight temp = new Knight(current.knight.positionX + current.knight.velocity, current.knight.positionY, current.knight.velocity);
+                    if (!temp.wallCollision()) {
+                        float distance = Math.abs(dragonX - temp.positionX) + Math.abs(dragonY - temp.positionY);
+                        Node newNode = new Node(temp, Direction.RIGHT, distance, current);
+                        if (reached[temp.positionY / 32][temp.positionX / 32] == false) {
+                            nodes.add(newNode);
+                            reached[temp.positionY / 32][temp.positionX / 32] = true;
+                        }
+                    } 
                 }
             }
-            stack.push(current);
-            result.add(current.knight.direction);
-            for (Direction direction: directions) {
-                if (direction == Direction.UP) {
-                    Knight test = new Knight(current.knight.positionX, current.knight.positionY - current.knight.velocity, current.knight.velocity);
-                    if (!test.wallCollision()){
-                        float dis = Math.abs(dragonX - test.positionX) + Math.abs(dragonY - test.positionY);
-                        Node newNode = new Node(test, dis);
-                        stack.push(newNode);
-                    }   
-                } 
-                if (direction == Direction.DOWN) {
-                    Knight test = new Knight(current.knight.positionX, current.knight.positionY + current.knight.velocity, current.knight.velocity);
-                    if (!test.wallCollision()){
-                        float dis = Math.abs(dragonX - test.positionX) + Math.abs(dragonY - test.positionY);
-                        Node newNode = new Node(test, dis);
-                        stack.push(newNode);
-                    }   
-                } 
-                if (direction == Direction.RIGHT) {
-                    Knight test = new Knight(current.knight.positionX + current.knight.velocity, current.knight.positionY, current.knight.velocity);
-                    if (!test.wallCollision()){
-                        float dis = Math.abs(dragonX - test.positionX) + Math.abs(dragonY - test.positionY);
-                        Node newNode = new Node(test, dis);
-                        stack.push(newNode);
-                    }   
-                } 
-                if (direction == Direction.LEFT) {
-                    Knight test = new Knight(current.knight.positionX - current.knight.velocity, current.knight.positionY, current.knight.velocity);
-                    if (!test.wallCollision()){
-                        float dis = Math.abs(dragonX - test.positionX) + Math.abs(dragonY - test.positionY);
-                        Node newNode = new Node(test, dis);
-                        stack.push(newNode);
-                    }   
-                } 
+            Node result = null;
+            for (Node x: nodes) {
+                if (x.distance < 32) {
+                    result = x;
+                    while (result.parent != node) {
+                        result = result.parent;
+                    }
+                }
             }
-            
+            return result;
         }
-        return result.get(1);
+        return null;
     }
-
 }
 

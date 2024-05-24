@@ -109,11 +109,12 @@ public class App extends Application {
 
                 cool.dragonKnightCollisionAction();
 
-                for (int i = 0; i < 4; i++) {
-                    Node node = new Node(gw.knights.get(i), 1000);    
-                    Direction newDirection = gw.knights.get(i).knightAI(node, dragonman.positionX, dragonman.positionY);
-                    gw.knights.get(i).direction = newDirection;            
+                for (int i = 0; i < 4; i++) {            
                     gw.knights.get(i).move(gw.knights.get(i));
+                    //float distance = Math.abs(dragonman.positionX - gw.knights.get(i).positionX) + Math.abs(dragonman.positionY - gw.knights.get(i).positionY);
+                    //Node node = new Node(gw.knights.get(i), null, distance, null);
+                    //Node bestNode = gw.knights.get(i).knightBFS(node, dragonman.positionX, dragonman.positionY);
+                    //gw.knights.get(i).direction = bestNode.direction;
                 }  
             }
         }; 
