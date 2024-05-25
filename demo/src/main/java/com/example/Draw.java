@@ -14,7 +14,7 @@ public class Draw
 {
     private Gameworld gw;
     private GraphicsContext context;
-    private Image spriteSheet = new Image("ALL SPRITES LINEAR.png");
+    private Image spriteSheet = new Image("ALL_SPRITES_LINEAR.png");
     private CollisionHandler cool;
     
 

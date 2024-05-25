@@ -81,7 +81,6 @@ public class App extends Application {
         knightArray.add(new Knight(480, 320, 1));
         knightArray.add(new Knight(480, 288, 1));
 
-
         Gameworld gw = new Gameworld(dragonman, knightArray);
         CollisionHandler cool = new CollisionHandler(gw);
         Draw drawie = new Draw(gw, canvas, cool);
