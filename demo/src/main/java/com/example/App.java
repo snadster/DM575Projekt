@@ -23,38 +23,12 @@ import java.util.Random;
 
 /* TODO
 
-    lav powermode og de tilhørende skift (i.e aesthetics.)
-        test evt velocities
-
-    ridder bevægelse  (celine vil gerne kigge lidt her)
-        brug samme funktion til at de kan flytte sig
-        ai til søgealgoritme
-        måske fire forskellige versioner
-            bare sårn. den ene tager 50% random, den anden
-            tager 25% random etc.
-        velocity tilpasset efter dragon mans hast
-        funktion som tager koordinater som input - skal kaldes i gameworld
-
-    collison checker
-        mellem dragon og ridder (to forskellige, hvor skal den ligge?)
-        mellem mønter og dragon (skal ligge i gameworld)
-            fire forskellige måder
-        mellem ridder og væg (skal ligge i ridder)
-            fire forskellige måder.
-    
-    Designmønstre
-
-    states
-        skift mellem 
-        definer hvad der sker i dem
-    
-    kig på diagram; tilpas måske tre overordnede under app.
+    Gameover state
+    fejlfinding ift. powermode (index out of bounds??)
+    kommentarer 
+   
 */
 
-
-/**
- * JavaFX App
- */
 public class App extends Application {
    
 	public void start(Stage stage) {
@@ -93,16 +67,17 @@ public class App extends Application {
       //*********************************\\
         
         Random rand = new Random();
-        int chaseOrScatter = rand.nextInt(4);
+        int chaseOrScatter = rand.nextInt(2);
         
         ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
 
         Runnable interval = () -> {
            for (int i = 0; i < gw.knights.size(); i++) {
-                if (chaseOrScatter == 0) {
+                if (chaseOrScatter == 1) {
                     gw.knights.get(i).updateChase(gw.knights.get(i), false);
                     gw.knights.get(i).scatterX = rand.nextInt(29);
                     gw.knights.get(i).scatterY = rand.nextInt(20);
+                    System.out.println(2);
                 }
                 else {
                     gw.knights.get(i).updateChase(gw.knights.get(i), true);
@@ -110,12 +85,7 @@ public class App extends Application {
            }
         };
 
-        ses.scheduleAtFixedRate(interval, 4, 2, TimeUnit.SECONDS);
-
-        ses.shutdown();
-
-        int chaseX = (dragonman.positionX + 5) / 32;
-        int chaseY = (dragonman.positionY + 5) / 32;
+        ses.scheduleAtFixedRate(interval, 3, 2, TimeUnit.SECONDS);
 
         AnimationTimer gameloop = new AnimationTimer()
         {
@@ -136,23 +106,35 @@ public class App extends Application {
 
                 cool.dragonKnightCollisionAction();
 
+                int chaseX = (gw.dragon.positionX + 5) / 32;
+                int chaseY = (gw.dragon.positionY + 5) / 32;
 
                 for (int i = 0; i < gw.knights.size(); i++) {            
                     gw.knights.get(i).move(gw.knights.get(i));
                     int knightMapX = (gw.knights.get(i).positionX + 5) / 32;
                     int knightMapY = (gw.knights.get(i).positionY + 5) / 32;
-                    if (gw.knights.get(i).chase) {
+                    if (gw.state == State.NORMAL) 
+                    {
+                        if (gw.knights.get(i).chase) {
+                            float distance = Math.abs(chaseX - knightMapX) + Math.abs(chaseY - knightMapY);
+                            Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
+                            Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY, false);
+                            gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
+                        }
+                        else {
+                            float distance = Math.abs(gw.knights.get(i).scatterX - knightMapX) + Math.abs(gw.knights.get(i).scatterY - knightMapY);
+                            Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
+                            Node bestNode = gw.knights.get(i).knightBFS(node, gw.knights.get(i).scatterX , gw.knights.get(i).scatterY, false);
+                            gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
+                        }
+                    }
+                    else if (gw.state == State.POWER) {
                         float distance = Math.abs(chaseX - knightMapX) + Math.abs(chaseY - knightMapY);
                         Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
-                        Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY);
+                        Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY, true);
                         gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
                     }
-                    else {
-                        float distance = Math.abs(gw.knights.get(i).scatterX - knightMapX) + Math.abs(gw.knights.get(i).scatterY - knightMapY);
-                        Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
-                        Node bestNode = gw.knights.get(i).knightBFS(node, gw.knights.get(i).scatterX , gw.knights.get(i).scatterY);
-                        gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
-                    }
+    
                 }  
             }
         }; 

@@ -30,7 +30,7 @@ public class Knight extends Entity
         knight.chase = chase;
     }
 
-    public Node knightBFS(Node node, int dragonX, int dragonY) 
+    public Node knightBFS(Node node, int dragonX, int dragonY, boolean powermode) 
     {
         ArrayList<Node> nodes = new ArrayList<Node>();
         nodes.add(node);
@@ -83,48 +83,79 @@ public class Knight extends Entity
                     } 
                 }
 
-                if (direction == Direction.LEFT && current.x > 0) 
+                if (direction == Direction.LEFT && current.x >= 0) 
                 {
-                    int tempX = current.x - 1;
-                    if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5 || Map.map[current.y][tempX] == 3) 
+                    if (current.x == 0) 
+                    //To account for wrapping around the map
                     {
-                        float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
-                        Node newNode = new Node(tempX, current.y, Direction.LEFT, distance, current);
-                        if (tempX == 0) 
-                        {
-                            newNode = new Node(29, current.y, Direction.LEFT, distance, current);
-                        }
+                        float distance = Math.abs(dragonX - 29) + Math.abs(dragonY - current.y);
+                        Node newNode = new Node(29, current.y, Direction.RIGHT, distance, current);
                         if (reached[newNode.y][newNode.x] == false) 
                         {
                             nodes.add(newNode);
                             reached[newNode.y][newNode.x] = true;
                         }
                     }
+                    else 
+                    {
+                        int tempX = current.x - 1;
+                        if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5 || Map.map[current.y][tempX] == 3) 
+                        {
+                            float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
+                            Node newNode = new Node(tempX, current.y, Direction.LEFT, distance, current);
+                            if (reached[newNode.y][newNode.x] == false) 
+                            {
+                                nodes.add(newNode);
+                                reached[newNode.y][newNode.x] = true;
+                            }
+                        }
+                    }
+                    
                 }
 
-                if (direction == Direction.RIGHT && current.x < 29) 
+                if (direction == Direction.RIGHT && current.x <= 29) 
                 {
-                    int tempX = current.x + 1;
-                    if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5 || Map.map[current.y][tempX] == 3) 
+                    if (current.x == 29)
+                    //To account for wrapping around the map
                     {
-                        float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
-                        Node newNode = new Node(tempX, current.y, Direction.RIGHT, distance, current);
-                        if (tempX == 29) 
-                        {
-                            newNode = new Node(0, current.y, Direction.RIGHT, distance, current);
-                        }
+                        float distance = Math.abs(dragonX - 0) + Math.abs(dragonY - current.y);
+                        Node newNode = new Node(0, current.y, Direction.RIGHT, distance, current);
                         if (reached[newNode.y][newNode.x] == false) 
                         {
                             nodes.add(newNode);
                             reached[newNode.y][newNode.x] = true;
                         }
-                    } 
+                    }
+                    else 
+                    {
+                        int tempX = current.x + 1;
+                        if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5 || Map.map[current.y][tempX] == 3) 
+                        {
+                            float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
+                            Node newNode = new Node(tempX, current.y, Direction.RIGHT, distance, current);
+                            if (reached[newNode.y][newNode.x] == false) 
+                            {
+                                nodes.add(newNode);
+                                reached[newNode.y][newNode.x] = true;
+                            }
+                        } 
+                    }
+                    
                 }
             }
             Node goal = null;
             for (Node test: nodes) 
             {
-                if (test.distance <= 1) 
+                if (test.distance >= 15 && powermode == true) 
+                {
+                    goal = test;
+                    while (goal.parent != node) 
+                    {
+                        goal = goal.parent;
+                    }
+                    return goal;
+                }
+                if (test.distance <= 1 && powermode == false) 
                 {
                     goal = test;
                     while (goal.parent != node) 

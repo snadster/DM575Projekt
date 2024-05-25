@@ -4,7 +4,6 @@
 
 package com.example;
 import java.util.ArrayList;
-//import java.util.Random;
 import java.util.concurrent.*; 
 
 
@@ -39,8 +38,8 @@ public class Gameworld
 
     public void collectCoin()
     {
-        int dragonX = (dragon.positionX / 32);
-        int dragonY = (dragon.positionY / 32);
+        int dragonX = ((dragon.positionX + 5) / 32);
+        int dragonY = ((dragon.positionY + 5) / 32);
         if (dragon.coinCollision() && Map.map[dragonY][dragonX]== 5) 
         {
             score = score + coinValue;
