@@ -1,3 +1,7 @@
+//*************************************************************************\\
+//                 Handle collisions betwwen entities                      \\
+//*************************************************************************\\
+
 package com.example;
 import java.util.ArrayList;
 
@@ -9,8 +13,7 @@ public class CollisionHandler
    {
       this.gw = gw;
    }
-
-   // 
+ 
    public void dragonKnightCollisionAction()
    {
       int knightIndex = dragonKnightCollisionKnightIndex();

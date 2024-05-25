@@ -1,34 +1,48 @@
+//*************************************************************************\\
+//                 Create and control Dragon Entity                        \\
+//*************************************************************************\\
 package com.example;
 
-public class Dragon extends Entity {
+public class Dragon extends Entity 
+{
     protected int lives;
     private KeyHandler kh;
 
-    public Dragon(int px, int py, int v, KeyHandler kh) {
+    public Dragon(int px, int py, int v, KeyHandler kh) 
+    {
         super(px, py, v);
         this.lives = 2;
         this.kh = kh;
     }
 
-    public void changeDirection() {
-        if (kh.upPressed == true) {
+    public void changeDirection() 
+    {
+        if (kh.upPressed == true) 
+        {
             direction = Direction.UP;
         }
 
-        if (kh.downPressed == true) {
+        if (kh.downPressed == true) 
+        {
             direction = Direction.DOWN;
         }
 
-        if (kh.leftPressed == true) {
+        if (kh.leftPressed == true) 
+        {
             direction = Direction.LEFT;
         }
 
-        if (kh.rightPressed == true) {
+        if (kh.rightPressed == true) 
+        {
             direction = Direction.RIGHT;
         }
     }
 
-    // vi bruger metoden fra entity, men tilføjer at vaults ikke kan begås i.
+      //*****************************\\
+     //     collision checking        \\
+    //*********************************\\
+
+    // using the method from entity, we add the vault as a collision.
     @Override 
     public boolean wallCollision()
     {
@@ -48,17 +62,10 @@ public class Dragon extends Entity {
         return dragonCollisionFireball;
     }
 
-    // denne metode laver en rectangel til dragen ved brug af vores fancy rectangle klasse
+    // creates a rectangle around the dragon sprite using the Rectagle class.
     public Rectangle dragonRectangle() 
     {
         Rectangle dragonRectangle = new Rectangle(this.positionX, this.positionY, 32, 32);
         return dragonRectangle;
     }
-
-        // denne metode laver en rectangel til dragen ved brug af vores fancy rectangle klasse
-  
-    
-    
-
-
 }

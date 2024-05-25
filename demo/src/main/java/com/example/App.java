@@ -1,3 +1,12 @@
+//*************************************************************************\\
+//      Authors: Sandra K. Johansen, Sofie Løfberg, Celine S. Fussing      \\
+//                                                                         \\
+//                              App.java                                   \\
+//                                                                         \\
+//    This is the top level and used as mediator between model and view.   \\
+//                                                                         \\
+//*************************************************************************\\
+
 package com.example;
 
 import javafx.animation.AnimationTimer;
@@ -8,9 +17,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
 //import javafx.scene.text.*;
-
 import java.util.ArrayList;
-//import java.util.concurrent.*; 
+import java.util.concurrent.*; 
+import java.util.Random;
 
 /* TODO
 
@@ -72,23 +81,40 @@ public class App extends Application {
         knightArray.add(new Knight(480, 320, 1));
         knightArray.add(new Knight(480, 288, 1));
 
-        Gameworld gw = new Gameworld(dragonman, knightArray);
 
-        Draw drawie = new Draw(gw, canvas);
+        Gameworld gw = new Gameworld(dragonman, knightArray);
+        CollisionHandler cool = new CollisionHandler(gw);
+        Draw drawie = new Draw(gw, canvas, cool);
+
         drawie.drawBoard();
 
-        CollisionHandler cool = new CollisionHandler(gw);
 
-    /*  CollisionHandler cool = new CollisionHandler(gw);
+        //*****************************\\
+       //       Game loop and AI        \\
+      //*********************************\\
         
-        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1); */
+        Random rand = new Random();
+        int chaseOrScatter = rand.nextInt(2);
+        
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
 
-        // Runnable knightDirection = () -> {
-        //     for (int i = 0; i < 4; i++) {
-        //         gw.GiveKnightDirection(gw.knights.get(i));
-        //     }
-        // };
-        // ses.scheduleAtFixedRate(knightDirection, 2000, 250, TimeUnit.MILLISECONDS);
+        Runnable interval = () -> {
+           for (int i = 0; i < gw.knights.size(); i++) {
+                if (chaseOrScatter == 0) {
+                    gw.knights.get(i).updateChase(gw.knights.get(i), false);
+                    gw.knights.get(i).scatterX = rand.nextInt(29);
+                    gw.knights.get(i).scatterY = rand.nextInt(20);
+                }
+                else {
+                    gw.knights.get(i).updateChase(gw.knights.get(i), true);
+                }
+           }
+        };
+
+        ses.scheduleAtFixedRate(interval, 5, 1, TimeUnit.SECONDS);
+
+        int chaseX = (dragonman.positionX + 5) / 32;
+        int chaseY = (dragonman.positionY + 5) / 32;
 
         AnimationTimer gameloop = new AnimationTimer()
         {
@@ -109,17 +135,23 @@ public class App extends Application {
 
                 cool.dragonKnightCollisionAction();
 
-                int dragonMapX = (dragonman.positionX + 5) / 32;
-                int dragonMapY = (dragonman.positionY + 5) / 32;
 
                 for (int i = 0; i < gw.knights.size(); i++) {            
                     gw.knights.get(i).move(gw.knights.get(i));
                     int knightMapX = (gw.knights.get(i).positionX + 5) / 32;
                     int knightMapY = (gw.knights.get(i).positionY + 5) / 32;
-                    float distance = Math.abs(dragonMapX - knightMapX) + Math.abs(dragonMapY - knightMapY);
-                    Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
-                    Node bestNode = gw.knights.get(i).knightBFS(node, dragonMapX, dragonMapY);
-                    gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
+                    if (gw.knights.get(i).chase) {
+                        float distance = Math.abs(chaseX - knightMapX) + Math.abs(chaseY - knightMapY);
+                        Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
+                        Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY);
+                        gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
+                    }
+                    else {
+                        float distance = Math.abs(gw.knights.get(i).scatterX - knightMapX) + Math.abs(gw.knights.get(i).scatterY - knightMapY);
+                        Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
+                        Node bestNode = gw.knights.get(i).knightBFS(node, gw.knights.get(i).scatterX , gw.knights.get(i).scatterY);
+                        gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
+                    }
                 }  
             }
         }; 

@@ -1,30 +1,36 @@
+//*************************************************************************\\
+//                    Handle all key-inputs                                \\
+//*************************************************************************\\
+
 package com.example;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 
-
-
-public class KeyHandler {
-
+public class KeyHandler 
+{
     public boolean upPressed, downPressed, rightPressed, leftPressed;
     private Scene scene;
 
-    public KeyHandler(Scene scene) {
+    public KeyHandler(Scene scene) 
+    {
         this.upPressed = false;
         this.downPressed = false;
         this.rightPressed = false;
         this.leftPressed = false;
-
         this.scene = scene;
     }
 
-    public void inputHandler() {
-        scene.setOnKeyPressed (new EventHandler <KeyEvent>() {
+    public void inputHandler() 
+    {
+        scene.setOnKeyPressed (new EventHandler <KeyEvent>() 
+        {
             @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
+            public void handle(KeyEvent event) 
+            {
+                switch (event.getCode()) 
+                {
                     case UP:  
                     upPressed = true;
                     downPressed = false;
@@ -59,5 +65,4 @@ public class KeyHandler {
             }
         });
     }
-
 }

@@ -1,13 +1,19 @@
+//*************************************************************************\\
+//                 Define nodes to use in Knight AI                        \\
+//*************************************************************************\\
+
 package com.example;
 
-public class Node {
+public class Node 
+{
     int x;
     int y;
     Direction direction;
     Float distance;
     Node parent;
     
-    public Node(int x, int y, Direction direction, float distance, Node parent) {
+    public Node(int x, int y, Direction direction, float distance, Node parent) 
+    {
         this.x = x;
         this.y = y;
         this.direction = direction;
