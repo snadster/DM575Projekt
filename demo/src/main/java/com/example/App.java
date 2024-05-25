@@ -94,7 +94,7 @@ public class App extends Application {
       //*********************************\\
         
         Random rand = new Random();
-        int chaseOrScatter = rand.nextInt(2);
+        int chaseOrScatter = rand.nextInt(4);
         
         ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
 
@@ -111,7 +111,9 @@ public class App extends Application {
            }
         };
 
-        ses.scheduleAtFixedRate(interval, 5, 1, TimeUnit.SECONDS);
+        ses.scheduleAtFixedRate(interval, 4, 2, TimeUnit.SECONDS);
+
+        ses.shutdown();
 
         int chaseX = (dragonman.positionX + 5) / 32;
         int chaseY = (dragonman.positionY + 5) / 32;

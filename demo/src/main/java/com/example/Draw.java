@@ -43,77 +43,72 @@ public class Draw
 
     public void drawBoardNormal()
     {
-        if (gw.state == State.NORMAL)
-        {
             for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
             {
                 for (int y = 0; y < Map.map.length; y++)
                 {
                     switch (Map.map[y][x]) //vi tar det der stårpå pladsen og læser det.
                     {
-                        case 0 :
-                            context.drawImage(spriteSheet, 1, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 1 :
-                            context.drawImage(spriteSheet, 69, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 2 :
-                            context.drawImage(spriteSheet, 103, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 3 :
-                            context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 4 :
-                            context.drawImage(spriteSheet, 35, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 5 :
-                            context.drawImage(spriteSheet, 137, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 6 :
-                            context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                    }
+                    case 0 :
+                        context.drawImage(spriteSheet, 1, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 1 :
+                        context.drawImage(spriteSheet, 69, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 2 :
+                        context.drawImage(spriteSheet, 103, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 3 :
+                        context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 4 :
+                        context.drawImage(spriteSheet, 35, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 5 :
+                        context.drawImage(spriteSheet, 137, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 6 :
+                        context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
                 }
             }
         }
     }
+    
 
     public void drawBoardPower()
     {
-        if (gw.state == State.POWER)
+        for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
         {
-            for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
+            for (int y = 0; y < Map.map.length; y++)
             {
-                for (int y = 0; y < Map.map.length; y++)
+                switch (Map.map[y][x]) //vi tar det der står på pladsen og læser det.
                 {
-                    switch (Map.map[y][x]) //vi tar det der står på pladsen og læser det.
-                    {
-                        case 0 :
-                            context.drawImage(spriteSheet, 1, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 1 :
-                            context.drawImage(spriteSheet, 69, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 2 :
-                            context.drawImage(spriteSheet, 103, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 3 :
-                            context.drawImage(spriteSheet, 171, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 4 :
-                            context.drawImage(spriteSheet, 35, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 5 :
-                            context.drawImage(spriteSheet, 137, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                        case 6 :
-                            context.drawImage(spriteSheet, 171, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                            break;
-                    }
+                    case 0 :
+                        context.drawImage(spriteSheet, 1, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 1 :
+                        context.drawImage(spriteSheet, 69, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 2 :
+                        context.drawImage(spriteSheet, 103, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 3 :
+                        context.drawImage(spriteSheet, 171, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 4 :
+                        context.drawImage(spriteSheet, 35, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 5 :
+                        context.drawImage(spriteSheet, 137, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
+                    case 6 :
+                        context.drawImage(spriteSheet, 171, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        break;
                 }
             }
         }
-    }   
+    }  
 
     public void drawBox()
     {
