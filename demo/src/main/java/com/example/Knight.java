@@ -126,6 +126,10 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
     }
 
      */
+
+     public void updateDirection(Direction direction) {
+        this.direction = direction;
+     }
     
 
     public Node knightBFS(Node node, int dragonX, int dragonY) {
@@ -146,7 +150,7 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
             nodes.remove(current);
 
             for (Direction direction: directions) {
-                if (direction == Direction.DOWN) {
+                if (direction == Direction.DOWN && current.y < 20) {
                     int tempY = current.y + 1;
                     if (Map.map[tempY][current.x] == 0 || Map.map[tempY][current.x] == 5 || Map.map[tempY][current.x] == 3) {
                         float distance = Math.abs(dragonX - current.x) + Math.abs(dragonY - tempY);
@@ -158,7 +162,7 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
                     }
                 }
 
-                if (direction == Direction.UP) {
+                if (direction == Direction.UP && current.y > 0) {
                     int tempY = current.y - 1;
                     if (Map.map[tempY][current.x] == 0 || Map.map[tempY][current.x] == 5 || Map.map[tempY][current.x] == 3) {
                         float distance = Math.abs(dragonX - current.x) + Math.abs(dragonY - tempY);
@@ -170,11 +174,14 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
                     } 
                 }
 
-                if (direction == Direction.LEFT) {
+                if (direction == Direction.LEFT && current.x > 0) {
                     int tempX = current.x - 1;
                     if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5 || Map.map[current.y][tempX] == 3) {
                         float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
                         Node newNode = new Node(tempX, current.y, Direction.LEFT, distance, current);
+                        if (tempX == 0) {
+                            newNode = new Node(29, current.y, Direction.LEFT, distance, current);
+                        }
                         if (reached[newNode.y][newNode.x] == false) {
                             nodes.add(newNode);
                             reached[newNode.y][newNode.x] = true;
@@ -182,11 +189,14 @@ public Direction FurthestDirection(Knight knight, int DragonPositionX, int Drago
                     }
                 }
 
-                if (direction == Direction.RIGHT) {
+                if (direction == Direction.RIGHT && current.x < 29) {
                     int tempX = current.x + 1;
                     if (Map.map[current.y][tempX] == 0 || Map.map[current.y][tempX] == 5 || Map.map[current.y][tempX] == 3) {
                         float distance = Math.abs(dragonX - tempX) + Math.abs(dragonY - current.y);
                         Node newNode = new Node(tempX, current.y, Direction.RIGHT, distance, current);
+                        if (tempX == 29) {
+                            newNode = new Node(0, current.y, Direction.RIGHT, distance, current);
+                        }
                         if (reached[newNode.y][newNode.x] == false) {
                             nodes.add(newNode);
                             reached[newNode.y][newNode.x] = true;
