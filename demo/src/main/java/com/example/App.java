@@ -67,112 +67,119 @@ public class App extends Application
         Gameworld gw = new Gameworld(dragonman, knightArray);
         CollisionHandler cool = new CollisionHandler(gw, keyH);
         Draw drawie = new Draw(gw, canvas, cool);
+    
+        // Randomize if the knights scatter or chase the dragon.
+        Random rand = new Random();
+        int chaseOrScatter = rand.nextInt(3);
         
-            // Draw board with the dragon and knights.
-            drawie.drawBoardNormal();
-        
-            // Randomize if the knights scatter or chase the dragon.
-            Random rand = new Random();
-            int chaseOrScatter = rand.nextInt(3);
-            
-            ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
 
-            Runnable interval = () -> {
+        Runnable interval = () -> 
+        {
             for (int i = 0; i < gw.knights.size(); i++) 
             {
-                    if (chaseOrScatter == 1) 
-                    {
-                        gw.knights.get(i).updateChase(gw.knights.get(i), false);
-                        gw.knights.get(i).scatterX = rand.nextInt(29);
-                        gw.knights.get(i).scatterY = rand.nextInt(20);
-                    }
-                    else {
-                        gw.knights.get(i).updateChase(gw.knights.get(i), true);
-                    }
-            }
-            };
-            // Make the knights reconsider their target every 1.5 seconds.
-            ses.scheduleAtFixedRate(interval, 3000, 1500, TimeUnit.MILLISECONDS);
-
-
-           //****************\\
-          //     Game loop    \\
-         //********************\\
-            AnimationTimer gameloop = new AnimationTimer()
-            {
-                //----------------------------------------------------------------
-                // Update the appearance of board for every action performed
-                // by the entities per frame.
-                //----------------------------------------------------------------
-                public void handle(long nowNS)
+                if (chaseOrScatter == 1) 
                 {
-                    drawie.renderTime(nowNS);
-                    
-                    if (gw.gameOver()) 
-                    {
-                        gw.state = State.GAMEOVER;
-                        ses.shutdown();
-                    }
-                    
-                    // Make dragon move by pressing one of the key input.
+                    gw.knights.get(i).updateChase(gw.knights.get(i), false);
+                    gw.knights.get(i).scatterX = rand.nextInt(29);
+                    gw.knights.get(i).scatterY = rand.nextInt(20);
+                }
+                else 
+                {
+                gw.knights.get(i).updateChase(gw.knights.get(i), true);
+                }
+            }
+        };
+        // Make the knights reconsider their target every 1.5 seconds.
+        ses.scheduleAtFixedRate(interval, 3000, 1500, TimeUnit.MILLISECONDS);
+
+
+          //****************\\
+         //     Game loop    \\
+        //********************\\
+        AnimationTimer gameloop = new AnimationTimer()
+        {
+            //----------------------------------------------------------------
+            // Update the appearance of board for every action performed
+            // by the entities per frame.
+            //----------------------------------------------------------------
+            public void handle(long nowNS)
+            {
+                if (gw.state != State.GAMEOVER)
+                {
+                    drawie.draw(nowNS);
+                }
+                else if (gw.state == State.GAMEOVER)
+                {
+                    drawie.drawEndScreen();
+                }
+                
+                if (gw.gameOver()) 
+                {
+                    gw.state = State.GAMEOVER;
+                    ses.shutdown();
+                }
+                
+                // Make dragon move by pressing one of the key input.
+                if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                    dragonman.move(dragonman);
+                }
+                // Make the dragon move according to key input.
+                dragonman.changeDirection();
+
+                gw.collectCoin();
+                gw.collectFireball();
+
+                cool.dragonKnightCollisionAction(nowNS);
+
+                // The position of the dragon used in the search algorithm.
+                int chaseX = (gw.dragon.positionX + 5) / 32;
+                int chaseY = (gw.dragon.positionY + 5) / 32;
+
+                // Update the knights direction.
+                for (int i = 0; i < gw.knights.size(); i++) {
+
+                    //Make intial delay for knights, so they only start moving when the user
+                    //moves the dragon.
                     if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-                        dragonman.move(dragonman);
-                    }
-                    // Make the dragon move according to key input.
-                    dragonman.changeDirection();
+                        gw.knights.get(i).move(gw.knights.get(i));
+                    } 
 
-                    gw.collectCoin();
-                    gw.collectFireball();
+                    // The position of the knights used in the search algorithm.        
+                    int knightMapX = (gw.knights.get(i).positionX + 5) / 32;
+                    int knightMapY = (gw.knights.get(i).positionY + 5) / 32;
 
-                    cool.dragonKnightCollisionAction(nowNS);
-
-                    // The position of the dragon used in the search algorithm.
-                    int chaseX = (gw.dragon.positionX + 5) / 32;
-                    int chaseY = (gw.dragon.positionY + 5) / 32;
-
-                    // Update the knights direction.
-                    for (int i = 0; i < gw.knights.size(); i++) {
-
-                        //Make intial delay for knights, so they only start moving when the user
-                        //moves the dragon.
-                        if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-                            gw.knights.get(i).move(gw.knights.get(i));
-                        } 
-
-                        // The position of the knights used in the search algorithm.        
-                        int knightMapX = (gw.knights.get(i).positionX + 5) / 32;
-                        int knightMapY = (gw.knights.get(i).positionY + 5) / 32;
-
-                        if (gw.state == State.NORMAL) 
-                        {
-                            // Update the knights' direction to chase the dragon.
-                            if (gw.knights.get(i).chase) {
-                                float distance = Math.abs(chaseX - knightMapX) + Math.abs(chaseY - knightMapY);
-                                Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
-                                Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY, false);
-                                gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
-                            }
-                            // Update the knights' direction to chase a random position.
-                            else {
-                                float distance = Math.abs(gw.knights.get(i).scatterX - knightMapX) + Math.abs(gw.knights.get(i).scatterY - knightMapY);
-                                Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
-                                Node bestNode = gw.knights.get(i).knightBFS(node, gw.knights.get(i).scatterX , gw.knights.get(i).scatterY, false);
-                                gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
-                            }
-                        }
-                        // Update the knights' direction to search for a position away from the dragon.
-                        else if (gw.state == State.POWER) {
+                    if (gw.state == State.NORMAL) 
+                    {
+                        // Update the knights' direction to chase the dragon.
+                        if (gw.knights.get(i).chase) {
                             float distance = Math.abs(chaseX - knightMapX) + Math.abs(chaseY - knightMapY);
                             Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
-                            Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY, true);
+                            Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY, false);
                             gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
                         }
-                    }  
-                }
-            }; 
-            gameloop.start();
-            stage.show();
-        }  
+                        // Update the knights' direction to chase a random position.
+                        else {
+                            float distance = Math.abs(gw.knights.get(i).scatterX - knightMapX) + Math.abs(gw.knights.get(i).scatterY - knightMapY);
+                            Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
+                            Node bestNode = gw.knights.get(i).knightBFS(node, gw.knights.get(i).scatterX , gw.knights.get(i).scatterY, false);
+                            gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
+                        }
+                    }
+                    // Update the knights' direction to search for a position away from the dragon.
+                    else if (gw.state == State.POWER) {
+                        float distance = Math.abs(chaseX - knightMapX) + Math.abs(chaseY - knightMapY);
+                        Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
+                        Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY, true);
+                        gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
+                    }
+                }  
+            }
+        }; 
+
+        gameloop.start();
+        stage.show();
+    }  
 
     public static void main(String[] args) {
         launch(args);

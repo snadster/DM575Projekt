@@ -7,6 +7,7 @@ package com.example;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.canvas.*;
+import javafx.scene.control.Button;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
 
@@ -29,10 +30,10 @@ public class Draw
      //       board rendering         \\
     //*********************************\\
 
-    public void renderTime(long nowNS)
+    public void draw(long nowNS)
     {
+        clearBackground();
         drawStates(nowNS);
-        drawBox();
         drawScore();
         drawDragon(nowNS);
         drawDeadKnights(nowNS);
@@ -130,7 +131,7 @@ public class Draw
     // Draw a box around the board to visualise the score and number
     // of lives.
     //--------------------------------------------------------------------
-    public void drawBox()
+    public void clearBackground()
     {
         this.context.setFill(Color.WHITESMOKE);
         context.fillRect(0, 0, 1050, 800);
@@ -138,10 +139,13 @@ public class Draw
 
     public void drawScore() 
     {
-        this.context.setFont(Font.loadFont("Verdana", 25));
+        // Font gothic = Font.loadFont("Sketch_Gothic_School.ttf", 25);
+        Font gothic =Font.font("Verdana", 35);
+        System.out.println(gothic);
+        this.context.setFont(gothic);
         this.context.setFill(Color.BLACK);
         context.fillText("Score: "+ gw.score, 30.0, 30.0);
-        context.fillText("Lives: "+ gw.dragon.lives, 30, 720);
+        context.fillText("Lives: "+ gw.dragon.lives, 30, 730);
     }
 
 
@@ -241,25 +245,41 @@ public class Draw
     //--------------------------------------------------------------------
     public void drawEndScreen()
     {
+        endBackground();
+        endText();
+    }
+
+    public void endText()
+    {
+        if (gw.dragon.lives > 0)
+        {
+            this.context.setFont(Font.font("Verdana", 60));
+            this.context.setFill(Color.WHITESMOKE);
+            context.fillText("Score: "+gw.score, 500.0, 500.0);
+        }
+        else if (gw.dragon.lives == 0)
+        {
+            this.context.setFont(Font.font("Verdana", 70));
+            this.context.setFill(Color.WHITESMOKE);
+            context.fillText("Score: "+ gw.score, 350.0, 390.0);
+        }
+    }
+
+    public void endBackground()
+    {
         Image winnerScreen = new Image("game_over_win.png");
         Image looserScreen = new Image("game_over_lost.png");
         if (gw.dragon.lives > 0)
         {
-            ImageView win = new ImageView(winnerScreen);
-            win.setX(32);
-            win.setY(32);
-            win.setFitHeight(736);
-            win.setFitWidth(1024);
-            win.setPreserveRatio(true);
-        }
-        if (gw.dragon.lives == 0);
+            context.drawImage(winnerScreen, 32, 32, 960, 671);
+            Button newGame = new Button("Yes!");
+            Button exitGame = new Button("no..");
+        } 
+        else if (gw.dragon.lives == 0);
         {
-            ImageView loose = new ImageView(looserScreen);
-            loose.setX(32);
-            loose.setY(32);
-            loose.setFitHeight(736);
-            loose.setFitWidth(1024);
-            loose.setPreserveRatio(true);
+            context.drawImage(looserScreen, 32, 32, 960, 671);
+            Button newGame = new Button("Yes!");
+            Button exitGame = new Button("no..");
         }
-    }
+    }   
 }

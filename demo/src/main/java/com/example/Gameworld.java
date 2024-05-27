@@ -88,16 +88,10 @@ public class Gameworld
                 }
             }
         }
-        if (CoinsLeft == 0) 
+        if (CoinsLeft == 0 || dragon.lives == 0) 
         {
             gameOver = true;
         }
-
-        else if (dragon.lives == 0) 
-        {
-            gameOver = true;
-        }
-
         return gameOver;
     }
 }
