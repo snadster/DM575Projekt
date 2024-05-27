@@ -1,15 +1,15 @@
 //*************************************************************************\\
-//                 Handle collisions betwwen entities                      \\
+//                 Handle collisions between entities.                     \\
 //*************************************************************************\\
 
 package com.example;
-import java.security.Key;
 import java.util.ArrayList;
 
 public class CollisionHandler
 {
    private Gameworld gw;
    protected KeyHandler keyh;
+   public ArrayList<Knight> dying = new ArrayList<Knight>();
 
    public CollisionHandler(Gameworld gw, KeyHandler keyh)
    {
@@ -17,39 +17,59 @@ public class CollisionHandler
       this.keyh = keyh;
    }
  
-   public void dragonKnightCollisionAction()
+   //--------------------------------------------------------------------
+   // Handle collisions between the knights and the dragon.
+   //--------------------------------------------------------------------
+   public void dragonKnightCollisionAction(long NowNS)
    {
       int knightIndex = dragonKnightCollisionKnightIndex();
       int no = -1;
+
       if (knightIndex != no && gw.state == State.NORMAL)
       {
-         gw.score = gw.score / 4 * 3;
-         gw.dragon.lives = gw.dragon.lives - 1;
+         gw.score = gw.score / 4 * 3; // Remove points from the score after a collsion.
+         gw.dragon.lives = gw.dragon.lives - 1; 
          gw.dragon.positionX = 448;
          gw.dragon.positionY = 384;
 
-         gw.knights.get(0).positionX = 448;
-         gw.knights.get(0).positionY = 288;
-         gw.knights.get(1).positionX = 448;
-         gw.knights.get(1).positionY = 320;
-         gw.knights.get(2).positionX = 480;
-         gw.knights.get(2).positionY = 320;
-         gw.knights.get(3).positionX = 480;
-         gw.knights.get(3).positionY = 288;
-
-         keyh.downPressed = false;
+         for (int i = 0; i < gw.knights.size(); i++) {
+            if (gw.knights.get(i).colour == "Blue") {
+               gw.knights.get(i).positionX = 448;
+               gw.knights.get(i).positionY = 288;
+            }
+            if (gw.knights.get(i).colour == "Purple") {
+               gw.knights.get(i).positionX = 448;
+               gw.knights.get(i).positionY = 320;
+            }
+            if (gw.knights.get(i).colour == "Pink") {
+               gw.knights.get(i).positionX = 480;
+               gw.knights.get(i).positionY = 320;
+            }
+            if (gw.knights.get(i).colour == "Orange") {
+               gw.knights.get(i).positionX = 480;
+               gw.knights.get(i).positionY = 288;
+            }
+        }
+         // Make an intial delay after the dragon has lost a life.
+         keyh.downPressed = false;  
          keyh.leftPressed = false;
          keyh.rightPressed = false;
          keyh.upPressed = false;
-
       }
       if (knightIndex != no && gw.state == State.POWER) //this state specifier is not strictly necessary; it is here for clear understanding
       {
          gw.score = gw.score + 400;
-         gw.knights.remove(knightIndex);
+         // add dead knight to seperate array
+         dying.add(gw.knights.get(knightIndex)); 
+         gw.knights.get(knightIndex).deathTime = NowNS; 
+         gw.knights.get(knightIndex).direction = Direction.UP;
+         gw.knights.remove(knightIndex); 
       } 
    }
 
+   //--------------------------------------------------------------------
+   // Check for collisions between the knights and the dragon.
+   //--------------------------------------------------------------------
    public int dragonKnightCollisionKnightIndex()
    {
       ArrayList<Rectangle> knightRectangles = knightRectangles();

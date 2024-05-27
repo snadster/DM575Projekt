@@ -11,7 +11,6 @@ public class Entity
     protected int positionX;
     protected int positionY;
     protected int velocity;
-    protected Map map;
 
     public Entity(int px, int py, int v) 
     {

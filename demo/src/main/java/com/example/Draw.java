@@ -2,7 +2,6 @@
 //               Render board and all game aestehtics.                     \\
 //*************************************************************************\\
 
-
 package com.example;
 
 import javafx.scene.image.Image;
@@ -29,7 +28,7 @@ public class Draw
      //       board rendering         \\
     //*********************************\\
 
-    public void drawBoard()//we use switch case for fun and for speed
+    public void drawBoard()
     {
         if (gw.state == State.NORMAL)
         {
@@ -43,11 +42,11 @@ public class Draw
 
     public void drawBoardNormal()
     {
-            for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
+            for (int x = 0; x < Map.map[0].length; x++)
             {
                 for (int y = 0; y < Map.map.length; y++)
                 {
-                    switch (Map.map[y][x]) //vi tar det der stårpå pladsen og læser det.
+                    switch (Map.map[y][x])
                     {
                     case 0 :
                         context.drawImage(spriteSheet, 1, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
@@ -75,14 +74,13 @@ public class Draw
         }
     }
     
-
     public void drawBoardPower()
     {
-        for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
+        for (int x = 0; x < Map.map[0].length; x++)
         {
             for (int y = 0; y < Map.map.length; y++)
             {
-                switch (Map.map[y][x]) //vi tar det der står på pladsen og læser det.
+                switch (Map.map[y][x])
                 {
                     case 0 :
                         context.drawImage(spriteSheet, 1, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
@@ -116,7 +114,7 @@ public class Draw
         context.fillRect(0, 0, 1050, 800);
     }
 
-    public void drawScore() 
+    public void drawScore() // den her virker stadig kun til at printe det, kan ikke engagn ændre skriftstørrelse
     {
         this.context.setFont(Font.loadFont("Verdana", 25));
         this.context.setFill(Color.BLACK);
@@ -143,6 +141,7 @@ public class Draw
         {
             drawPowerKnights(nowNS);
         }
+        drawDeadKnights(nowNS);
     }
 
     public void drawNormalKnights(long nowNS)
@@ -174,32 +173,39 @@ public class Draw
         } 
     }
 
-    public void drawDeadKnights(long nowNS, Knight deadKnightPosition)
+    public void drawDeadKnights(long nowNS)
     {
-        drawAnimatedSprite(nowNS, deadKnightPosition, 4, 1, 205);
+        int animatedFrameTime = 1000000000;
+        for (Knight knight : cool.dying)
+        {
+            System.out.println(1);
+            if (nowNS - knight.deathTime < animatedFrameTime)
+            {
+                System.out.println(2);
+                drawAnimatedSprite(nowNS - knight.deathTime, knight, 4, 1, 205);
+            }
+        }
     }
 
     public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
     {
-        //animates the dragon from the spritesheet.
-        Entity entities = entity;
-        int x = entities.positionX;
-        int y = entities.positionY;
+        int x = entity.positionX;
+        int y = entity.positionY;
         int size = 33;
         //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
-        if (entities.direction == Direction.UP)
+        if (entity.direction == Direction.UP)
         {
             drawAnimated(nowNS, animationLength, startX, startY, x, y, size, size);
         }
-        else if (entities.direction == Direction.DOWN)
+        else if (entity.direction == Direction.DOWN)
         {
             drawAnimated(nowNS, animationLength, startX + 1 * animationLength * 34, startY, x, y, size, size);
         }
-        else if (entities.direction == Direction.RIGHT)
+        else if (entity.direction == Direction.RIGHT)
         {
             drawAnimated(nowNS, animationLength, startX + 2 * animationLength * 34, startY, x, y, size, size);
         }
-        else if (entities.direction == Direction.LEFT)
+        else if (entity.direction == Direction.LEFT)
         {
             drawAnimated(nowNS, animationLength, startX + 3 * animationLength * 34, startY, x, y, size, size);
         }

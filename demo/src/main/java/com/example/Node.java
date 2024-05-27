@@ -6,11 +6,11 @@ package com.example;
 
 public class Node 
 {
-    int x;
-    int y;
-    Direction direction;
-    Float distance;
-    Node parent;
+    protected int x;
+    protected int y;
+    protected Direction direction;
+    protected Float distance;
+    protected Node parent;
     
     public Node(int x, int y, Direction direction, float distance, Node parent) 
     {

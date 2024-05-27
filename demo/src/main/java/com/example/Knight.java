@@ -8,10 +8,11 @@ import java.util.ArrayList;
 
 public class Knight extends Entity 
 {
-    boolean chase;
-    int scatterX;
-    int scatterY;
-    String colour;
+    protected boolean chase;
+    protected int scatterX;
+    protected int scatterY;
+    protected String colour;
+    protected long deathTime;
 
     public Knight(int px, int py, int v, String colour) 
     {
@@ -20,6 +21,7 @@ public class Knight extends Entity
         this.scatterX = 0;
         this.scatterY = 0;
         this.colour = colour;
+        this.deathTime = -1;
     }
 
     public void updateDirection(Knight knight, Direction direction) 
