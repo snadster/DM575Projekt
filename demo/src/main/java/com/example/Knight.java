@@ -11,13 +11,15 @@ public class Knight extends Entity
     boolean chase;
     int scatterX;
     int scatterY;
+    String colour;
 
-    public Knight(int px, int py, int v) 
+    public Knight(int px, int py, int v, String colour) 
     {
         super(px, py, v);
         this.chase = true;
         this.scatterX = 0;
         this.scatterY = 0;
+        this.colour = colour;
     }
 
     public void updateDirection(Knight knight, Direction direction) 

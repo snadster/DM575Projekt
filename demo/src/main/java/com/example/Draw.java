@@ -146,11 +146,24 @@ public class Draw
     }
 
     public void drawNormalKnights(long nowNS)
-    {
-        drawAnimatedSprite(nowNS, gw.knights.get(0), 3, 1, 35);
-        drawAnimatedSprite(nowNS, gw.knights.get(1), 3, 1, 69);
-        drawAnimatedSprite(nowNS, gw.knights.get(2), 3, 1, 103);
-        drawAnimatedSprite(nowNS, gw.knights.get(3), 3, 1, 137);
+    {   
+        
+        for (int i = 0; i < gw.knights.size(); i++) {
+            if (gw.knights.get(i).colour == "Blue") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 35);
+            }
+            if (gw.knights.get(i).colour == "Purple") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 69);
+            }
+            if (gw.knights.get(i).colour == "Pink") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 103);
+            }
+            if (gw.knights.get(i).colour == "Orange") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 137);
+            }
+
+        }
+        
     }
 
     public void drawPowerKnights(long nowNS)

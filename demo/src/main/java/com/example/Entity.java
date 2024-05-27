@@ -15,7 +15,7 @@ public class Entity
 
     public Entity(int px, int py, int v) 
     {
-        this.direction = Direction.UP;
+        this.direction = Direction.DOWN;
         this.positionX = px;
         this.positionY = py;
         this.velocity = v;

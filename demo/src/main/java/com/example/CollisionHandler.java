@@ -3,15 +3,18 @@
 //*************************************************************************\\
 
 package com.example;
+import java.security.Key;
 import java.util.ArrayList;
 
 public class CollisionHandler
 {
    private Gameworld gw;
+   protected KeyHandler keyh;
 
-   public CollisionHandler(Gameworld gw)
+   public CollisionHandler(Gameworld gw, KeyHandler keyh)
    {
       this.gw = gw;
+      this.keyh = keyh;
    }
  
    public void dragonKnightCollisionAction()
@@ -24,6 +27,7 @@ public class CollisionHandler
          gw.dragon.lives = gw.dragon.lives - 1;
          gw.dragon.positionX = 448;
          gw.dragon.positionY = 384;
+
          gw.knights.get(0).positionX = 448;
          gw.knights.get(0).positionY = 288;
          gw.knights.get(1).positionX = 448;
@@ -32,6 +36,12 @@ public class CollisionHandler
          gw.knights.get(2).positionY = 320;
          gw.knights.get(3).positionX = 480;
          gw.knights.get(3).positionY = 288;
+
+         keyh.downPressed = false;
+         keyh.leftPressed = false;
+         keyh.rightPressed = false;
+         keyh.upPressed = false;
+
       }
       if (knightIndex != no && gw.state == State.POWER) //this state specifier is not strictly necessary; it is here for clear understanding
       {

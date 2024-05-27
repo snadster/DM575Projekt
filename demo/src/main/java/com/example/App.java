@@ -23,9 +23,15 @@ import java.util.Random;
 
 /* TODO
 
-    Gameover state
-    fejlfinding ift. powermode (index out of bounds??)
-    kommentarer 
+    Gameover state (sandra)
+        - slutskærm
+        - knap til nyt spil
+    døde ridder (sandra)
+    fejlfinding - wrap around riddere (venstre) (sofie)
+    knights index håndtering (sofie)
+
+    kommentarer og korrektur (Celine mm.)
+    Rapport (Når der er ventetid)
    
 */
 
@@ -50,21 +56,21 @@ public class App extends Application {
 
         Dragon dragonman = new Dragon(448, 384, 2, keyH); 
         ArrayList<Knight> knightArray = new ArrayList<>();
-        knightArray.add(new Knight(448, 288, 1));
-        knightArray.add(new Knight(448, 320, 1));
-        knightArray.add(new Knight(480, 320, 1));
-        knightArray.add(new Knight(480, 288, 1));
+        knightArray.add(new Knight(448, 288, 1, "Blue"));
+        knightArray.add(new Knight(448, 320, 1, "Purple"));
+        knightArray.add(new Knight(480, 320, 1, "Pink"));
+        knightArray.add(new Knight(480, 288, 1, "Orange"));
 
         Gameworld gw = new Gameworld(dragonman, knightArray);
-        CollisionHandler cool = new CollisionHandler(gw);
+        CollisionHandler cool = new CollisionHandler(gw, keyH);
         Draw drawie = new Draw(gw, canvas, cool);
 
         drawie.drawBoard();
 
 
-        //*****************************\\
-       //       Game loop and AI        \\
-      //*********************************\\
+        //******************\\
+       //       Game loop    \\
+      //**********************\\
         
         Random rand = new Random();
         int chaseOrScatter = rand.nextInt(2);
@@ -77,7 +83,6 @@ public class App extends Application {
                     gw.knights.get(i).updateChase(gw.knights.get(i), false);
                     gw.knights.get(i).scatterX = rand.nextInt(29);
                     gw.knights.get(i).scatterY = rand.nextInt(20);
-                    System.out.println(2);
                 }
                 else {
                     gw.knights.get(i).updateChase(gw.knights.get(i), true);
@@ -85,7 +90,7 @@ public class App extends Application {
            }
         };
 
-        ses.scheduleAtFixedRate(interval, 3, 2, TimeUnit.SECONDS);
+        ses.scheduleAtFixedRate(interval, 3000, 1500, TimeUnit.MILLISECONDS);
 
         AnimationTimer gameloop = new AnimationTimer()
         {
@@ -98,7 +103,10 @@ public class App extends Application {
                 drawie.drawDragon(nowNS);
                 drawie.drawKnights(nowNS);
 
-                dragonman.move(dragonman);
+                if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                    dragonman.move(dragonman);
+                }
+                
                 dragonman.changeDirection();
 
                 gw.collectCoin();
@@ -109,8 +117,10 @@ public class App extends Application {
                 int chaseX = (gw.dragon.positionX + 5) / 32;
                 int chaseY = (gw.dragon.positionY + 5) / 32;
 
-                for (int i = 0; i < gw.knights.size(); i++) {            
-                    gw.knights.get(i).move(gw.knights.get(i));
+                for (int i = 0; i < gw.knights.size(); i++) { 
+                    if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+                        gw.knights.get(i).move(gw.knights.get(i));
+                    }           
                     int knightMapX = (gw.knights.get(i).positionX + 5) / 32;
                     int knightMapY = (gw.knights.get(i).positionY + 5) / 32;
                     if (gw.state == State.NORMAL) 
