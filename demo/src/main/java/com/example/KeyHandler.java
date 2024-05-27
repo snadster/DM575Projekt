@@ -22,6 +22,9 @@ public class KeyHandler
         this.scene = scene;
     }
 
+    //--------------------------------------------------------------------
+    // Handle keyboard input from the user.
+    //--------------------------------------------------------------------
     public void inputHandler() 
     {
         scene.setOnKeyPressed (new EventHandler <KeyEvent>() 
@@ -59,7 +62,7 @@ public class KeyHandler
                     leftPressed = false;
                     break;
 
-                    default:
+                    default: // Only the arrows are permitted as valid inputs.
                     break;
                 }
             }

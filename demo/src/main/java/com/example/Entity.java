@@ -1,5 +1,5 @@
 //*************************************************************************\\
-//           Define rules for -and control- all entities                   \\
+//           Define rules for - and control - all entities                 \\
 //*************************************************************************\\
 package com.example;
 
@@ -20,7 +20,10 @@ public class Entity
         this.velocity = v;
     }
 
-    // Make the entity move if there is no wall collision.
+    //--------------------------------------------------------------------
+    // Make the entity move in designated direction if there is no 
+    // wall collision.
+    //--------------------------------------------------------------------
     public void move(Entity entity) 
     {
         if (!wallCollision()) 
@@ -56,7 +59,7 @@ public class Entity
             }
         } 
 
-        else 
+        else // Center the sprite on a tile after a wall collision.
         {
             entity.positionX = (entity.positionX + 5) / 32 * 32;
             entity.positionY = (entity.positionY + 5) / 32 * 32;
@@ -67,14 +70,14 @@ public class Entity
      //  collision checking w/rectangles  \\
     //*************************************\\
     
-    // Check for collision between entities and walls, and entities and towers.
+    // Check for collisions between entities and walls, and entities and towers.
     public boolean wallCollision()
     {
         boolean entityCollisionWall = collision(1) || collision(4) || collision(6);
         return entityCollisionWall;
     }
 
-    // Check for collision between the given map number and entities - by checking for overlap of different rectangles.
+    // Check for collisions between the given map number and entities - by checking for overlap of different rectangles.
     public boolean collision(int mapNumber)
     {
         Rectangle entityRectangle = new Rectangle(positionX+1, positionY+1, 30, 30);
@@ -91,7 +94,10 @@ public class Entity
         return yep;
     }
 
-    // Iterate over the map and create rectangles for given numbers in map. Used for collision checks.
+    //--------------------------------------------------------------------
+    // Iterate over the map and create rectangles for given numbers in
+    // map. Used for collision checks.
+    //--------------------------------------------------------------------
     public ArrayList<Rectangle> rectangleMaker(int mapNumber)
     {
         ArrayList<Rectangle> listRectangles = new ArrayList<>();

@@ -59,7 +59,7 @@ public class CollisionHandler
       if (knightIndex != no && gw.state == State.POWER) //this state specifier is not strictly necessary; it is here for clear understanding
       {
          gw.score = gw.score + 400;
-         // add dead knight to seperate array
+         // Add dead knight to seperate array.
          dying.add(gw.knights.get(knightIndex)); 
          gw.knights.get(knightIndex).deathTime = NowNS; 
          gw.knights.get(knightIndex).direction = Direction.UP;
@@ -84,6 +84,10 @@ public class CollisionHandler
       return knightHitIndex;
    }
 
+   //--------------------------------------------------------------------
+   // Make rectangeles for the knights. Used to check for collisions
+   // concerning knights.
+   //--------------------------------------------------------------------
    public ArrayList<Rectangle> knightRectangles()
    {
       ArrayList<Rectangle> knightRectangles = new ArrayList<Rectangle>();

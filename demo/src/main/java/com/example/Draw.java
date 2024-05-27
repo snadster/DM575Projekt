@@ -5,6 +5,7 @@
 package com.example;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.canvas.*;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
@@ -28,18 +29,32 @@ public class Draw
      //       board rendering         \\
     //*********************************\\
 
-    public void drawBoard()
+    public void renderTime(long nowNS)
+    {
+        drawStates(nowNS);
+        drawBox();
+        drawScore();
+        drawDragon(nowNS);
+        drawDeadKnights(nowNS);
+    }
+
+    public void drawStates(long nowNS)
     {
         if (gw.state == State.NORMAL)
         {
             drawBoardNormal();
+            drawNormalKnights(nowNS);
         }
         else if (gw.state == State.POWER)
         {
             drawBoardPower();
+            drawPowerKnights(nowNS);
         }
     }
 
+    //--------------------------------------------------------------------
+    // Draw the board for normal mode.
+    //--------------------------------------------------------------------
     public void drawBoardNormal()
     {
             for (int x = 0; x < Map.map[0].length; x++)
@@ -74,6 +89,9 @@ public class Draw
         }
     }
     
+    //--------------------------------------------------------------------
+    // Draw the board for power mode.
+    //--------------------------------------------------------------------
     public void drawBoardPower()
     {
         for (int x = 0; x < Map.map[0].length; x++)
@@ -108,13 +126,17 @@ public class Draw
         }
     }  
 
+    //--------------------------------------------------------------------
+    // Draw a box around the board to visualise the score and number
+    // of lives.
+    //--------------------------------------------------------------------
     public void drawBox()
     {
         this.context.setFill(Color.WHITESMOKE);
         context.fillRect(0, 0, 1050, 800);
     }
 
-    public void drawScore() // den her virker stadig kun til at printe det, kan ikke engagn ændre skriftstørrelse
+    public void drawScore() 
     {
         this.context.setFont(Font.loadFont("Verdana", 25));
         this.context.setFill(Color.BLACK);
@@ -126,97 +148,118 @@ public class Draw
       //*****************************\\
      //       Render Entities         \\
     //*********************************\\
-    public void drawDragon(long nowNS)
-    {
-        drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
-    }
+    
 
-    public void drawKnights(long nowNS) 
-    {
-        if (gw.state == State.NORMAL) 
+        public void drawDragon(long nowNS)
         {
-            drawNormalKnights(nowNS);
+            drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
         }
-        if (gw.state == State.POWER) 
-        {
-            drawPowerKnights(nowNS);
+
+        public void drawNormalKnights(long nowNS)
+        {   
+            
+            for (int i = 0; i < gw.knights.size(); i++) {
+                if (gw.knights.get(i).colour == "Blue") {
+                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 35);
+                }
+                if (gw.knights.get(i).colour == "Purple") {
+                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 69);
+                }
+                if (gw.knights.get(i).colour == "Pink") {
+                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 103);
+                }
+                if (gw.knights.get(i).colour == "Orange") {
+                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 137);
+                }
+
+            }
+            
         }
-        drawDeadKnights(nowNS);
-    }
 
-    public void drawNormalKnights(long nowNS)
-    {   
-        
-        for (int i = 0; i < gw.knights.size(); i++) {
-            if (gw.knights.get(i).colour == "Blue") {
-                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 35);
-            }
-            if (gw.knights.get(i).colour == "Purple") {
-                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 69);
-            }
-            if (gw.knights.get(i).colour == "Pink") {
-                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 103);
-            }
-            if (gw.knights.get(i).colour == "Orange") {
-                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 137);
-            }
-
-        }
-        
-    }
-
-    public void drawPowerKnights(long nowNS)
-    {
-        for (Knight knight : gw.knights) 
+        public void drawPowerKnights(long nowNS)
         {
-            drawAnimatedSprite(nowNS, knight, 3, 1, 171);
-        } 
-    }
-
-    public void drawDeadKnights(long nowNS)
-    {
-        int animatedFrameTime = 1000000000;
-        for (Knight knight : cool.dying)
-        {
-            System.out.println(1);
-            if (nowNS - knight.deathTime < animatedFrameTime)
+            for (Knight knight : gw.knights) 
             {
-                System.out.println(2);
-                drawAnimatedSprite(nowNS - knight.deathTime, knight, 4, 1, 205);
+                drawAnimatedSprite(nowNS, knight, 3, 1, 171);
+            } 
+        }
+
+        public void drawDeadKnights(long nowNS)
+        {
+            int animatedFrameTime = 1000000000;
+            for (Knight knight : cool.dying)
+            {
+                System.out.println(1);
+                if (nowNS - knight.deathTime < animatedFrameTime)
+                {
+                    System.out.println(2);
+                    drawAnimatedSprite(nowNS - knight.deathTime, knight, 4, 1, 205);
+                }
             }
         }
-    }
 
-    public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
+        //--------------------------------------------------------------------
+        // Draw the animated sprites in their current direction.
+        //--------------------------------------------------------------------
+        public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
+        {
+            int x = entity.positionX;
+            int y = entity.positionY;
+            int size = 32; // hvis ting er sære er det den her der var 33
+            //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
+            if (entity.direction == Direction.UP)
+            {
+                drawAnimated(nowNS, animationLength, startX, startY, x, y, size, size);
+            }
+            else if (entity.direction == Direction.DOWN)
+            {
+                drawAnimated(nowNS, animationLength, startX + 1 * animationLength * 34, startY, x, y, size, size);
+            }
+            else if (entity.direction == Direction.RIGHT)
+            {
+                drawAnimated(nowNS, animationLength, startX + 2 * animationLength * 34, startY, x, y, size, size);
+            }
+            else if (entity.direction == Direction.LEFT)
+            {
+                drawAnimated(nowNS, animationLength, startX + 3 * animationLength * 34, startY, x, y, size, size);
+            }
+        }
+
+        //--------------------------------------------------------------------
+        // Draw correct frames from spritesheet
+        //--------------------------------------------------------------------
+        public void drawAnimated(long nowNS, long animationLength, int startX, int startY, int positionX, int positionY, int dw, int dh)
+        {
+            long fourthOfSecondNS = 1000000000 / 4;
+            long animationFrame = nowNS / fourthOfSecondNS % animationLength;
+            context.setImageSmoothing(false);
+            context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX + 32, positionY + 32, dw, dh);
+        }     
+
+    //--------------------------------------------------------------------
+    // Draw the gameover screen.
+    //--------------------------------------------------------------------
+    public void drawEndScreen()
     {
-        int x = entity.positionX;
-        int y = entity.positionY;
-        int size = 33;
-        //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
-        if (entity.direction == Direction.UP)
+        Image winnerScreen = new Image("game_over_win.png");
+        Image looserScreen = new Image("game_over_lost.png");
+        if (gw.dragon.lives > 0)
         {
-            drawAnimated(nowNS, animationLength, startX, startY, x, y, size, size);
+            ImageView win = new ImageView(winnerScreen);
+            win.setX(32);
+            win.setY(32);
+            win.setFitHeight(736);
+            win.setFitWidth(1024);
+            win.setPreserveRatio(true);
         }
-        else if (entity.direction == Direction.DOWN)
+        if (gw.dragon.lives == 0);
         {
-            drawAnimated(nowNS, animationLength, startX + 1 * animationLength * 34, startY, x, y, size, size);
-        }
-        else if (entity.direction == Direction.RIGHT)
-        {
-            drawAnimated(nowNS, animationLength, startX + 2 * animationLength * 34, startY, x, y, size, size);
-        }
-        else if (entity.direction == Direction.LEFT)
-        {
-            drawAnimated(nowNS, animationLength, startX + 3 * animationLength * 34, startY, x, y, size, size);
+            ImageView loose = new ImageView(looserScreen);
+            loose.setX(32);
+            loose.setY(32);
+            loose.setFitHeight(736);
+            loose.setFitWidth(1024);
+            loose.setPreserveRatio(true);
         }
     }
-
-    public void drawAnimated(long nowNS, long animationLength, int startX, int startY, int positionX, int positionY, int dw, int dh)
-    {
-        long fourthOfSecondNS = 1000000000 / 4;
-        long animationFrame = nowNS / fourthOfSecondNS % animationLength;
-        context.setImageSmoothing(false);
-        context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX + 32, positionY + 32, dw, dh);
-    } 
-
 }

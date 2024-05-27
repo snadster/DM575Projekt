@@ -1,5 +1,5 @@
 //*************************************************************************\\
-//            Define rectangles to use in collision checks                 \\
+//            Define rectangles to use in collision checks.                \\
 //*************************************************************************\\
 
 package com.example;
@@ -19,9 +19,12 @@ public class Rectangle
         this.height = height;
     }
 
+    //--------------------------------------------------------------------
+    // Check when the boxes do NOT overlap by using a concept of 
+    // seperating axis.
+    //--------------------------------------------------------------------
     public boolean overlap(Rectangle other)
     {
-        //we use a concept of seperating axis to check when our boxes do NOT overlap
         boolean dontOverlap = 
             this.x + this.width < other.x    || //this is to the left of other
             other.x + other.width < this.x   || //this is to the right of other

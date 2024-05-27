@@ -1,5 +1,5 @@
 //*************************************************************************\\
-//                 Create and control Dragon Entity                        \\
+//                 Create and control the entity, dragon                   \\
 //*************************************************************************\\
 package com.example;
 
@@ -15,6 +15,9 @@ public class Dragon extends Entity
         this.kh = kh;
     }
 
+    //--------------------------------------------------------------------
+    // Update the dragon's direction matching the pressed key input.
+    //--------------------------------------------------------------------
     public void changeDirection() 
     {
         if (kh.upPressed == true) 
@@ -42,7 +45,7 @@ public class Dragon extends Entity
      //     collision checking        \\
     //*********************************\\
 
-    // using the method from entity, we add the vault as a collision.
+    // Use the method from entity to add the knight vault as a collision.
     @Override 
     public boolean wallCollision()
     {
@@ -62,7 +65,7 @@ public class Dragon extends Entity
         return dragonCollisionFireball;
     }
 
-    // creates a rectangle around the dragon sprite using the Rectagle class.
+    // Create a rectangle around the dragon sprite using the Rectangle class.
     public Rectangle dragonRectangle() 
     {
         Rectangle dragonRectangle = new Rectangle(this.positionX, this.positionY, 32, 32);

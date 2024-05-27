@@ -36,6 +36,9 @@ public class Gameworld
     //     } 
     // }
 
+    //--------------------------------------------------------------------
+    // Collect coins and remove them from the board.
+    //--------------------------------------------------------------------
     public void collectCoin()
     {
         int dragonX = ((dragon.positionX + 5) / 32);
@@ -47,6 +50,10 @@ public class Gameworld
         }
     }
 
+    //--------------------------------------------------------------------
+    // Collect fireballs and remove them from the board. Change the state
+    // to power mode.
+    //--------------------------------------------------------------------
     public void collectFireball()
     {
         int dragonX = (dragon.positionX / 32);
@@ -55,6 +62,7 @@ public class Gameworld
         {
             Map.map[dragonY][dragonX] = 0;
             state = State.POWER;
+            // Make the state change back to normal after 10.1 seconds.
             Runnable endPowerState = () -> state = State.NORMAL;
             ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
             executorService.schedule(endPowerState, 10, TimeUnit.SECONDS);
@@ -62,7 +70,10 @@ public class Gameworld
         }
     }
 
-    public void gameOver() 
+    //--------------------------------------------------------------------
+    // Check if the game is over.
+    //--------------------------------------------------------------------
+    public boolean gameOver() 
     {
         boolean gameOver = false;
 
@@ -87,9 +98,6 @@ public class Gameworld
             gameOver = true;
         }
 
-        else if (gameOver == true) 
-        {
-           state = State.GAMEOVER;
-        }
+        return gameOver;
     }
 }
