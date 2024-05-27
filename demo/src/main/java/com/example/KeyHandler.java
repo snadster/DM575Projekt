@@ -10,7 +10,7 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyHandler 
 {
-    public boolean upPressed, downPressed, rightPressed, leftPressed;
+    public boolean upPressed, downPressed, rightPressed, leftPressed, newGame;
     private Scene scene;
 
     public KeyHandler(Scene scene) 
@@ -20,6 +20,8 @@ public class KeyHandler
         this.rightPressed = false;
         this.leftPressed = false;
         this.scene = scene;
+        this.newGame = false;
+
     }
 
     //--------------------------------------------------------------------
@@ -61,6 +63,12 @@ public class KeyHandler
                     downPressed = false;
                     leftPressed = false;
                     break;
+
+                    case ENTER:
+                    newGame = true;
+
+                    case DELETE:
+                    System.exit(0);
 
                     default: // Only the arrows are permitted as valid inputs.
                     break;

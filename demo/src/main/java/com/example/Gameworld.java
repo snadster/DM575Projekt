@@ -73,10 +73,8 @@ public class Gameworld
     //--------------------------------------------------------------------
     // Check if the game is over.
     //--------------------------------------------------------------------
-    public boolean gameOver() 
+    public int gameOver() 
     {
-        boolean gameOver = false;
-
         int CoinsLeft = 0;
         for (int x = 0; x < 30; x++) 
         {
@@ -90,8 +88,30 @@ public class Gameworld
         }
         if (CoinsLeft == 0 || dragon.lives == 0) 
         {
-            gameOver = true;
+            this.state = State.GAMEOVER;
         }
-        return gameOver;
+        return CoinsLeft;
+    }
+
+    public void newGame() {
+        this.state = State.NORMAL;
+        this.score = 0;
+        dragon.lives = 2;
+        for (int x = 0; x < 30; x++) {
+            for (int y = 0; y < 21; y++) {
+                if (Map.map[y][x] == 0) {
+                    Map.map[y][x] = 5;
+                }
+            }
+        }
+        Map.map[5][7] = 2;
+        Map.map[9][28] = 2;
+        Map.map[13][2] = 2;
+        Map.map[19][21] = 2;
+
+        knights.add(new Knight(448, 288, 1, "Blue"));
+        knights.add(new Knight(448, 320, 1, "Purple"));
+        knights.add(new Knight(480, 320, 1, "Pink"));
+        knights.add(new Knight(480, 288, 1, "Orange"));
     }
 }

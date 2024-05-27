@@ -16,11 +16,9 @@ import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
-//import javafx.scene.text.*;
 import java.util.ArrayList;
 import java.util.concurrent.*; 
 import java.util.Random;
-
 /* TODO
 
     Gameover state (sandra)
@@ -105,20 +103,26 @@ public class App extends Application
             //----------------------------------------------------------------
             public void handle(long nowNS)
             {
+                if (keyH.newGame) {
+                    keyH.newGame = false;
+                    keyH.downPressed = false;
+                    keyH.leftPressed = false;
+                    keyH.rightPressed = false;
+                    keyH.upPressed = false;
+                    gw.newGame();
+                } 
+
                 if (gw.state != State.GAMEOVER)
                 {
                     drawie.draw(nowNS);
                 }
                 else if (gw.state == State.GAMEOVER)
                 {
+                    ses.shutdown();
                     drawie.drawEndScreen();
                 }
                 
-                if (gw.gameOver()) 
-                {
-                    gw.state = State.GAMEOVER;
-                    ses.shutdown();
-                }
+                gw.gameOver(); 
                 
                 // Make dragon move by pressing one of the key input.
                 if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
@@ -166,14 +170,14 @@ public class App extends Application
                             gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
                         }
                     }
-                    // Update the knights' direction to search for a position away from the dragon.
+                    // Update the knights' direction to run away from the dragon.
                     else if (gw.state == State.POWER) {
                         float distance = Math.abs(chaseX - knightMapX) + Math.abs(chaseY - knightMapY);
                         Node node = new Node(knightMapX, knightMapY, gw.knights.get(i).direction, distance, null);
                         Node bestNode = gw.knights.get(i).knightBFS(node, chaseX, chaseY, true);
                         gw.knights.get(i).updateDirection(gw.knights.get(i), bestNode.direction);
                     }
-                }  
+                }
             }
         }; 
 

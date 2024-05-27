@@ -5,9 +5,7 @@
 package com.example;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.canvas.*;
-import javafx.scene.control.Button;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
 
@@ -140,8 +138,7 @@ public class Draw
     public void drawScore() 
     {
         // Font gothic = Font.loadFont("Sketch_Gothic_School.ttf", 25);
-        Font gothic =Font.font("Verdana", 35);
-        System.out.println(gothic);
+        Font gothic = Font.font("Verdana", 35);
         this.context.setFont(gothic);
         this.context.setFill(Color.BLACK);
         context.fillText("Score: "+ gw.score, 30.0, 30.0);
@@ -193,10 +190,8 @@ public class Draw
             int animatedFrameTime = 1000000000;
             for (Knight knight : cool.dying)
             {
-                System.out.println(1);
                 if (nowNS - knight.deathTime < animatedFrameTime)
                 {
-                    System.out.println(2);
                     drawAnimatedSprite(nowNS - knight.deathTime, knight, 4, 1, 205);
                 }
             }
@@ -269,17 +264,17 @@ public class Draw
     {
         Image winnerScreen = new Image("game_over_win.png");
         Image looserScreen = new Image("game_over_lost.png");
-        if (gw.dragon.lives > 0)
+        
+        if (gw.gameOver() == 0)
         {
             context.drawImage(winnerScreen, 32, 32, 960, 671);
-            Button newGame = new Button("Yes!");
-            Button exitGame = new Button("no..");
+            
         } 
-        else if (gw.dragon.lives == 0);
+        else if (gw.gameOver() > 0)
         {
             context.drawImage(looserScreen, 32, 32, 960, 671);
-            Button newGame = new Button("Yes!");
-            Button exitGame = new Button("no..");
+
         }
+        
     }   
 }
