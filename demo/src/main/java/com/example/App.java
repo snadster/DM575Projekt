@@ -172,9 +172,12 @@ public class App extends Application
     
                 }  
             }
+        
         }; 
         gameloop.start();
         stage.show();
+        
+
     }
 
     public static void main(String[] args) {
