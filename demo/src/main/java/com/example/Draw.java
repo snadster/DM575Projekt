@@ -42,12 +42,10 @@ public class Draw
         if (gw.state == State.NORMAL)
         {
             drawBoardNormal();
-            drawNormalKnights(nowNS);
         }
         else if (gw.state == State.POWER)
         {
             drawBoardPower();
-            drawPowerKnights(nowNS);
         }
     }
 
@@ -151,89 +149,102 @@ public class Draw
     //*********************************\\
     
 
-        public void drawDragon(long nowNS)
+    public void drawDragon(long nowNS)
+    {
+        drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
+    }
+
+    public void drawKnightsta(long nowNS)
+    {
+        if (gw.state == State.NORMAL)
         {
-            drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
+            drawNormalKnights(nowNS);
         }
-
-        public void drawNormalKnights(long nowNS)
-        {   
-            
-            for (int i = 0; i < gw.knights.size(); i++) {
-                if (gw.knights.get(i).colour == "Blue") {
-                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 35);
-                }
-                if (gw.knights.get(i).colour == "Purple") {
-                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 69);
-                }
-                if (gw.knights.get(i).colour == "Pink") {
-                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 103);
-                }
-                if (gw.knights.get(i).colour == "Orange") {
-                    drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 137);
-                }
-
-            }
-            
-        }
-
-        public void drawPowerKnights(long nowNS)
+        else if (gw.state == State.POWER)
         {
-            for (Knight knight : gw.knights) 
-            {
-                drawAnimatedSprite(nowNS, knight, 3, 1, 171);
-            } 
+            drawPowerKnights(nowNS);
         }
+    }
 
-        public void drawDeadKnights(long nowNS)
-        {
-            int animatedFrameTime = 1000000000;
-            for (Knight knight : cool.dying)
-            {
-                if (nowNS - knight.deathTime < animatedFrameTime)
-                {
-                    drawAnimatedSprite(nowNS - knight.deathTime, knight, 4, 1, 205);
-                }
+    public void drawNormalKnights(long nowNS)
+    {    
+        for (int i = 0; i < gw.knights.size(); i++) {
+            if (gw.knights.get(i).colour == "Blue") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 35);
             }
+            if (gw.knights.get(i).colour == "Purple") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 69);
+            }
+            if (gw.knights.get(i).colour == "Pink") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 103);
+            }
+            if (gw.knights.get(i).colour == "Orange") {
+                drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 137);
+            }
+
         }
+        
+    }
 
-        //--------------------------------------------------------------------
-        // Draw the animated sprites in their current direction.
-        //--------------------------------------------------------------------
-        public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
+    public void drawPowerKnights(long nowNS)
+    {
+        for (Knight knight : gw.knights) 
         {
-            int x = entity.positionX;
-            int y = entity.positionY;
-            int size = 32; // hvis ting er sære er det den her der var 33
-            //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
-            if (entity.direction == Direction.UP)
+            drawAnimatedSprite(nowNS, knight, 3, 1, 171);
+        } 
+    }
+
+    public void drawDeadKnights(long nowNS)
+    {
+        int animatedFrameTime = 1000000000;
+        for (Knight knight : cool.dying)
+        {
+            if (nowNS - knight.deathTime < animatedFrameTime)
             {
-                drawAnimated(nowNS, animationLength, startX, startY, x, y, size, size);
-            }
-            else if (entity.direction == Direction.DOWN)
-            {
-                drawAnimated(nowNS, animationLength, startX + 1 * animationLength * 34, startY, x, y, size, size);
-            }
-            else if (entity.direction == Direction.RIGHT)
-            {
-                drawAnimated(nowNS, animationLength, startX + 2 * animationLength * 34, startY, x, y, size, size);
-            }
-            else if (entity.direction == Direction.LEFT)
-            {
-                drawAnimated(nowNS, animationLength, startX + 3 * animationLength * 34, startY, x, y, size, size);
+                drawAnimatedSprite(nowNS - knight.deathTime, knight, 4, 1, 205);
             }
         }
+    }
 
-        //--------------------------------------------------------------------
-        // Draw correct frames from spritesheet
-        //--------------------------------------------------------------------
-        public void drawAnimated(long nowNS, long animationLength, int startX, int startY, int positionX, int positionY, int dw, int dh)
+    //--------------------------------------------------------------------
+    // Draw the animated sprites in their current direction.
+    //--------------------------------------------------------------------
+    public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
+    {
+        int x = entity.positionX;
+        int y = entity.positionY;
+        int size = 32; // hvis ting er sære er det den her der var 33
+        //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
+        if (entity.direction == Direction.UP)
         {
-            long fourthOfSecondNS = 1000000000 / 4;
-            long animationFrame = nowNS / fourthOfSecondNS % animationLength;
-            context.setImageSmoothing(false);
-            context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX + 32, positionY + 32, dw, dh);
-        }     
+            drawAnimated(nowNS, animationLength, startX, startY, x, y, size, size);
+        }
+        else if (entity.direction == Direction.DOWN)
+        {
+            drawAnimated(nowNS, animationLength, startX + 1 * animationLength * 34, startY, x, y, size, size);
+        }
+        else if (entity.direction == Direction.RIGHT)
+        {
+            drawAnimated(nowNS, animationLength, startX + 2 * animationLength * 34, startY, x, y, size, size);
+        }
+        else if (entity.direction == Direction.LEFT)
+        {
+            drawAnimated(nowNS, animationLength, startX + 3 * animationLength * 34, startY, x, y, size, size);
+        }
+    }
+
+    //--------------------------------------------------------------------
+    // Draw correct frames from spritesheet.
+    //--------------------------------------------------------------------
+    public void drawAnimated(long nowNS, long animationLength, int startX, int startY, int positionX, int positionY, int dw, int dh)
+    {
+        long fourthOfSecondNS = 1000000000 / 4;
+        long animationFrame = nowNS / fourthOfSecondNS % animationLength;
+        context.setImageSmoothing(false);
+        context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX + 32, positionY + 32, dw, dh);
+    }     
+        
+    
 
     //--------------------------------------------------------------------
     // Draw the gameover screen.
@@ -265,12 +276,12 @@ public class Draw
         Image winnerScreen = new Image("game_over_win.png");
         Image looserScreen = new Image("game_over_lost.png");
         
-        if (gw.gameOver() == 0)
+        if (gw.gameOver() > 0)
         {
             context.drawImage(winnerScreen, 32, 32, 960, 671);
             
         } 
-        else if (gw.gameOver() > 0)
+        else if (gw.gameOver() == 0)
         {
             context.drawImage(looserScreen, 32, 32, 960, 671);
 

@@ -67,10 +67,10 @@ public class KeyHandler
                     case ENTER:
                     newGame = true;
 
-                    case DELETE:
+                    case Q:
                     System.exit(0);
 
-                    default: // Only the arrows are permitted as valid inputs.
+                    default: // Only the arrows, enter, and q are permitted as valid inputs.
                     break;
                 }
             }

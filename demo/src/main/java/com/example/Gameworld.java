@@ -24,18 +24,6 @@ public class Gameworld
         this.score = 0;
     }
 
-    // jeg vil prøve at lave en metode som håndtere at checke for collections, for at holde os til dry
-    // men det må blive en anden dag hvis overhovedet.
-    // public void collection(int mapNumber, int newMapNumber, int attribute, int valueAttribute)
-    // {
-    //     int dragonX = (dragon.positionX / 32);
-    //     int dragonY = (dragon.positionY / 32);
-    //     if (dragon.coinCollision() && Map.map[dragonY][dragonX]== mapNumber) {
-    //         attribute = attribute + valueAttribute;
-    //         Map.map[dragonY][dragonX] = newMapNumber;
-    //     } 
-    // }
-
     //--------------------------------------------------------------------
     // Collect coins and remove them from the board.
     //--------------------------------------------------------------------
@@ -93,7 +81,11 @@ public class Gameworld
         return CoinsLeft;
     }
 
-    public void newGame() {
+    //--------------------------------------------------------------------
+    // Start new game with start settings again.
+    //--------------------------------------------------------------------
+    public void newGame() 
+    {
         this.state = State.NORMAL;
         this.score = 0;
         dragon.lives = 2;

@@ -21,12 +21,10 @@ import java.util.concurrent.*;
 import java.util.Random;
 /* TODO
 
-    Gameover state (sandra)
-        - slutskærm
-        - knap til nyt spil
+    Tekst til slutskærm
 
-    kommentarer og korrektur (Celine mm.)
-    Rapport (Når der er ventetid)
+    korrektur (Celine mm.)
+    Rapport
    
 */
 
