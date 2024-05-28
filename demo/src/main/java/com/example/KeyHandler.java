@@ -7,6 +7,7 @@ package com.example;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import java.util.concurrent.*;
 
 public class KeyHandler 
 {
@@ -27,7 +28,7 @@ public class KeyHandler
     //--------------------------------------------------------------------
     // Handle keyboard input from the user.
     //--------------------------------------------------------------------
-    public void inputHandler() 
+    public void inputHandler(ExecutorService ses) 
     {
         scene.setOnKeyPressed (new EventHandler <KeyEvent>() 
         {
@@ -68,6 +69,7 @@ public class KeyHandler
                     newGame = true;
 
                     case Q:
+                    ses.shutdown();
                     System.exit(0);
 
                     default: // Only the arrows, enter, and q are permitted as valid inputs.

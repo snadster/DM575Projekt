@@ -162,7 +162,7 @@ public class Knight extends Entity
             Node goal = null;
             for (Node test: nodes) 
             {
-                if (test.distance >= 15 && powermode == true) // Search for a node away from the dragon
+                if (test.distance >= 20 && powermode == true) // Search for a node away from the dragon
                 {
                     goal = test;
                     while (goal.parent != node) // Go back to the roots children

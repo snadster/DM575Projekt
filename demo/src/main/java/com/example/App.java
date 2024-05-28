@@ -47,10 +47,12 @@ public class App extends Application
         stage.setScene(mainScene);
         Canvas canvas = new Canvas(1024, 736);
         root.setCenter(canvas);
+
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
             
         // Initialize the keyhandler to handle keyboard input.
         KeyHandler keyH = new KeyHandler(mainScene);
-        keyH.inputHandler();
+        keyH.inputHandler(ses);
 
         // Intialize the dragon and knights on the board.
         Dragon dragonman = new Dragon(448, 384, 2, keyH); 
@@ -67,8 +69,6 @@ public class App extends Application
         // Randomize if the knights scatter or chase the dragon.
         Random rand = new Random();
         int chaseOrScatter = rand.nextInt(3);
-        
-        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
 
         Runnable interval = () -> 
         {
@@ -116,7 +116,6 @@ public class App extends Application
                 }
                 else if (gw.state == State.GAMEOVER)
                 {
-                    ses.shutdown();
                     drawie.drawEndScreen();
                 }
                 
