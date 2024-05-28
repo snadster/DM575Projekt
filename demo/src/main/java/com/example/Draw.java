@@ -23,9 +23,6 @@ public class Draw
         this.cool = cool;
     }
 
-      //*****************************\\
-     //         Render board          \\
-    //*********************************\\
     public void render(long nowNS)
     {
         clearBackground();
@@ -36,6 +33,9 @@ public class Draw
         drawDeadKnights(nowNS);
     }
 
+      //*****************************\\
+     //         Render board          \\
+    //*********************************\\
     public void drawBoard(long nowNS)
     {
         if (gw.state == State.NORMAL)
@@ -139,7 +139,24 @@ public class Draw
     //*********************************\\
     public void drawDragon(long nowNS)
     {
+        if (gw.state != State.POWER)
+        {
+            dragon(nowNS);
+        }
+        else if (gw.state == State.POWER)
+        {
+            powerDragon(nowNS);
+        }
+    }
+
+    public void dragon(long nowNS)
+    {
         drawAnimatedSprite(nowNS, gw.dragonman, 4, 1, 1);
+    }
+
+    public void powerDragon(long nowNS)
+    {
+        drawAnimatedSprite(nowNS, gw.dragonman, 4, 1, 273);
     }
 
     public void drawKnights(long nowNS)

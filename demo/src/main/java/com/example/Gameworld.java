@@ -108,6 +108,10 @@ public class Gameworld
         Map.map[9][28] = 2;
         Map.map[13][2] = 2;
         Map.map[19][21] = 2;
+
+        // Place dragon on correct spot in map
+        dragonman.positionX = 448;
+        dragonman.positionY = 384;
         
         // Delete old knights. Make new knights.
         knights.clear();
