@@ -6,10 +6,10 @@ package com.example;
 
 public class Rectangle
 {
-    public double x;
-    public double y;
-    public double width;
-    public double height; 
+    protected double x;
+    protected double y;
+    protected double width;
+    protected double height; 
 
     public Rectangle(double x, double y, int width, int height)
     {

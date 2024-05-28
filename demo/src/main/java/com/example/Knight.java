@@ -36,9 +36,9 @@ public class Knight extends Entity
     }
 
     //--------------------------------------------------------------------
-    // Determine the next node, the knights must search for the tile with a 
-    // distance of 1 or less or 15 or more to the given position depending
-    // on the boolean input using Breadth-First Search.
+    // Determine the knights' next node. The knights must search for the  
+    // tile with a distance of 1 or less, or 15 or more to the given  
+    // position depending on the boolean input using Breadth-First Search.
     //--------------------------------------------------------------------
     public Node knightBFS(Node node, int dragonX, int dragonY, boolean powermode) 
     {

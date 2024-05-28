@@ -38,8 +38,8 @@ public class App extends Application
         // Set the screen preferences.
         stage.setTitle("Camelot's Burning");
         stage.setFullScreen(true);
-        //stage.setFullScreenExitHint("We bid thee welcome to Camelot brave Dragon, are thou ready to burn the town? Start the exploration by presing upon thy board of keys a direction in which you wish to fly. Should thou wish to minimise thine screen, press 'ESC'");
-        stage.setFullScreenExitHint("");
+        stage.setFullScreenExitHint("We bid thee welcome. Press q to forefit thine battle.");
+        //stage.setFullScreenExitHint("");
         stage.getIcons().add(new Image("TILE_EMPTY_FLAME.png"));
     
         BorderPane root = new BorderPane();
@@ -112,7 +112,7 @@ public class App extends Application
 
                 if (gw.state != State.GAMEOVER)
                 {
-                    drawie.draw(nowNS);
+                    drawie.render(nowNS);
                 }
                 else if (gw.state == State.GAMEOVER)
                 {

@@ -28,16 +28,17 @@ public class Draw
      //       board rendering         \\
     //*********************************\\
 
-    public void draw(long nowNS)
+    public void render(long nowNS)
     {
         clearBackground();
-        drawStates(nowNS);
+        drawBoard(nowNS);
         drawScore();
         drawDragon(nowNS);
+        drawKnights(nowNS);
         drawDeadKnights(nowNS);
     }
 
-    public void drawStates(long nowNS)
+    public void drawBoard(long nowNS)
     {
         if (gw.state == State.NORMAL)
         {
@@ -135,9 +136,7 @@ public class Draw
 
     public void drawScore() 
     {
-        // Font gothic = Font.loadFont("Sketch_Gothic_School.ttf", 25);
-        Font gothic = Font.font("Verdana", 35);
-        this.context.setFont(gothic);
+        this.context.setFont(Font.font("Verdana", FontWeight.BOLD, 35));
         this.context.setFill(Color.BLACK);
         context.fillText("Score: "+ gw.score, 30.0, 30.0);
         context.fillText("Lives: "+ gw.dragon.lives, 30, 730);
@@ -154,7 +153,7 @@ public class Draw
         drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
     }
 
-    public void drawKnightsta(long nowNS)
+    public void drawKnights(long nowNS)
     {
         if (gw.state == State.NORMAL)
         {
@@ -213,8 +212,7 @@ public class Draw
     {
         int x = entity.positionX;
         int y = entity.positionY;
-        int size = 32; // hvis ting er sære er det den her der var 33
-        //endelige størrelse burde være 32 størrelsesmuligheder: 64, 128, 160, 192, 224
+        int size = 32; 
         if (entity.direction == Direction.UP)
         {
             drawAnimated(nowNS, animationLength, startX, startY, x, y, size, size);
@@ -243,8 +241,6 @@ public class Draw
         context.setImageSmoothing(false);
         context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX + 32, positionY + 32, dw, dh);
     }     
-        
-    
 
     //--------------------------------------------------------------------
     // Draw the gameover screen.
@@ -257,31 +253,41 @@ public class Draw
 
     public void endText()
     {
-        if (gw.dragon.lives > 0)
+        if (gw.gameOver() == 0)
         {
-            this.context.setFont(Font.font("Verdana", 60));
             this.context.setFill(Color.WHITESMOKE);
-            context.fillText("Score: "+gw.score, 500.0, 500.0);
+            this.context.setFont(Font.font("Verdana", FontWeight.BOLD, 17));
+            context.fillText("Score: ", 717.0, 612.0);
+            this.context.setFont(Font.font("Verdana", FontWeight.BOLD, 35));
+            context.fillText("" + gw.score, 700.0, 643);
         }
-        else if (gw.dragon.lives == 0)
+        else if (gw.gameOver() > 0)
         {
             this.context.setFont(Font.font("Verdana", 70));
             this.context.setFill(Color.WHITESMOKE);
-            context.fillText("Score: "+ gw.score, 350.0, 390.0);
+            context.fillText("Score: "+ gw.score, 343.0, 390.0);
         }
+        this.context.setFill(Color.WHITESMOKE);
+        this.context.setFont(Font.font("Verdana", FontWeight.BOLD, 43));
+        context.fillText("enter: YES!!", 255.0, 510.0);
+        this.context.setFont(Font.font("Verdana", FontWeight.BOLD, 43));
+        context.fillText("q: no... :(", 565.0, 510);
     }
 
+    //--------------------------------------------------------------------
+    // Draw a new background when the game is over.
+    //--------------------------------------------------------------------
     public void endBackground()
     {
         Image winnerScreen = new Image("game_over_win.png");
         Image looserScreen = new Image("game_over_lost.png");
         
-        if (gw.gameOver() > 0)
+        if (gw.gameOver() == 0)
         {
             context.drawImage(winnerScreen, 32, 32, 960, 671);
             
         } 
-        else if (gw.gameOver() == 0)
+        else if (gw.gameOver() > 0)
         {
             context.drawImage(looserScreen, 32, 32, 960, 671);
 

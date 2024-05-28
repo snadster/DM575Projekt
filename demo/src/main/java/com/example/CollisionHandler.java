@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class CollisionHandler
 {
    private Gameworld gw;
-   protected KeyHandler keyh;
-   public ArrayList<Knight> dying = new ArrayList<Knight>();
+   private KeyHandler keyh;
+   protected ArrayList<Knight> dying = new ArrayList<Knight>();
 
    public CollisionHandler(Gameworld gw, KeyHandler keyh)
    {

@@ -10,7 +10,7 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyHandler 
 {
-    public boolean upPressed, downPressed, rightPressed, leftPressed, newGame;
+    protected boolean upPressed, downPressed, rightPressed, leftPressed, newGame;
     private Scene scene;
 
     public KeyHandler(Scene scene) 
