@@ -1,6 +1,7 @@
 //*************************************************************************\\
-//               Create enumerated types for Direction.                    \\
+//                     Create enum Direction.                              \\
 //*************************************************************************\\
+
 package com.example;
 
 public enum Direction 

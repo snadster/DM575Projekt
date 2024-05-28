@@ -1,5 +1,5 @@
 //*************************************************************************\\
-//                    Handle all key-inputs                                \\
+//                          Handle all key-inputs                          \\
 //*************************************************************************\\
 
 package com.example;
@@ -20,9 +20,8 @@ public class KeyHandler
         this.downPressed = false;
         this.rightPressed = false;
         this.leftPressed = false;
-        this.scene = scene;
         this.newGame = false;
-
+        this.scene = scene;
     }
 
     //--------------------------------------------------------------------
@@ -67,12 +66,15 @@ public class KeyHandler
 
                     case ENTER:
                     newGame = true;
+                    break;
 
                     case Q:
                     ses.shutdown();
                     System.exit(0);
+                    break;
 
-                    default: // Only the arrows, enter, and q are permitted as valid inputs.
+                    // Only the arrows, enter, and q are key binds.
+                    default:
                     break;
                 }
             }

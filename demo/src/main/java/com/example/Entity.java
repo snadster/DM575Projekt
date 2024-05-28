@@ -1,5 +1,5 @@
 //*************************************************************************\\
-//           Define rules for - and control - all entities                 \\
+//       Define rules in common for - and control - all entities           \\
 //*************************************************************************\\
 package com.example;
 
@@ -21,7 +21,7 @@ public class Entity
     }
 
     //--------------------------------------------------------------------
-    // Make the entity move in designated direction if there is no 
+    // Make the entity move in the designated direction, if there is no 
     // wall collision.
     //--------------------------------------------------------------------
     public void move(Entity entity) 
@@ -58,56 +58,54 @@ public class Entity
                 entity.positionX = 0;
             }
         } 
-
-        else // Center the sprite on a tile after a wall collision.
+        // Center the sprite on a tile after a wall collision.
+        else
         {
             entity.positionX = (entity.positionX + 5) / 32 * 32;
             entity.positionY = (entity.positionY + 5) / 32 * 32;
         } 
     }
 
-      //*********************************\\
-     //  collision checking w/rectangles  \\
-    //*************************************\\
-    
-    // Check for collisions between entities and walls, and entities and towers.
+       //*********************************\\
+      //  Collision checking w/rectangles  \\
+     //*************************************\\
+    // Check for collisions between entities and all types of walls.
     public boolean wallCollision()
     {
         boolean entityCollisionWall = collision(1) || collision(4) || collision(6);
         return entityCollisionWall;
     }
 
-    // Check for collisions between the given map number and entities - by checking for overlap of different rectangles.
+    // Check for collisions between the given map number and entities - by checking for overlap of rectangles.
     public boolean collision(int mapNumber)
     {
-        Rectangle entityRectangle = new Rectangle(positionX+1, positionY+1, 30, 30);
+        Rectangle entityRectangle = new Rectangle(positionX + 1, positionY + 1, 30, 30);
         ArrayList<Rectangle> colliders = rectangleMaker(mapNumber);
-        boolean yep = false;
+        boolean overlap = false;
         for(int x = 0; x < colliders.size(); x++)
         {
             if(colliders.get(x).overlap(entityRectangle))
             {
-                yep = true;
+                overlap = true;
             }
-            
         }
-        return yep;
+        return overlap;
     }
 
     //--------------------------------------------------------------------
-    // Iterate over the map and create rectangles for given numbers in
-    // map. Used for collision checks.
+    // Iterate over the map and create rectangles for given numbers
+    // corresponding to map numbers. Used for collision checks.
     //--------------------------------------------------------------------
     public ArrayList<Rectangle> rectangleMaker(int mapNumber)
     {
         ArrayList<Rectangle> listRectangles = new ArrayList<>();
-        for (int x = 0; x < Map.map[0].length; x++) //Map.map er det, som kalder vores map fra filen Map.
+        for (int x = 0; x < Map.map[0].length; x++)
         {
             for (int y = 0; y < Map.map.length; y++)
             {
                 if (Map.map[y][x] == mapNumber)
                 {
-                    Rectangle rectangles = new Rectangle(x*32, y*32, 32, 32);
+                    Rectangle rectangles = new Rectangle(x * 32, y * 32, 32, 32);
                     listRectangles.add(rectangles);
                 }
             }

@@ -8,55 +8,62 @@ import java.util.ArrayList;
 public class CollisionHandler
 {
    private Gameworld gw;
-   private KeyHandler keyh;
+   private KeyHandler keyH;
    protected ArrayList<Knight> dying = new ArrayList<Knight>();
 
-   public CollisionHandler(Gameworld gw, KeyHandler keyh)
+   public CollisionHandler(Gameworld gw, KeyHandler keyH)
    {
       this.gw = gw;
-      this.keyh = keyh;
+      this.keyH = keyH;
    }
  
    //--------------------------------------------------------------------
    // Handle collisions between the knights and the dragon.
    //--------------------------------------------------------------------
-   public void dragonKnightCollisionAction(long NowNS)
+   public void collisionAction(long NowNS)
    {
-      int knightIndex = dragonKnightCollisionKnightIndex();
-      int no = -1;
+      int knightIndex = collidedKnightIndex();
+      int noCollision = -1;
 
-      if (knightIndex != no && gw.state == State.NORMAL)
+      if (knightIndex != noCollision && gw.state == State.NORMAL)
       {
-         gw.score = gw.score / 4 * 3; // Remove points from the score after a collsion.
-         gw.dragon.lives = gw.dragon.lives - 1; 
-         gw.dragon.positionX = 448;
-         gw.dragon.positionY = 384;
+         // Reduce the score and lives after a collsion.
+         gw.score = gw.score / 4 * 3; 
+         gw.dragonman.lives = gw.dragonman.lives - 1; 
 
-         for (int i = 0; i < gw.knights.size(); i++) {
-            if (gw.knights.get(i).colour == "Blue") {
+         // Reset positions.
+         gw.dragonman.positionX = 448;
+         gw.dragonman.positionY = 384;
+         for (int i = 0; i < gw.knights.size(); i++) 
+         {
+            if (gw.knights.get(i).colour == "Blue") 
+            {
                gw.knights.get(i).positionX = 448;
                gw.knights.get(i).positionY = 288;
             }
-            if (gw.knights.get(i).colour == "Purple") {
+            if (gw.knights.get(i).colour == "Purple") 
+            {
                gw.knights.get(i).positionX = 448;
                gw.knights.get(i).positionY = 320;
             }
-            if (gw.knights.get(i).colour == "Pink") {
+            if (gw.knights.get(i).colour == "Pink") 
+            {
                gw.knights.get(i).positionX = 480;
                gw.knights.get(i).positionY = 320;
             }
-            if (gw.knights.get(i).colour == "Orange") {
+            if (gw.knights.get(i).colour == "Orange") 
+            {
                gw.knights.get(i).positionX = 480;
                gw.knights.get(i).positionY = 288;
             }
         }
          // Make an intial delay after the dragon has lost a life.
-         keyh.downPressed = false;  
-         keyh.leftPressed = false;
-         keyh.rightPressed = false;
-         keyh.upPressed = false;
+         keyH.downPressed = false;  
+         keyH.leftPressed = false;
+         keyH.rightPressed = false;
+         keyH.upPressed = false;
       }
-      if (knightIndex != no && gw.state == State.POWER) //this state specifier is not strictly necessary; it is here for clear understanding
+      if (knightIndex != noCollision && gw.state == State.POWER)
       {
          gw.score = gw.score + 400;
          // Add dead knight to seperate array.
@@ -68,15 +75,15 @@ public class CollisionHandler
    }
 
    //--------------------------------------------------------------------
-   // Check for collisions between the knights and the dragon.
+   // Return the index of the knight the dragon collided with.
    //--------------------------------------------------------------------
-   public int dragonKnightCollisionKnightIndex()
+   public int collidedKnightIndex()
    {
       ArrayList<Rectangle> knightRectangles = knightRectangles();
       int knightHitIndex = -1;
       for (int k = 0; k < knightRectangles.size(); k++)
       {
-         if (knightRectangles.get(k).overlap(gw.dragon.dragonRectangle()))
+         if (knightRectangles.get(k).overlap(gw.dragonman.dragonRectangle()))
          {
             knightHitIndex = k;
          }
@@ -85,8 +92,7 @@ public class CollisionHandler
    }
 
    //--------------------------------------------------------------------
-   // Make rectangeles for the knights. Used to check for collisions
-   // concerning knights.
+   // Make rectangeles for the knights.
    //--------------------------------------------------------------------
    public ArrayList<Rectangle> knightRectangles()
    {

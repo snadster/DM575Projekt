@@ -15,7 +15,6 @@ public class Draw
     private GraphicsContext context;
     private Image spriteSheet = new Image("ALL_SPRITES_LINEAR.png");
     private CollisionHandler cool;
-    
 
     public Draw(Gameworld gw, Canvas canvas, CollisionHandler cool) 
     {
@@ -25,9 +24,8 @@ public class Draw
     }
 
       //*****************************\\
-     //       board rendering         \\
+     //         Render board          \\
     //*********************************\\
-
     public void render(long nowNS)
     {
         clearBackground();
@@ -62,25 +60,22 @@ public class Draw
                     switch (Map.map[y][x])
                     {
                     case 0 :
-                        context.drawImage(spriteSheet, 1, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 1, 239, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 1 :
-                        context.drawImage(spriteSheet, 69, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 69, 239, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 2 :
-                        context.drawImage(spriteSheet, 103, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 103, 239, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 3 :
-                        context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 171, 239, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 4 :
-                        context.drawImage(spriteSheet, 35, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 35, 239, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 5 :
-                        context.drawImage(spriteSheet, 137, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                        break;
-                    case 6 :
-                        context.drawImage(spriteSheet, 171, 239, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 137, 239, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                 }
             }
@@ -99,25 +94,22 @@ public class Draw
                 switch (Map.map[y][x])
                 {
                     case 0 :
-                        context.drawImage(spriteSheet, 1, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 1, 307, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 1 :
-                        context.drawImage(spriteSheet, 69, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 69, 307, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 2 :
-                        context.drawImage(spriteSheet, 103, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 103, 307, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 3 :
-                        context.drawImage(spriteSheet, 171, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 171, 307, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 4 :
-                        context.drawImage(spriteSheet, 35, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 35, 307, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                     case 5 :
-                        context.drawImage(spriteSheet, 137, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
-                        break;
-                    case 6 :
-                        context.drawImage(spriteSheet, 171, 307, 32, 32, (x*32)+32, (y*32)+32, 32, 32);
+                        context.drawImage(spriteSheet, 137, 307, 32, 32, (x * 32) + 32, (y * 32) + 32, 32, 32);
                         break;
                 }
             }
@@ -125,8 +117,8 @@ public class Draw
     }  
 
     //--------------------------------------------------------------------
-    // Draw a box around the board to visualise the score and number
-    // of lives.
+    // Draw a box around the board to correctly render the score and 
+    // number of lives.
     //--------------------------------------------------------------------
     public void clearBackground()
     {
@@ -139,18 +131,15 @@ public class Draw
         this.context.setFont(Font.font("Verdana", FontWeight.BOLD, 35));
         this.context.setFill(Color.BLACK);
         context.fillText("Score: "+ gw.score, 30.0, 30.0);
-        context.fillText("Lives: "+ gw.dragon.lives, 30, 730);
+        context.fillText("Lives: "+ gw.dragonman.lives, 30, 730);
     }
-
 
       //*****************************\\
      //       Render Entities         \\
     //*********************************\\
-    
-
     public void drawDragon(long nowNS)
     {
-        drawAnimatedSprite(nowNS, gw.dragon, 4, 1, 1);
+        drawAnimatedSprite(nowNS, gw.dragonman, 4, 1, 1);
     }
 
     public void drawKnights(long nowNS)
@@ -167,22 +156,25 @@ public class Draw
 
     public void drawNormalKnights(long nowNS)
     {    
-        for (int i = 0; i < gw.knights.size(); i++) {
-            if (gw.knights.get(i).colour == "Blue") {
+        for (int i = 0; i < gw.knights.size(); i++)
+        {
+            if (gw.knights.get(i).colour == "Blue") 
+            {
                 drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 35);
             }
-            if (gw.knights.get(i).colour == "Purple") {
+            if (gw.knights.get(i).colour == "Purple") 
+            {
                 drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 69);
             }
-            if (gw.knights.get(i).colour == "Pink") {
+            if (gw.knights.get(i).colour == "Pink") 
+            {
                 drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 103);
             }
-            if (gw.knights.get(i).colour == "Orange") {
+            if (gw.knights.get(i).colour == "Orange") 
+            {
                 drawAnimatedSprite(nowNS, gw.knights.get(i), 3, 1, 137);
             }
-
-        }
-        
+        }   
     }
 
     public void drawPowerKnights(long nowNS)
@@ -206,7 +198,7 @@ public class Draw
     }
 
     //--------------------------------------------------------------------
-    // Draw the animated sprites in their current direction.
+    // Draw the animated sprites facing their current direction.
     //--------------------------------------------------------------------
     public void drawAnimatedSprite(long nowNS, Entity entity, int animationLength, int startX, int startY)
     {
@@ -242,9 +234,9 @@ public class Draw
         context.drawImage(spriteSheet, startX + animationFrame * 34, startY, 32, 32, positionX + 32, positionY + 32, dw, dh);
     }     
 
-    //--------------------------------------------------------------------
-    // Draw the gameover screen.
-    //--------------------------------------------------------------------
+      //*****************************\\
+     //      Render end screen        \\
+    //*********************************\\
     public void drawEndScreen()
     {
         endBackground();
@@ -253,6 +245,7 @@ public class Draw
 
     public void endText()
     {
+        // If game is won.
         if (gw.gameOver() == 0)
         {
             this.context.setFill(Color.WHITESMOKE);
@@ -261,6 +254,7 @@ public class Draw
             this.context.setFont(Font.font("Verdana", FontWeight.BOLD, 35));
             context.fillText("" + gw.score, 700.0, 643);
         }
+        // If game is lost.
         else if (gw.gameOver() > 0)
         {
             this.context.setFont(Font.font("Verdana", 70));
@@ -274,24 +268,20 @@ public class Draw
         context.fillText("q: no... :(", 565.0, 510);
     }
 
-    //--------------------------------------------------------------------
-    // Draw a new background when the game is over.
-    //--------------------------------------------------------------------
     public void endBackground()
     {
         Image winnerScreen = new Image("game_over_win.png");
         Image looserScreen = new Image("game_over_lost.png");
         
+        // If game is won.
         if (gw.gameOver() == 0)
         {
             context.drawImage(winnerScreen, 32, 32, 960, 671);
-            
         } 
+        // If game is lost.
         else if (gw.gameOver() > 0)
         {
             context.drawImage(looserScreen, 32, 32, 960, 671);
-
-        }
-        
+        } 
     }   
 }

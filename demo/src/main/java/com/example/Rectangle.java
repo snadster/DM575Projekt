@@ -20,16 +20,23 @@ public class Rectangle
     }
 
     //--------------------------------------------------------------------
-    // Check when the boxes do NOT overlap by using a concept of 
+    // Check when the boxes do NOT overlap by using the concept of 
     // seperating axis.
     //--------------------------------------------------------------------
     public boolean overlap(Rectangle other)
     {
         boolean dontOverlap = 
-            this.x + this.width < other.x    || //this is to the left of other
-            other.x + other.width < this.x   || //this is to the right of other
-            this.y + this.height < other.y   || // this is above other
-            other.y + other.height < this.y;   // this is below other
+            // This is to the left of other.
+            this.x + this.width < other.x    || 
+
+            // This is to the right of other.
+            other.x + other.width < this.x   ||
+
+            // This is above other.
+            this.y + this.height < other.y   ||
+             
+            // This is below other.
+            other.y + other.height < this.y;   
         return !dontOverlap;
     }
 }
