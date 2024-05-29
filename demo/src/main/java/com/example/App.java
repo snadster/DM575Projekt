@@ -67,11 +67,10 @@ public class App extends Application
             {
                 // Randomize if the knights scatter or chase the dragon.
                 int chaseOrScatter = rand.nextInt(3);
-                if (chaseOrScatter == 0) 
+                if (chaseOrScatter == 1) 
                 {
+                    gw.knights.get(i).scatterTarget(gw.knights.get(i));
                     gw.knights.get(i).updateChase(gw.knights.get(i), false);
-                    gw.knights.get(i).scatterX = rand.nextInt(29);
-                    gw.knights.get(i).scatterY = rand.nextInt(20);
                 }
                 else 
                 {

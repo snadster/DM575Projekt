@@ -5,6 +5,7 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Knight extends Entity 
 {
@@ -22,6 +23,21 @@ public class Knight extends Entity
         this.scatterY = 0;
         this.colour = colour;
         this.deathTime = -1;
+    }
+
+    //--------------------------------------------------------------------
+    // Assign a random target to the knight in scatter mode
+    //--------------------------------------------------------------------
+    public void scatterTarget(Knight knight) 
+    {
+        Random rand = new Random();
+        knight.scatterX = rand.nextInt(30);
+        knight.scatterY = rand.nextInt(21);
+        while (Map.map[knight.scatterY][knight.scatterX] == 1 || Map.map[knight.scatterY][knight.scatterX] == 4 ) 
+        {
+            knight.scatterX = rand.nextInt(30);
+            knight.scatterY = rand.nextInt(21);
+        }
     }
 
     public void updateDirection(Knight knight, Direction direction) 
@@ -175,7 +191,7 @@ public class Knight extends Entity
                     return goal;
                 }
                 // Get the node with the smallest distance to the dragon.
-                if (test.distance <= 2 && !powermode) 
+                if (test.distance <= 1 && !powermode) 
                 {
                     goal = test;
                     while (goal.parent != root) 
