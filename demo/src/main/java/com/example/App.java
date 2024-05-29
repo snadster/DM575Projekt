@@ -59,15 +59,15 @@ public class App extends Application
         CollisionHandler cool = new CollisionHandler(gw, keyH);
         Draw drawie = new Draw(gw, canvas, cool);
     
-        // Randomize if the knights scatter or chase the dragon.
         Random rand = new Random();
-        int chaseOrScatter = rand.nextInt(2);
 
         Runnable alternate = () -> 
         {
             for (int i = 0; i < gw.knights.size(); i++) 
             {
-                if (chaseOrScatter == 1) 
+                // Randomize if the knights scatter or chase the dragon.
+                int chaseOrScatter = rand.nextInt(3);
+                if (chaseOrScatter == 0) 
                 {
                     gw.knights.get(i).updateChase(gw.knights.get(i), false);
                     gw.knights.get(i).scatterX = rand.nextInt(29);
@@ -75,7 +75,7 @@ public class App extends Application
                 }
                 else 
                 {
-                gw.knights.get(i).updateChase(gw.knights.get(i), true);
+                    gw.knights.get(i).updateChase(gw.knights.get(i), true);
                 }
             }
         };
